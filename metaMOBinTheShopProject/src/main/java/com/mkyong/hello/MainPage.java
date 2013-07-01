@@ -45,6 +45,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private Panel loginPanel;
 	private Panel mainPanel;
 	private String mode = "main";
+	//
 	
 	private Label userNameLabel = new Label("userName", "Gast");
 
