@@ -1,6 +1,6 @@
-package com.mkyong.hello.callbacks;
+package de.metamob.ui.callbacks;
 
-import com.mkyong.hello.Item;
+import de.metamob.ui.Item;
 
 public interface IMainPageCallback {
 	public void itemPanelClicked (Item item);

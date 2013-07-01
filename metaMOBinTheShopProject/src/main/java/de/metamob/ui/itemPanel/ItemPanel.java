@@ -1,4 +1,4 @@
-package com.mkyong.hello.itemPanel;
+package de.metamob.ui.itemPanel;
 
 import java.util.List;
 
@@ -11,8 +11,9 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-import com.mkyong.hello.Item;
-import com.mkyong.hello.callbacks.IMainPageItemCallback;
+
+import de.metamob.ui.Item;
+import de.metamob.ui.callbacks.IMainPageItemCallback;
 
 public class ItemPanel extends Panel {
 	

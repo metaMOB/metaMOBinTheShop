@@ -1,4 +1,4 @@
-package com.mkyong.usermanagement;
+package de.metamob.usermanagement;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.WebPage;

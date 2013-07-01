@@ -1,4 +1,4 @@
-package com.mkyong.hello;
+package de.metamob.ui;
 
 import org.apache.wicket.util.io.IClusterable;
 import org.apache.*;

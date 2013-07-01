@@ -1,4 +1,4 @@
-package com.mkyong.hello.mainPanel;
+package de.metamob.ui.mainPanel;
 
 import java.util.ArrayList;
 
@@ -16,11 +16,12 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
-import com.mkyong.hello.Category;
-import com.mkyong.hello.Item;
-import com.mkyong.hello.callbacks.IMainPageCallback;
-import com.mkyong.hello.callbacks.IMainPageItemCallback;
-import com.mkyong.hello.itemPanel.ItemPanel;
+
+import de.metamob.ui.Category;
+import de.metamob.ui.Item;
+import de.metamob.ui.callbacks.IMainPageCallback;
+import de.metamob.ui.callbacks.IMainPageItemCallback;
+import de.metamob.ui.itemPanel.ItemPanel;
 
 public class MainPanel extends Panel implements IMainPageItemCallback {
 

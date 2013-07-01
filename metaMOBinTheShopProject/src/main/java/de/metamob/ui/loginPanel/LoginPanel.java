@@ -1,4 +1,4 @@
-package com.mkyong.hello.loginPanel;
+package de.metamob.ui.loginPanel;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -6,8 +6,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-import com.mkyong.hello.Item;
-import com.mkyong.hello.callbacks.IMainPageCallback;
+
+import de.metamob.ui.Item;
+import de.metamob.ui.callbacks.IMainPageCallback;
 
 public class LoginPanel extends Panel {
 
