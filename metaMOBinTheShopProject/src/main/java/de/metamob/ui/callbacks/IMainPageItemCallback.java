@@ -1,7 +1,7 @@
 package de.metamob.ui.callbacks;
 
-import de.metamob.ui.Item;
+import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public interface IMainPageItemCallback {
-	public void itemPanelClicked (Item item);
+	public void itemPanelClicked (StockItem item);
 }

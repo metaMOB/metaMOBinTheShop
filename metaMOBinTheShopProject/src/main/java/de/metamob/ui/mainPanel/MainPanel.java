@@ -2,6 +2,7 @@ package de.metamob.ui.mainPanel;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -23,6 +24,10 @@ import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.itemPanel.ItemPanel;
 
+import org.dieschnittstelle.jee.esa.crm.entities.*;
+import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
+import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+
 public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	private String message = "Enter a message";
@@ -39,7 +44,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        form.add(new TextField<String>("msgInput", messageModel));
 	        add(form);
 	        
-	        addCategoryModule();     
+	        addAllSelectors();
+	        addCategoryModule();  
+	        addTouchpointModule();
 	        addItemModule();
 	}
 
@@ -50,28 +57,23 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	
     private void addCategoryModule() {
     	
-    	List<Category> myList = new ArrayList<Category>();
-    	myList.add(new Category("Abel"));
-    	myList.add(new Category("Bebel"));
-    	myList.add(new Category("Cebel"));
+    	List<ProductType> myList = generateProductTypes();
     	
-        ListView<Category> categories = new ListView<Category>("categories", myList){
+        ListView<ProductType> categories = new ListView<ProductType>("categories", myList){
 
 			@Override
-			protected void populateItem(final ListItem<Category> entry) {
+			protected void populateItem(final ListItem<ProductType> entry) {
 				// TODO Auto-generated method stub
 				AjaxLink<Void> link = new AjaxLink<Void>("categoryLink"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						Category temp = (Category) entry.getModel().getObject();
-						
-		                System.out.println("JUP "+ temp.getCategoryName());
+						ProductType temp = (ProductType) entry.getModel().getObject();
+						System.out.println("CATEGORY: "+ temp);
 		            }
 				};
-				link.add(new Label("categoryName", entry.getModel()));
-				entry.add(link);
 				
-				
+				link.add(new Label("categoryName", entry.getModel().getObject().name()));
+				entry.add(link);	
 			}
         	
         };
@@ -79,6 +81,53 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
         add(categories);
     }
     
+    private List<ProductType> generateProductTypes(){
+    	List<ProductType> myList = new ArrayList<ProductType>();
+    	myList.add(ProductType.BREAD);
+    	myList.add(ProductType.PASTRY);
+    	myList.add(ProductType.ROLL);
+    	return myList;
+    }
+    
+    private void addTouchpointModule() {
+    	
+    	List<AbstractTouchpoint> myList = generateTestTouchpoints();
+    	
+        ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", myList){
+			
+        	@Override
+			protected void populateItem(final ListItem<AbstractTouchpoint> entry) {
+				// TODO Auto-generated method stub
+				AjaxLink<Void> link = new AjaxLink<Void>("touchpointLink"){
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
+						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());						
+		            }
+				};
+				
+				link.add(new Label("touchpointName", "TOUCHPOINT: "+entry.getModel().getObject().getName()));
+				entry.add(link);
+			}       	
+        };
+ 
+        add(touchpoints);
+    }
+    
+    private List<AbstractTouchpoint> generateTestTouchpoints(){
+    	String [] names = {"TP 1", "TP 2", "TP 3", "TP 4", "TP 5"};
+    	int [] ids = {101, 102, 103, 104, 105};
+    	
+    	List<AbstractTouchpoint> myList = new ArrayList<AbstractTouchpoint>();
+    	
+    	for (int i=0; i<names.length; i++){
+    		MobileTouchpoint tempTP = new MobileTouchpoint();
+    		tempTP.setName(names[i]);
+    		tempTP.setId(ids[i]);
+    		myList.add(tempTP);
+    	}
+    	return myList;
+    }
     
     private void addItemModule() {
     	
@@ -90,9 +139,30 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
       	myList.add(new Item("0005", "Frankfurter Kranz", "Bal bal blub... juhu das funzt", (float) 15.00, "images/products/example.jpg"));
       	myList.add(new Item("0006", "Mohnbroetchen", "Bal bal blub... juhu das funzt", (float) 0.99, "images/products/example.jpg"));
     
-      	add (new ItemPanel("itemPanel", new ListModel<Item>(myList), this));
+      	add (new ItemPanel("itemPanel", this));
     }
 
+    private void addAllSelectors(){
+    	AjaxLink<Void> linkAllTouchpoints = new AjaxLink<Void>("touchpointAllLink"){
+    		@Override
+    		public void onClick(AjaxRequestTarget target) {
+    			System.out.println("NO TOUCHPOINT");						
+    		}
+    	};
+    	add(linkAllTouchpoints);
+    	
+    	AjaxLink<Void> linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
+    		@Override
+    		public void onClick(AjaxRequestTarget target) {
+    			System.out.println("NO CATEGORY");						
+    		}
+    	};
+    	add(linkAllCategories);
+    }
+    
+    
+    
+    
     public String getMessage() {
 		return message;
 	}
@@ -102,7 +172,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	}
 
 	@Override
-	public void itemPanelClicked(Item item) {
+	public void itemPanelClicked(StockItem item) {
 		// TODO Auto-generated method stub
 		//SessionUser session = (SessionUser)Session.get();
 		//User thisUser = session.getUser();
