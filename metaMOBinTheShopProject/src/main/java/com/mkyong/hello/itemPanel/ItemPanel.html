@@ -1,0 +1,43 @@
+<wicket:panel>
+	<div class="siteoptions">            	
+            	<div class="sholder">
+                    <div class="styled-select">
+                        <select class="options">
+                           <option>Beliebtheit</option>
+                           <option>Preis absteigend</option>
+                           <option>Preis aufsteigend</option>
+                           <option>Verfügbarkeit</option>
+                        </select>
+                    </div>
+                </div>
+        	<div class="sort">Sortieren nach</div>
+    	</div>
+    <div class="rightContent">
+
+
+		<span wicket:id="items"> 
+			<div class="item">	             
+				<div class="itemimage"><img wicket:id="itemImage" width="134" height="134"/></div>      		
+    				<div class="itemdescwrapper">
+    				<div class="titel"><span wicket:id="itemName"></span></div>
+    				<div class="description"><span wicket:id="itemDescription"></span></div>
+					<div class="Preis"><span wicket:id="itemPrice"></span> &euro;</div>
+					<button type="submit" class="buttonwarenkorb" ><a href="#" wicket:id="itemLink">
+                        				zum Warenkorb
+                        			</a></button>   
+				</div>               		
+    		</div>
+    	</span>
+    </div>
+    
+    <div class="pagenavi"> 
+        <nav class="pagenumbers">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+               	<li>3</li>
+           	</ul>
+        </nav>
+    	<div class="sitenumbertext">Seite: </div>
+    </div>
+</wicket:panel>

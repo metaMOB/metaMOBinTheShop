@@ -1,0 +1,33 @@
+<wicket:panel>
+	<div class="leftContent">
+    	<nav class="list">
+        	<div class="listhead"><h1>Kategorie</h1></div>
+            	<ul>
+                	<span wicket:id="categories">                    		
+                    	<li>
+                        	<a href="#" wicket:id="categoryLink">
+                        		<span wicket:id="categoryName"></span>
+                        	</a>	
+                        </li>                    		
+                	</span>
+                </ul>
+          	<div class="listhead"><h1>Touchpoints</h1></div>
+            	<ul>
+                	<li>element 1</li>
+                    <li>element 2</li>
+                    <li>element 3</li>
+                    <li>element 4</li>
+                    <li>element 5</li>
+                    <li>element 6</li>
+                    <li>element 7</li>
+                </ul>
+            </nav>
+      	</div>
+            
+        <form wicket:id="form">
+        	<input type="text" wicket:id="msgInput" value="" size="50" />
+        	<input type="submit" value="set message" />
+      	</form>
+	 	<span wicket:id="msg" id="msg">Message goes here</span>	
+	 	<span wicket:id="itemPanel"></span>	 
+</wicket:panel>
