@@ -1,4 +1,5 @@
 /metaMOBinTheShopProject/.classpath
 /metaMOBinTheShopProject/target/classes/com/mkyong/hello/MainPage$1.class
-*.class
+/metaMOBinTheShopProject/target/*
 /metaMOBinTheShopProject/target/classes/com/mkyong/hello/MainPage.class
+/metaMOBinTheShopProject/target/classes/com/mkyong/hello/Item.class
