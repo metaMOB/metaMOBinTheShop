@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class UserManager extends WebPage{
-
+//Test
 	private String name;
 	private String role;
 	private String hashedPassword;
