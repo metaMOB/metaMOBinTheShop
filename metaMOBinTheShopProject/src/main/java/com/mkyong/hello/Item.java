@@ -7,6 +7,8 @@ import org.apache.wicket.request.resource.ContextRelativeResource;
 
 public class Item implements IClusterable {
 	
+	// ...
+	
 	public String getId() {
 		return id;
 	}

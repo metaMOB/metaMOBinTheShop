@@ -5,6 +5,7 @@ import org.apache.*;
 
 public class Category implements IClusterable {
 
+	// *** .. ...
 	
 	private String categoryName;
 	
