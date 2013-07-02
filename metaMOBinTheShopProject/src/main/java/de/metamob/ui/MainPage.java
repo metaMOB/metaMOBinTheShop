@@ -28,6 +28,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
 
+import de.metamob.data.shoppingCart.ShoppingCart;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.loginPanel.LoginPanel;
@@ -36,6 +37,7 @@ import de.metamob.usermanagement.UserManager;
 
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public class MainPage extends WebPage implements IMainPageCallback { // IMainPageItemCallback
 																		// {
@@ -46,13 +48,38 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private Panel loginPanel;
 	private Panel mainPanel;
 	private String mode = "main";
-	// test
+	private AjaxLink<Void> link;
 	
-	private Label userNameLabel = new Label("userName", "Gast");
+	private ShoppingCart shoppingCart = new ShoppingCart(); 
+	
+	String userNameText = "Gast";
+	public String getUserNameText() {
+		return userNameText;
+	}
+
+	public void setUserNameText(String userNameText) {
+		this.userNameText = userNameText;
+	}
+	
+	String loginLabelText = "Login";
+
+	public String getLoginLabelText() {
+		return loginLabelText;
+	}
+
+	public void setLoginLabelText(String loginLabelText) {
+		this.loginLabelText = loginLabelText;
+	}
+
+	//PropertyModel<String> userNameModel = new PropertyModel<String>(this, "userNameText");
+	
+	private Label userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
+	private Label loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
 
 	public MainPage(final PageParameters parameters) {
-
+		
 		add(userNameLabel);
+		
 		
 		mainPanel = new MainPanel("contentPanel", this);
 		loginPanel = new LoginPanel("contentPanel", this);
@@ -63,10 +90,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		visiblePanel = mainPanel;
 		add(visiblePanel);
 
-		AjaxLink<Void> link = new AjaxLink<Void>("loginLink") {
+		
+		
+		link = new AjaxLink<Void>("loginLink") {
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				System.out.println("Hakllo");
+				System.out.println("LOGIN/LOGOUT: CLICK");
+				if (loginLabelText.equals("Login")){
 				if (mode.equals("main")) {
 					visiblePanel.replaceWith(loginPanel);
 					visiblePanel = loginPanel;
@@ -78,13 +108,41 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					target.add(mainPanel);
 					mode = "main";
 				}
+				}
+				else {
+					loginLabelText = "Login";
+					userNameText = "Gast"; 
+					userManager.logOut();
+					setResponsePage(getPage());	
+				}
 			}
 		};
+		link.add(loginLinkLabel);
 		add(link);
+		
 	}
 
 	@Override
-	public void itemPanelClicked(Item item) {
-
+	public void itemPanelClicked(StockItem stockItem) {
+		shoppingCart.addToCart(stockItem);
+		System.out.println("SHOPPING CART "+shoppingCart);
 	}
+
+	@Override
+	public void userLoggedIn() {
+		// TODO Auto-generated method stub
+		
+		userNameText = userManager.getName(); 
+		loginLabelText = "LogOut";
+		//userNameLabel.render();
+		
+		//add(userNameLabel);
+		
+		visiblePanel.replaceWith(mainPanel);
+		visiblePanel = mainPanel;
+		add(mainPanel);
+		mode = "main";
+		
+		setResponsePage(getPage());		
+	}	
 }

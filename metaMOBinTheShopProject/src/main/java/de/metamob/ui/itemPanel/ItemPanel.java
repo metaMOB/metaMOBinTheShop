@@ -76,6 +76,7 @@ public class ItemPanel extends Panel {
     	
     	for (int i=0; i<names.length; i++){
     		IndividualisedProductItem tempIndividualProduct = new IndividualisedProductItem(names[i], type[i], 10);
+    		tempIndividualProduct.setId(ids[i]);
     		PointOfSale tempPointOfSale = new PointOfSale();
     		tempPointOfSale.setId(pos[i]);
     		

@@ -4,14 +4,15 @@
             <h1>Login</h1>
           </div>
           <div class="content">
-          		<form action="" method="get">
+          <div wicket:id="feedback"/>
+          
+          		<form wicket:id="formLogin">
               <label id="inputs">E-Mail</label>
-              <input type="text" placeholder="Ihre E-Mailadresse" name="email" >
+              <input type="text" placeholder="Ihre E-Mailadresse" name="email" wicket:id="emailLogin" required>
               <div style="clear:both;"></div>
               <label id="inputs">Passwort</label>
-              <input type="text" placeholder="Ihr Passwort" name="passwort" > 
-    		  <!-- <input type="text" placeholder="Ihr Passwort" name="passwort" wicket:id="loginPassword"/> -->
-          	<button type="submit" class="butlogin">Einloggen</button>
+              <input type="password" placeholder="Ihr Passwort" name="passwort" wicket:id="passwordLogin">
+          	<button type="submit" class="butlogin" wicket:id="submitLogin">Einloggen</button>
             <span style="clear:both;"></span>
           	</form>
         <div class="underline"></div>

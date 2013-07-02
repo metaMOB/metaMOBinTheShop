@@ -37,12 +37,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		super(id);
 		this.iMainPageCallback = mainPageCallback;
 		// TODO Auto-generated constructor stub
-		PropertyModel<String> messageModel = 
-		         new PropertyModel<String>(this, "message");
-		 	add(new Label("msg", messageModel));
-	        Form<?> form = new Form("form");
-	        form.add(new TextField<String>("msgInput", messageModel));
-	        add(form);
+		PropertyModel<String> messageModel = new PropertyModel<String>(this, "message");
+		 	
+		add(new Label("msg", messageModel));
+	    Form<?> form = new Form("form");
+	    form.add(new TextField<String>("msgInput", messageModel));
+	    add(form);
 	        
 	        addAllSelectors();
 	        addCategoryModule();  
@@ -172,18 +172,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	}
 
 	@Override
-	public void itemPanelClicked(StockItem item) {
-		// TODO Auto-generated method stub
-		//SessionUser session = (SessionUser)Session.get();
-		//User thisUser = session.getUser();
-		//Session a=Session.get();
-		//System.out.println("Hallo "+a.getAttribute("test"));
-		
-		/*if (thisUser.hasAnyRole(new Roles("CUSTOMER"))){
-			System.out.println("JUP!!! "+item.getName());
-		} else {
-			System.out.println("Nicht angemeldet!");
-		}*/
+	public void itemPanelClicked(StockItem stockItem) {
+		iMainPageCallback.itemPanelClicked(stockItem);
 	}
-
 }

@@ -29,15 +29,18 @@ public class UserManager extends WebPage{
 		role = "CUSTOMER";
 		
 		if (hashedPasswordStored.equals(hashedPassword)){
+			System.out.println("USERMANAGER: LOGIN PASSED");
 			Session.get().setAttribute("username", username);
 			Session.get().setAttribute("name", name);
 			Session.get().setAttribute("role", role);
 			return true;
 		}
+		System.out.println("USERMANAGER: LOGIN FAILED");
 		return false;
 	}
 	
 	public void logOut (){
+		System.out.println("USERMANAGER: LOGOUT");
 		Session.get().setAttribute("username", "NONE");
 		Session.get().setAttribute("name", "NONE");
 		Session.get().setAttribute("role", "NONE");
