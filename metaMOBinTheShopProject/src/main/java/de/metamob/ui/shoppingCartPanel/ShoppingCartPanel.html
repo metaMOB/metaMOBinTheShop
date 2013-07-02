@@ -1,0 +1,53 @@
+<wicket:panel>
+	<div class="siteoptions">            	
+            	<div class="sholder">
+                    <div class="styled-select">
+                        <select class="options">
+                           <option>Beliebtheit</option>
+                           <option>Preis absteigend</option>
+                           <option>Preis aufsteigend</option>
+                           <option>Verfügbarkeit</option>
+                        </select>
+                    </div>
+                </div>
+        	<div class="sort">Sortieren nach</div>
+    	</div>
+    <div class="rightContent">
+
+		<div class="shoppingcart">
+			<ul class="searchLists">
+				<li class="odd">
+					<ul class="searchListsinner">
+						<li class="produkthead">Produkte</li>
+						<li class="pricehead">Preis</li>
+						<li class="counthead">Anzahl</li>
+						<li class="deletehead">entfernen</li>
+					</ul>
+				</li>
+				<span wicket:id="items">    	
+		        	<li class="odd">
+		            	<ul class="searchListsinner">
+		                	<li class="produkt"><span wicket:id="itemName"></span></li>
+                        	<li class="price"><span wicket:id="itemPrice"></span></li>
+                            <li class="count"><input type="number" min="0" max="100" wicket:id="itemNumber"></li>
+                            <li class="delete"><a href="#" wicket:id="itemDelete">entfernen</a></li>
+		                </ul>
+		            </li>                    
+		        </span>         
+		    </ul>
+			<div style="clear:both;margin-bottom:20px;"></div>
+		</div>			
+			
+    </div>
+    
+    <div class="pagenavi"> 
+        <nav class="pagenumbers">
+            <ul>
+                <li>1</li>
+                <li>2</li>
+               	<li>3</li>
+           	</ul>
+        </nav>
+    	<div class="sitenumbertext">Seite: </div>
+    </div>
+</wicket:panel>

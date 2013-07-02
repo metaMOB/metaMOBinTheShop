@@ -23,6 +23,7 @@ import de.metamob.ui.Item;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.itemPanel.ItemPanel;
+import de.metamob.ui.shoppingCartPanel.ShoppingCartPanel;
 
 import org.dieschnittstelle.jee.esa.crm.entities.*;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
@@ -32,6 +33,11 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	private String message = "Enter a message";
 	private IMainPageCallback iMainPageCallback;
+	private String mode = "ITEMDISPLAY";
+	
+	private Panel itemPanel = new ItemPanel("itemPanel", this);
+	private Panel shoppingCartPanel;
+	private Panel visiblePanel = itemPanel;
 	
 	public MainPanel(String id, IMainPageCallback mainPageCallback) {
 		super(id);
@@ -47,7 +53,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        addAllSelectors();
 	        addCategoryModule();  
 	        addTouchpointModule();
-	        addItemModule();
+	        add (itemPanel);
+	        //addItemModule();
 	}
 
 	public MainPanel(String id, IModel<?> model) {
@@ -169,6 +176,33 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public void currentDisplay(AjaxRequestTarget target){
+		if (mode.equals("SHOPPINGCART")){
+			System.out.println("CHANGE TO ITEMPANEL");
+			itemPanel = new ItemPanel("itemPanel", this); 
+			visiblePanel.replaceWith(itemPanel);
+			visiblePanel = itemPanel;
+			
+			//visiblePanel.setOutputMarkupId(true);
+			
+			add(visiblePanel);
+			this.mode = "ITEMDISPLAY";
+			setResponsePage(getPage());	
+		}
+		else if (mode.equals("ITEMDISPLAY")){
+			System.out.println("CHANGE TO SHOPPINGCART");
+			shoppingCartPanel = new ShoppingCartPanel("itemPanel", this); 
+			visiblePanel.replaceWith(shoppingCartPanel);
+			visiblePanel = shoppingCartPanel;
+			
+			//visiblePanel.setOutputMarkupId(true);
+			
+			add(visiblePanel);
+			this.mode = "SHOPPINGCART";
+			setResponsePage(getPage());	
+		}
 	}
 
 	@Override

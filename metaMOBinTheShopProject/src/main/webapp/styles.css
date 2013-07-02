@@ -16,12 +16,8 @@ body {
 	font-weight:300;
 }
 
-a {
-	color:#0068b3;
-}
-
-a:hover {
-	text-decoration:underline;
+a. {
+	color:#000;
 }
 
 .leftContent a {
@@ -32,6 +28,10 @@ a:hover {
 .rightContent a {
 	text-decoration:none;
 	color:#FFF;
+}
+
+a:hover {
+	text-decoration:underline;
 }
 
 h1 {
@@ -349,6 +349,110 @@ button.buttonwarenkorb:hover {
 /* -------------- PRODUCTS ENDE ---------------*/
 
 
+.shoppingcart{
+	width:688px;
+	border: 1px solid rgba(255,103,97,1.0);
+	margin-bottom:10px;
+	clear:both;
+}
+
+
+
+
+.searchLists li.odd:nth-child(odd) {
+	background-color: #edf6f8;
+}
+
+.searchLists li{
+	background:url(../images/icons/liststyleimage.png) no-repeat 3px 5px;
+	padding:0 0 3px 20px;
+	height:50px;
+}
+
+
+.searchListsinner li {
+	margin-top:8px;
+	padding:0px 4px 0 4px;
+	/*border-right:1px solid #ccc;*/
+	vertical-align:middle;
+}
+
+.searchListsinner {
+	clear:both;
+	background-color: #FFF;
+}
+
+.searchListsinner li {
+	padding:0 5px 0 5px;
+	margin:0 5px 0 5px;
+	height:50px;
+}
+
+
+.searchListsinner li.produkt {
+	float:left;
+	height:40px;
+	padding-top:11px;
+}
+.searchListsinner li.delete {
+	float:right;
+	width:60px;
+	height:40px;
+	padding-top:11px;
+}
+.searchListsinner li.count {
+	float:right;
+	width:60px;
+	height:40px;
+	padding-top:11px;
+}
+.searchListsinner li.price {
+	float:right;
+	width:60px;
+	height:40px;
+	vertical-align:middle;
+	padding-top:11px;
+}
+
+
+li.produkthead{
+	font-size:16px;
+	font-weight:700;
+	background-color:#FFF;
+	float:left;
+	margin-bottom: 0 0 18px 0;
+	padding-bottom: 0 0 18px 0;
+}
+li.deletehead{
+	float:right;
+	font-size:16px;
+	font-weight:700;
+	background-color:#FFF;
+	width:60px;
+	margin-bottom: 0 0 18px 0;
+	padding-bottom: 0 0 18px 0;
+}
+li.counthead{
+	float:right;
+	font-size:16px;
+	font-weight:700;
+	background-color:#FFF;	
+	width:60px;
+	margin-bottom: 0 0 18px 0;
+	padding-bottom: 0 0 18px 0;
+}
+li.pricehead{
+	float:right;
+	font-size:16px;
+	font-weight:700;
+	background-color:#FFF;
+	width:60px;
+	margin-bottom: 0 0 18px 0;
+	padding-bottom: 0 0 18px 0;
+}
+
+
+
 
 
 .pagenavi {
@@ -429,7 +533,7 @@ footer {
 
 
 
-
+/* ------------------------- LOGIN PANEL ----------------------- */
 
 
 
@@ -462,7 +566,7 @@ button.butlogin {
 
 
 
-/* ------ checkbox ------ ENDE------ */
+
 
 
 .wrapper{

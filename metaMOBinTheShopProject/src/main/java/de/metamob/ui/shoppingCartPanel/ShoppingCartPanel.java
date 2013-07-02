@@ -1,10 +1,11 @@
-package de.metamob.ui.itemPanel;
+package de.metamob.ui.shoppingCartPanel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -26,16 +27,16 @@ import java.text.DecimalFormat;
 
 import org.dieschnittstelle.jee.esa.erp.entities.*;
 
-public class ItemPanel extends Panel {
+public class ShoppingCartPanel extends Panel {
 	
 	private IMainPageItemCallback iMainPageItemCallback;
 
-	public ItemPanel(String id) {
+	public ShoppingCartPanel(String id) {
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemPanel(String id, IMainPageItemCallback itemPanelCallback) {
+	public ShoppingCartPanel(String id, IMainPageItemCallback itemPanelCallback) {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
@@ -47,20 +48,30 @@ public class ItemPanel extends Panel {
 			@Override
 			protected void populateItem(final ListItem<StockItem> entry) {
 				// TODO Auto-generated method stub
-				AjaxLink<Void> link = new AjaxLink<Void>("itemLink"){
+				
+				StockItem temp = (StockItem) entry.getModel().getObject();
+								
+				entry.add(new Label("itemName", temp.getProduct().getName()));
+				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getPrice()/100.0)));
+				
+				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						StockItem temp = (StockItem) entry.getModel().getObject();
-						iMainPageItemCallback.itemPanelClicked (temp);
-		                System.out.println("ITEM: "+ temp.getProduct().getName());
+						
+		                System.out.println("ITEMDELETE");
 		            }
 				};
-				StockItem temp = (StockItem) entry.getModel().getObject();
-				entry.add(link);
-				entry.add(new Label("itemName", temp.getProduct().getName()));
-				entry.add(new Label("itemDescription", ((IndividualisedProductItem) temp.getProduct()).getProductType()));
-				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getPrice()/100.0)));
-				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
+				
+				NumberTextField<Integer> number = new NumberTextField<Integer>("itemNumber");
+				number.add(new AjaxEventBehavior("onclick") {
+				    @Override
+				    protected void onEvent(AjaxRequestTarget target) {
+				    	System.out.println("NUMBER");
+				    }
+				});
+				
+				entry.add(delete);
+				entry.add(number);
 			}
         };
         add(items);

@@ -32,12 +32,8 @@ public class ShoppingCart extends WebPage{
 			//myShoppingList.get(tempID).increment();
 		} else {
 			System.out.println ("NOT IN LIST");
-			ShoppingItem tempItem = new ShoppingItem(stockItem);
-			System.out.println ("NOT IN  1");
-			
-			myShoppingList.put(tempID, tempItem);
-			System.out.println ("NOT IN  2");
-			
+			ShoppingItem tempItem = new ShoppingItem(stockItem);			
+			myShoppingList.put(tempID, tempItem);			
 		}
 	}
 	

@@ -48,7 +48,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private Panel loginPanel;
 	private Panel mainPanel;
 	private String mode = "main";
-	private AjaxLink<Void> link;
+	private AjaxLink<Void> link;	
+	private AjaxLink<Void> philsButton;
+	private AjaxLink<Void> shoppingCartButton;
 	
 	private ShoppingCart shoppingCart = new ShoppingCart(); 
 	
@@ -83,6 +85,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		mainPanel = new MainPanel("contentPanel", this);
 		loginPanel = new LoginPanel("contentPanel", this);
+		
 		loginPanel.setOutputMarkupId(true);
 		mainPanel.setOutputMarkupId(true);
 		this.setOutputMarkupId(true);
@@ -117,6 +120,34 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				}
 			}
 		};
+		
+		philsButton = new AjaxLink<Void>("demPhilSeinButton") {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				System.out.println("PHILS BUTTON: CLICK");
+			}
+		};
+		
+		add(philsButton);
+		
+		shoppingCartButton = new AjaxLink<Void>("shoppingCartLink") {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				System.out.println("SHOPPINGCART: CLICK");
+				
+				((MainPanel) mainPanel).currentDisplay(target);
+				if (!mode.equals("main")){
+					System.out.println("CHANGE TO MAINPANEL");
+					visiblePanel.replaceWith(mainPanel);
+					visiblePanel = mainPanel;
+					target.add(mainPanel);
+					mode = "main";
+				}
+			}
+		};		
+		
+		add(shoppingCartButton);
+		
 		link.add(loginLinkLabel);
 		add(link);
 		
