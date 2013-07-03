@@ -13,7 +13,7 @@ import org.dieschnittstelle.jee.esa.erp.entities.ProductBundle;
 /**
  * Session Bean implementation class ProductCRUDStateless
  */
-@Stateless
+@Stateless(name="ProductCRUD")
 public class ProductCRUDStateless implements ProductCRUDRemote, ProductCRUDLocal {
 	
 	@PersistenceContext(unitName = "crm_erp_PU")

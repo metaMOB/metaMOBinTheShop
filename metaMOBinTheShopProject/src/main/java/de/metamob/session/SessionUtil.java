@@ -2,8 +2,6 @@ package de.metamob.session;
 
 import org.apache.wicket.Session;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
-
-import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 
 public class SessionUtil {
