@@ -13,9 +13,11 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -39,6 +41,7 @@ import de.metamob.usermanagement.UserManager;
 
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.apache.wicket.behavior.Behavior;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
@@ -56,7 +59,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private UserManager userManager = new UserManager();
 	private Panel visiblePanel;
 	private Panel loginPanel;
-	private Panel mainPanel;
+	private MainPanel mainPanel;
 	private String mode = "main";
 	private AjaxLink<Void> link;	
 	private AjaxLink<Void> philsButton;
@@ -85,10 +88,12 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 
 	//PropertyModel<String> userNameModel = new PropertyModel<String>(this, "userNameText");
 	
-	private Label userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
-	private Label loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
+	private Label userNameLabel;
+	private Label loginLinkLabel;
 
 	public MainPage(final PageParameters parameters) {
+		userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
+		loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
 		
 		add(userNameLabel);
 		
@@ -98,6 +103,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		loginPanel.setOutputMarkupId(true);
 		mainPanel.setOutputMarkupId(true);
+		//mainPanel.updateData();
+		
+		
 		this.setOutputMarkupId(true);
 
 		visiblePanel = mainPanel;
@@ -118,6 +126,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				} else {
 					visiblePanel.replaceWith(mainPanel);
 					visiblePanel = mainPanel;
+					//mainPanel.updateData();
 					target.add(mainPanel);
 					mode = "main";
 				}
@@ -146,6 +155,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				sttp = new StationaryTouchpoint(pos2.getId());
 				sttp.setName("Test Touchpoint2");
 				touchpointCRUDRemote.createTouchpoint(sttp);
+				
+				//mainPanel.updateData();
+				setResponsePage(getPage());
 			}
 		};
 		
@@ -171,7 +183,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		link.add(loginLinkLabel);
 		add(link);
-		
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        
 	        addAllSelectors();
 	        addCategoryModule();  
-	        addTouchpointModule();
+	        
 	        add (itemPanel);
 	        //addItemModule();
 	}
@@ -68,8 +68,17 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		// TODO Auto-generated constructor stub
 	}
 	
+	private void updateData(){
+		addTouchpointModule();
+	}
+	
+	@Override
+	public void onBeforeRender(){
+		super.onBeforeRender();
+		addTouchpointModule();
+	}
+	
     private void addCategoryModule() {
-    	
     	List<ProductType> myList = generateProductTypes();
     	
         ListView<ProductType> categories = new ListView<ProductType>("categories", myList){
@@ -102,11 +111,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	return myList;
     }
     
+    ListView<AbstractTouchpoint> touchpoints = null;
+    
     private void addTouchpointModule() {
     	
     	List<AbstractTouchpoint> myList = touchpointCRUDRemote.readAllTouchpoints();
     	
-        ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", myList){
+        touchpoints = new ListView<AbstractTouchpoint>("touchpoints", myList){
 			
         	@Override
 			protected void populateItem(final ListItem<AbstractTouchpoint> entry) {
@@ -123,7 +134,11 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				entry.add(link);
 			}       	
         };
- 
+        
+        if (touchpoints!=null){
+        	remove(touchpoints);
+        }
+        
         add(touchpoints);
     }
     
