@@ -20,6 +20,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
 
+import de.metamob.session.SessionUtil;
 import de.metamob.ui.Category;
 import de.metamob.ui.Item;
 import de.metamob.ui.callbacks.IMainPageCallback;
@@ -126,7 +127,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
 						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
-						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());						
+						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
+						SessionUtil.setSelectedTouchPoint(temp);
+						setResponsePage(getPage());	
 		            }
 				};
 				
@@ -161,7 +164,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	AjaxLink<Void> linkAllTouchpoints = new AjaxLink<Void>("touchpointAllLink"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
-    			System.out.println("NO TOUCHPOINT");						
+    			System.out.println("NO TOUCHPOINT");
+    			SessionUtil.setSelectedTouchPoint(null);
+    			setResponsePage(getPage());	
     		}
     	};
     	add(linkAllTouchpoints);
@@ -169,14 +174,11 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	AjaxLink<Void> linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
-    			System.out.println("NO CATEGORY");						
+    			System.out.println("NO CATEGORY");	
     		}
     	};
     	add(linkAllCategories);
     }
-    
-    
-    
     
     public String getMessage() {
 		return message;

@@ -3,6 +3,9 @@ package de.metamob.session;
 import org.apache.wicket.Session;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 
+import com.sun.org.apache.xml.internal.serializer.ToUnknownStream;
+import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
+
 public class SessionUtil {
 	
 	public static boolean isLoggedIn(){
@@ -19,6 +22,14 @@ public class SessionUtil {
 	
 	public static Customer getCurrentUser(){
 		return (Customer) Session.get().getAttribute(SessionAttributes.USER.toString());
+	}
+	
+	public static void setSelectedTouchPoint(AbstractTouchpoint touchpoint){
+		Session.get().setAttribute(SessionAttributes.SELECTEDTOUCHPOINT.toString(), touchpoint);
+	}
+	
+	public static AbstractTouchpoint getSelectedTouchPoint(){
+		return (AbstractTouchpoint) Session.get().getAttribute(SessionAttributes.SELECTEDTOUCHPOINT.toString());
 	}
 	
 }
