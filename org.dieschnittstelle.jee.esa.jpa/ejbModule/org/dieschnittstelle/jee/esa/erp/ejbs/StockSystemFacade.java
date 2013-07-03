@@ -17,7 +17,7 @@ import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
  * Session Bean implementation class StockSystemFacade
  */
 @Singleton
-public class StockSystemFacade implements StockSystemRemote {
+public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
 
 	@EJB(beanName="StockItemCRUDService")
 	private StockItemCRUDLocal stockItemCRUD; 
