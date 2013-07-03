@@ -40,7 +40,7 @@ public class ItemPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
-		addItemPanelModule();
+		//addItemPanelModule();
 	}
 	
 	private List<StockItem> generateTestProducts(){
@@ -109,6 +109,6 @@ public class ItemPanel extends Panel {
 	@Override
 	public void onBeforeRender(){
 		super.onBeforeRender();
-		//addItemPanelModule();
+		addItemPanelModule();
 	}
 }
