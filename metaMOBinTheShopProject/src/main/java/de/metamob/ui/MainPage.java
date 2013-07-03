@@ -1,9 +1,11 @@
 package de.metamob.ui;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.management.relation.Role;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -37,10 +39,18 @@ import de.metamob.usermanagement.UserManager;
 
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
+import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
+import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public class MainPage extends WebPage implements IMainPageCallback { // IMainPageItemCallback
-																		// {
+	
+	@EJB(name="TouchpointCRUD")
+    private TouchpointCRUDLocal touchpointCRUDRemote;
+	@EJB(name="PointOfSaleCRUD")
+    private PointOfSaleCRUDLocal pointOfSaleCRUDRemote;
 
 	private static final long serialVersionUID = 1L;
 	private UserManager userManager = new UserManager();
@@ -121,10 +131,21 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 			}
 		};
 		
+		
+		
 		philsButton = new AjaxLink<Void>("demPhilSeinButton") {
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				System.out.println("PHILS BUTTON: CLICK");
+				PointOfSale pos1 = pointOfSaleCRUDRemote.createPointOfSale(new PointOfSale());
+				PointOfSale pos2 = pointOfSaleCRUDRemote.createPointOfSale(new PointOfSale());
+				
+				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
+				sttp.setName("Test Touchpoint1");
+				touchpointCRUDRemote.createTouchpoint(sttp);
+				
+				sttp = new StationaryTouchpoint(pos2.getId());
+				sttp.setName("Test Touchpoint2");
+				touchpointCRUDRemote.createTouchpoint(sttp);
 			}
 		};
 		

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:ejb="http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd" version="3.1">
+  <display-name>org.dieschnittstelle.jee.esa.ejbs</display-name>
+  <enterprise-beans>
+    <session>
+      <ejb-name>shoppingCart</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.ShoppingCartStateful</ejb-class>
+      <stateful-timeout>
+        <timeout>1000000</timeout>
+        <unit>Milliseconds</unit>
+      </stateful-timeout>
+    </session>
+    <session>
+      <ejb-name>customerTrackingSystem</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.CustomerTrackingStateless</ejb-class>
+    </session>
+    <session>
+      <ejb-name>campaignTrackingSystem</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.CampaignTrackingSingleton</ejb-class>
+    </session>
+    <session>
+      <ejb-name>StockSystem</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemFacade</ejb-class>
+    </session>
+    <session>
+      <ejb-name>StockItemCRUDService</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.StockItemCRUDStateless</ejb-class>
+    </session>
+    <session>
+      <ejb-name>PointOfSaleCRUDService</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDStateless</ejb-class>
+    </session>
+    <session>
+      <ejb-name>TouchpointCRUD</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDStateless</ejb-class>
+    </session>
+    <session>
+      <ejb-name>PointOfSaleCRUD</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDStateless</ejb-class>
+    </session>
+  </enterprise-beans>
+</ejb-jar>

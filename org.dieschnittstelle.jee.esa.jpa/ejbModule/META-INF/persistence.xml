@@ -1,0 +1,17 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+	<persistence-unit name="crm_erp_PU">
+		<jta-data-source>java:/crm_erp_DS</jta-data-source>
+		<jar-file>sharedLib.jar</jar-file>
+		<!-- <class>org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint</class> -->
+		<!-- Explizite Angabe von Klassen, die zur Persistence Unit gehören sollen, 
+			bzw. Angabe von jars, deren Klassen übernommen werden sollen -->
+		<!-- <jar-file>lib/somejar.jar</jar-file> -->
+		<!-- <class>com.example.SomeClass</class> -->
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+		</properties>
+	</persistence-unit>
+</persistence>

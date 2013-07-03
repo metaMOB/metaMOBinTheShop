@@ -40,12 +40,16 @@
 			<version>6.8.0</version>
 		</dependency>
 		
-		
-		
 		<dependency>
     		<groupId>org.apache.wicket</groupId>
     		<artifactId>wicket-auth-roles</artifactId>
    			<version>6.8.0</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.wicketstuff</groupId>
+    		<artifactId>wicketstuff-javaee-inject</artifactId>
+   	 		<version>6.8.0</version>
 		</dependency>
 
 		<!-- slf4j-log4j -->

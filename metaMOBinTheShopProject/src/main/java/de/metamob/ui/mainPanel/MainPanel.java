@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.ejb.EJB;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,6 +27,7 @@ import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.itemPanel.ItemPanel;
 import de.metamob.ui.shoppingCartPanel.ShoppingCartPanel;
 
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.*;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
@@ -38,6 +41,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	private Panel itemPanel = new ItemPanel("itemPanel", this);
 	private Panel shoppingCartPanel;
 	private Panel visiblePanel = itemPanel;
+
+	@EJB(name="TouchpointCRUD")
+    private TouchpointCRUDLocal touchpointCRUDRemote;
 	
 	public MainPanel(String id, IMainPageCallback mainPageCallback) {
 		super(id);
@@ -98,7 +104,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     
     private void addTouchpointModule() {
     	
-    	List<AbstractTouchpoint> myList = generateTestTouchpoints();
+    	List<AbstractTouchpoint> myList = touchpointCRUDRemote.readAllTouchpoints();
     	
         ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", myList){
 			
@@ -121,20 +127,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
         add(touchpoints);
     }
     
-    private List<AbstractTouchpoint> generateTestTouchpoints(){
-    	String [] names = {"TP 1", "TP 2", "TP 3", "TP 4", "TP 5"};
-    	int [] ids = {101, 102, 103, 104, 105};
-    	
-    	List<AbstractTouchpoint> myList = new ArrayList<AbstractTouchpoint>();
-    	
-    	for (int i=0; i<names.length; i++){
-    		MobileTouchpoint tempTP = new MobileTouchpoint();
-    		tempTP.setName(names[i]);
-    		tempTP.setId(ids[i]);
-    		myList.add(tempTP);
-    	}
-    	return myList;
-    }
+
     
     private void addItemModule() {
     	
