@@ -356,17 +356,17 @@ button.buttonwarenkorb:hover {
 	clear:both;
 }
 
+.searchLists a {
+	color:#000;
+}
 
 
-
-.searchLists li.odd:nth-child(odd) {
+.searchLists li.odds:nth-child(odd) {
 	background-color: #edf6f8;
 }
 
-.searchLists li{
-	background:url(../images/icons/liststyleimage.png) no-repeat 3px 5px;
+.searchLists li.odd{
 	padding:0 0 3px 20px;
-	height:50px;
 }
 
 
