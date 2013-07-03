@@ -1,37 +1,35 @@
 package de.metamob.ui.loginPanel;
 
+import javax.ejb.EJB;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.CompoundPropertyModel;
+
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.util.io.IClusterable;
-import org.apache.wicket.util.value.ValueMap;
+import org.dieschnittstelle.jee.esa.crm.ejbs.UserCheckLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 
-
-import de.metamob.ui.Item;
+import de.metamob.session.SessionUtil;
 import de.metamob.ui.callbacks.IMainPageCallback;
-import de.metamob.usermanagement.UserManager;
 
 public class LoginPanel extends Panel {
 
 	private IMainPageCallback iMainPageCallback;
-	
-	
 	private TextField<String> emailLoginField;
 	private PasswordTextField passwordLoginField;	
 	private String feedbackText = "";
-	private UserManager userManager = new UserManager();
+	//private UserManager userManager = new UserManager();
+	
+	@EJB(name="LoginSystem")
+    private UserCheckLocal userCheck;
 	
 	public String getFeedbackText() {
 		return feedbackText;
@@ -51,23 +49,8 @@ public class LoginPanel extends Panel {
 		super(id);
 		this.iMainPageCallback = mainPageCallback;
 		feedback.setOutputMarkupId(true);
-		// TODO Auto-generated constructor stub
-		//emailLoginField = new TextField<String>("emailLogin");
-		//passwordLoginField = new PasswordTextField<String>("passwordLogin");
-	   
 		Form<?> formLogin = new Form<Void>("formLogin");
-		/*Form<?> formLogin = new Form<Void>("formLogin") {
-			@Override
-			protected void onSubmit() {
-				//get the entered password and pass to next page
-				PageParameters pageParameters = new PageParameters();
-				pageParameters.add("password", password.getModelObject());
-				setResponsePage(SuccessPage.class, pageParameters);
- 
-			}
-		};*/
-		
-		
+
         add(feedback);
 		
 		emailLoginField = new TextField<String>("emailLogin", Model.of(""));
@@ -81,29 +64,22 @@ public class LoginPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> formLogin)
             {
-            	System.out.println("BLUB");
-                // repaint the feedback panel so that it is hidden
-                //target.add(feedback);
-            	
-            	if (!emailLoginField.getModelObject().equals(passwordLoginField.getModelObject())){
+            	Customer user = userCheck.checkLoginData(emailLoginField.getModelObject(), DigestUtils.md5Hex(passwordLoginField.getModelObject()));
+            	if (user!=null){
+            		SessionUtil.login(user);
+            		feedbackText = "PASST";
+            		iMainPageCallback.userLoggedIn();
+            	}else{
             		feedbackText = "Falscher Benutzer/Passwort";
-            	} else {
-            		
-            		if (userManager.logIn("Lohse", "geheim")){
-            			feedbackText = "PASST";
-            			iMainPageCallback.userLoggedIn();
-            			
-            		} else {
-            			feedbackText = "EXISTIERT NICHT";
-            		}
             	}
+            	
             	target.add(feedback);
             }
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> formLogin)
             {
-                // repaint the feedback panel so errors are shown
+                //repaint the feedback panel so errors are shown
                 //target.add(feedback);
             	System.out.println("LOGIN ERROR: MISSING PASSWORD"+emailLoginField.getModelObject());
             	

@@ -1,20 +1,7 @@
 package de.metamob.ui;
 
-import java.awt.Point;
-import java.util.ArrayList;
-
-import java.util.List;
-
 import javax.ejb.EJB;
-import javax.management.relation.Role;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
-
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.Component;
-import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.head.IHeaderResponse;
@@ -31,18 +18,23 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
+import org.dieschnittstelle.jee.esa.crm.entities.Gender;
+
 
 import de.metamob.data.shoppingCart.ShoppingCart;
+import de.metamob.session.SessionUtil;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.loginPanel.LoginPanel;
 import de.metamob.ui.mainPanel.MainPanel;
-import de.metamob.usermanagement.UserManager;
 
 import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.behavior.Behavior;
+import org.dieschnittstelle.jee.esa.crm.ejbs.UserCheckLocal;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
@@ -51,12 +43,17 @@ import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 public class MainPage extends WebPage implements IMainPageCallback { // IMainPageItemCallback
 	
 	@EJB(name="TouchpointCRUD")
-    private TouchpointCRUDLocal touchpointCRUDRemote;
+    private TouchpointCRUDLocal touchpointCRUD;
+	
 	@EJB(name="PointOfSaleCRUD")
-    private PointOfSaleCRUDLocal pointOfSaleCRUDRemote;
-
+    private PointOfSaleCRUDLocal pointOfSaleCRUD;
+	
+	@EJB(name="CustomerCRUD")
+	private CustomerCRUDLocal customerCRUD;
+	
+	
 	private static final long serialVersionUID = 1L;
-	private UserManager userManager = new UserManager();
+	
 	private Panel visiblePanel;
 	private Panel loginPanel;
 	private MainPanel mainPanel;
@@ -134,7 +131,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				else {
 					loginLabelText = "Login";
 					userNameText = "Gast"; 
-					userManager.logOut();
+					SessionUtil.logout();
 					setResponsePage(getPage());	
 				}
 			}
@@ -145,18 +142,23 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		philsButton = new AjaxLink<Void>("demPhilSeinButton") {
 			@Override
 			public void onClick(AjaxRequestTarget target) {
-				PointOfSale pos1 = pointOfSaleCRUDRemote.createPointOfSale(new PointOfSale());
-				PointOfSale pos2 = pointOfSaleCRUDRemote.createPointOfSale(new PointOfSale());
+				//customer
+				customerCRUD.createCustomer(new Customer("Hans", "Heimlich", Gender.M, "01234579", "hans@wurst.de", "test123"));
+				customerCRUD.createCustomer(new Customer("Felix", "Helix", Gender.M, "01234579", "felix@helix.de", "test123"));
+				customerCRUD.createCustomer(new Customer("Philipp", "UelksMulks", Gender.M, "01234579", "moep@boep.de", "test123"));
+				
+				//points of sale
+				PointOfSale pos1 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
+				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
 				sttp.setName("Test Touchpoint1");
-				touchpointCRUDRemote.createTouchpoint(sttp);
+				touchpointCRUD.createTouchpoint(sttp);
 				
 				sttp = new StationaryTouchpoint(pos2.getId());
 				sttp.setName("Test Touchpoint2");
-				touchpointCRUDRemote.createTouchpoint(sttp);
+				touchpointCRUD.createTouchpoint(sttp);
 				
-				//mainPanel.updateData();
 				setResponsePage(getPage());
 			}
 		};
@@ -193,12 +195,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 
 	@Override
 	public void userLoggedIn() {
-		// TODO Auto-generated method stub
-		
-		userNameText = userManager.getName(); 
+		userNameText = (SessionUtil.isLoggedIn())?SessionUtil.getCurrentUser().getFullName():"Gast"; 
 		loginLabelText = "LogOut";
 		//userNameLabel.render();
-		
 		//add(userNameLabel);
 		
 		visiblePanel.replaceWith(mainPanel);

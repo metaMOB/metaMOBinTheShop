@@ -3,9 +3,9 @@
 	<name>MetaMOBinTheShopEAR</name>
 	<comment></comment>
 	<projects>
-		<project>MetaMOBinTheShopWicketUI</project>
-		<project>org.dieschnittstelle.jee.esa.jpa</project>
 		<project>sharedLib</project>
+		<project>org.dieschnittstelle.jee.esa.jpa</project>
+		<project>MetaMOBinTheShopWicketUI</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

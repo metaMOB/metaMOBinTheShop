@@ -1,5 +1,7 @@
 package org.dieschnittstelle.jee.esa.crm.ejbs.crud;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -78,4 +80,18 @@ public class CustomerCRUDStateless implements CustomerCRUDRemote, CustomerCRUDLo
 		return true;
 	}
 
+	@Override
+	public Customer readCustomer(String email, String passwordHash) {
+		if ((email==null) || (passwordHash==null)){
+			return null;
+		}
+		String queryString = "SELECT a FROM Customer a WHERE a.email = '" + email + "' AND a.passwordHash = '" + passwordHash+"'";
+		logger.info("check: login: "+email+" password-hash: " +passwordHash);
+    	List<Customer> lst = em.createQuery(queryString).getResultList();
+		if(lst.size()==0){
+    		return null;
+    	}else{
+    		return lst.get(0);
+    	}
+	}
 }

@@ -6,3 +6,11 @@
 /metaMOBinTheShopProject/._.DS_Store
 /org.dieschnittstelle.jee.esa.jpa/build/classes/org/
 /sharedLib/build/classes/org/
+/metaMOBinTheShopProject/bin/**
+/MetaMOBinTheShopEAR/.project
+/MetaMOBinTheShopEAR/.settings/org.eclipse.wst.common.component
+/metaMOBinTheShopProject/.settings/org.eclipse.wst.common.component
+/org.dieschnittstelle.jee.esa.jpa/.settings/org.eclipse.wst.common.component
+/org.dieschnittstelle.jee.esa.jpa/build/**
+
+

@@ -20,6 +20,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jboss.logging.Logger;
 
@@ -36,9 +37,6 @@ public class Customer implements Serializable {
 	 */
 	private static final long serialVersionUID = 7461272049473919251L;
 
-	/*
-	 * Ü: move the annotation to the getter
-	 */
 	@Id
 	@GeneratedValue
 	private int id = -1;
@@ -60,6 +58,8 @@ public class Customer implements Serializable {
 	private String mobilePhoneId;
 
 	private String email;
+	
+	private String passwordHash;
 
 	@ManyToOne(cascade={CascadeType.ALL})
 	private Address address;
@@ -91,10 +91,11 @@ public class Customer implements Serializable {
 		this.gender = gender;
 	}
 
-	public Customer(String firstName, String lastName, Gender gender,
-			String mobilePhoneId) {
+	public Customer(String firstName, String lastName, Gender gender, String mobilePhoneId, String eMail, String password) {
 		this(firstName, lastName, gender);
 		this.mobilePhoneId = mobilePhoneId;
+		this.setEmail(eMail);
+		this.setPassword(password);
 	}
 
 	public Customer(int id) {
@@ -115,6 +116,10 @@ public class Customer implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public String getFullName(){
+		return getFirstName() + " " + getLastName();
 	}
 
 	public String getMobilePhoneId() {
@@ -170,6 +175,14 @@ public class Customer implements Serializable {
 	public Gender getGender() {
 		return this.gender;
 	}
+	
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPassword(String password) {
+		this.passwordHash = DigestUtils.md5Hex(password);;
+	}
 
 	public boolean equals(Object other) {
 		return EqualsBuilder.reflectionEquals(this, other);
@@ -221,5 +234,4 @@ public class Customer implements Serializable {
 	public void onPreUpdate() {
 		logger.info("@PreUpdate: " + this);		
 	}
-	
 }

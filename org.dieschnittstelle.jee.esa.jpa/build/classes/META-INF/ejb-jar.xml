@@ -38,5 +38,13 @@
       <ejb-name>PointOfSaleCRUD</ejb-name>
       <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDStateless</ejb-class>
     </session>
+    <session>
+      <ejb-name>CustomerCRUD</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDStateless</ejb-class>
+    </session>
+     <session>
+      <ejb-name>LoginSystem</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.UserCheckStateless</ejb-class>
+    </session>
   </enterprise-beans>
 </ejb-jar>

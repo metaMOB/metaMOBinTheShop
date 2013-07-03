@@ -52,7 +52,7 @@ public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRU
     	if (product==null){
     		return null;
     	}
-    	String queryString = "SELECT a FROM StockItem a WHERE product.id = " + product.getId();
+    	String queryString = "SELECT a FROM StockItem a WHERE a.product.id = " + product.getId();
     	return em.createQuery(queryString).getResultList();
     }
     
