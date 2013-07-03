@@ -39,31 +39,7 @@ public class ItemPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
-		
-		List<StockItem> myList = generateTestProducts();
-		
-		ListView<StockItem> items = new ListView<StockItem>("items", myList){
-
-			@Override
-			protected void populateItem(final ListItem<StockItem> entry) {
-				// TODO Auto-generated method stub
-				AjaxLink<Void> link = new AjaxLink<Void>("itemLink"){
-					@Override
-					public void onClick(AjaxRequestTarget target) {
-						StockItem temp = (StockItem) entry.getModel().getObject();
-						iMainPageItemCallback.itemPanelClicked (temp);
-		                System.out.println("ITEM: "+ temp.getProduct().getName());
-		            }
-				};
-				StockItem temp = (StockItem) entry.getModel().getObject();
-				entry.add(link);
-				entry.add(new Label("itemName", temp.getProduct().getName()));
-				entry.add(new Label("itemDescription", ((IndividualisedProductItem) temp.getProduct()).getProductType()));
-				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getPrice()/100.0)));
-				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
-			}
-        };
-        add(items);
+		addItemPanelModule();
 	}
 	
 	private List<StockItem> generateTestProducts(){
@@ -87,4 +63,35 @@ public class ItemPanel extends Panel {
     	}
     	return myList;
     }
+	
+	private void addItemPanelModule(){
+		// CRUD
+		List<IndividualisedProductItem> myList = null;// generateTestProducts();
+		// CRUD
+		
+		ListView<IndividualisedProductItem> items = new ListView<IndividualisedProductItem>("items", myList){
+			@Override
+			protected void populateItem(final ListItem<IndividualisedProductItem> entry) {
+				// TODO Auto-generated method stub
+				AjaxLink<Void> link = new AjaxLink<Void>("itemLink"){
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+		                System.out.println("ITEM: "+ entry.getModelObject().getName());
+		            }
+				};
+				entry.add(link);
+				entry.add(new Label("itemName", entry.getModelObject().getName()));
+				entry.add(new Label("itemDescription", entry.getModelObject().getProductType()));
+				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(entry.getModelObject().getPrice()/100.0)));
+				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
+			}
+        };
+        add(items);
+	}
+	
+	@Override
+	public void onBeforeRender(){
+		super.onBeforeRender();
+		addItemPanelModule();
+	}
 }
