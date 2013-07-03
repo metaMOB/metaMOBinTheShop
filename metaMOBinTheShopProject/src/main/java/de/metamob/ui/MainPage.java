@@ -19,7 +19,9 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 
 import org.dieschnittstelle.jee.esa.crm.entities.Gender;
-
+import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
+import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
+import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 
 import de.metamob.data.shoppingCart.ShoppingCart;
 import de.metamob.session.SessionUtil;
@@ -38,6 +40,7 @@ import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
+import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public class MainPage extends WebPage implements IMainPageCallback { // IMainPageItemCallback
@@ -50,6 +53,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	
 	@EJB(name="CustomerCRUD")
 	private CustomerCRUDLocal customerCRUD;
+	
+	@EJB(name="StockSystem")
+	private StockSystemLocal stockSystem;
+	
+	@EJB(name="ProductCRUD")
+	private ProductCRUDLocal productCRUD;
+	
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -159,6 +169,19 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				sttp.setName("Test Touchpoint2");
 				touchpointCRUD.createTouchpoint(sttp);
 				
+				//StockItems
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zimtstern",ProductType.PASTRY,0 , 35)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Kraftmeier",ProductType.ROLL,0, 65)), pos1.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
+				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
+				
+				
+				
 				setResponsePage(getPage());
 			}
 		};
@@ -197,8 +220,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	public void userLoggedIn() {
 		userNameText = (SessionUtil.isLoggedIn())?SessionUtil.getCurrentUser().getFullName():"Gast"; 
 		loginLabelText = "LogOut";
-		//userNameLabel.render();
-		//add(userNameLabel);
 		
 		visiblePanel.replaceWith(mainPanel);
 		visiblePanel = mainPanel;

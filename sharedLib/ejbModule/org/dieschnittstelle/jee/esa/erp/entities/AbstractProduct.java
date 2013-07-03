@@ -22,6 +22,8 @@ public abstract class AbstractProduct implements Serializable {
 	private int id;
 
 	private String name;
+	
+	private int price;
 
 	public AbstractProduct() {
 
@@ -45,6 +47,14 @@ public abstract class AbstractProduct implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 }

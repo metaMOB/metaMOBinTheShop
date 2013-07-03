@@ -87,7 +87,7 @@ public class ShoppingCartPanel extends Panel {
     	List<StockItem> myList = new ArrayList<StockItem>();
     	
     	for (int i=0; i<names.length; i++){
-    		IndividualisedProductItem tempIndividualProduct = new IndividualisedProductItem(names[i], type[i], 10);
+    		IndividualisedProductItem tempIndividualProduct = new IndividualisedProductItem(names[i], type[i], 10,10);
     		tempIndividualProduct.setId(ids[i]);
     		PointOfSale tempPointOfSale = new PointOfSale();
     		tempPointOfSale.setId(pos[i]);

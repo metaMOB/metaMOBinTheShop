@@ -26,7 +26,6 @@ public class LoginPanel extends Panel {
 	private TextField<String> emailLoginField;
 	private PasswordTextField passwordLoginField;	
 	private String feedbackText = "";
-	//private UserManager userManager = new UserManager();
 	
 	@EJB(name="LoginSystem")
     private UserCheckLocal userCheck;
@@ -38,8 +37,6 @@ public class LoginPanel extends Panel {
 	public void setFeedbackText(String feedbackText) {
 		this.feedbackText = feedbackText;
 	}
-
-	
 	
 	PropertyModel<String> messageModel = new PropertyModel<String>(this, "feedbackText");
 
@@ -87,9 +84,7 @@ public class LoginPanel extends Panel {
             	target.add(feedback);
             }
         });
-		add(formLogin);
-		
-		
+		add(formLogin);	
 	}
 
 	public LoginPanel(String id, IModel<?> model) {

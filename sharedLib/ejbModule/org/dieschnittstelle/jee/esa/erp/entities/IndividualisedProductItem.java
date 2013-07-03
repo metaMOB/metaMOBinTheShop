@@ -24,10 +24,11 @@ public class IndividualisedProductItem extends AbstractProduct implements Serial
 		
 	}
 	
-	public IndividualisedProductItem(String name,ProductType type,int expirationAfterStocked) {
+	public IndividualisedProductItem(String name,ProductType type,int expirationAfterStocked, int price) {
 		super(name);
 		this.productType = type;
 		this.expirationAfterStocked = expirationAfterStocked;
+		this.setPrice(price); 
 	}
 	
 	public ProductType getProductType() {
