@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.ejb.EJB;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -12,21 +14,20 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
-import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
-import org.dieschnittstelle.jee.esa.crm.entities.MobileTouchpoint;
 
-import de.metamob.ui.Item;
+import de.metamob.session.SessionUtil;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 
-import org.apache.wicket.markup.html.form.NumberTextField;
-
-import java.text.DecimalFormat;
+import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 
 import org.dieschnittstelle.jee.esa.erp.entities.*;
 
 public class ItemPanel extends Panel {
+	
+	@EJB(name="StockSystem")
+	private StockSystemLocal stockSystem;
 	
 	private IMainPageItemCallback iMainPageItemCallback;
 
@@ -64,10 +65,21 @@ public class ItemPanel extends Panel {
     	return myList;
     }
 	
+	private ListView<IndividualisedProductItem> items = null;
+	
 	private void addItemPanelModule(){
 		// CRUD
-		List<IndividualisedProductItem> myList = null;// generateTestProducts();
+		AbstractTouchpoint tp = SessionUtil.getSelectedTouchPoint();
+		List<IndividualisedProductItem> myList = null;
+		if(tp==null){
+			myList = stockSystem.getAllProductsOnStock();
+		}else{
+			myList = stockSystem.getProductsOnStock(tp.getErpPointOfSaleId());
+		}	
+		
+		// generateTestProducts();
 		// CRUD
+		
 		
 		ListView<IndividualisedProductItem> items = new ListView<IndividualisedProductItem>("items", myList){
 			@Override
@@ -86,12 +98,17 @@ public class ItemPanel extends Panel {
 				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
 			}
         };
+        
+        if(items!=null){
+			 remove(items);
+	    }
+        
         add(items);
 	}
 	
 	@Override
 	public void onBeforeRender(){
 		super.onBeforeRender();
-		addItemPanelModule();
+		//addItemPanelModule();
 	}
 }

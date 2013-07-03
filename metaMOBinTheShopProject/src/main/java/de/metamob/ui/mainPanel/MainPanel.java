@@ -17,11 +17,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.util.ListModel;
-
 
 import de.metamob.session.SessionUtil;
-import de.metamob.ui.Category;
 import de.metamob.ui.Item;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
@@ -35,7 +32,7 @@ import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public class MainPanel extends Panel implements IMainPageItemCallback {
 
-	private String message = "Enter a message";
+	//private String message = "Enter a message";
 	private IMainPageCallback iMainPageCallback;
 	private String mode = "ITEMDISPLAY";
 	
@@ -50,12 +47,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		super(id);
 		this.iMainPageCallback = mainPageCallback;
 		// TODO Auto-generated constructor stub
-		PropertyModel<String> messageModel = new PropertyModel<String>(this, "message");
+		
+		/*PropertyModel<String> messageModel = new PropertyModel<String>(this, "message");
 		 	
 		add(new Label("msg", messageModel));
 	    Form<?> form = new Form("form");
 	    form.add(new TextField<String>("msgInput", messageModel));
-	    add(form);
+	    add(form);*/
 	        
 	        addAllSelectors();
 	        addCategoryModule();  
@@ -180,13 +178,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	add(linkAllCategories);
     }
     
-    public String getMessage() {
+  /*  public String getMessage() {
 		return message;
 	}
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
+	}*/
 	
 	public void currentDisplay(AjaxRequestTarget target){
 		if (mode.equals("SHOPPINGCART")){
