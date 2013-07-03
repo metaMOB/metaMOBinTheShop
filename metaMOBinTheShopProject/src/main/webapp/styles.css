@@ -257,11 +257,9 @@ button.but:hover {
 
 .sholder {
 	float:right;
-	background:#FFF;
-	border: 1px solid #2A5769;
 }
 
-select {
+/*select {
 	background: transparent;
    	padding: 5px 36px 5px 5px;
    	font-size: 13px;
@@ -279,7 +277,7 @@ select {
    	height: 30px;
    	overflow: hidden;
    	background: url(images/selectimage.png) no-repeat right ;
-   }
+   }*/
    
 .sort{
 	float:right;
@@ -350,23 +348,22 @@ button.buttonwarenkorb:hover {
 
 
 .shoppingcart{
-	width:688px;
-	border: 1px solid rgba(255,103,97,1.0);
+	width:670px;
 	margin-bottom:10px;
 	clear:both;
-}
-
-.searchLists a {
-	color:#000;
+	margin:0 10px 0 10px;
 }
 
 
-.searchLists li.odds:nth-child(odd) {
+
+
+.searchLists li.odd:nth-child(odd) {
 	background-color: #edf6f8;
 }
 
-.searchLists li.odd{
-	padding:0 0 3px 20px;
+.searchLists li{
+	background:url(../images/icons/liststyleimage.png) no-repeat 3px 5px;
+	padding:0 0 0 20px;
 }
 
 
@@ -385,7 +382,7 @@ button.buttonwarenkorb:hover {
 .searchListsinner li {
 	padding:0 5px 0 5px;
 	margin:0 5px 0 5px;
-	height:50px;
+	
 }
 
 
@@ -418,40 +415,42 @@ button.buttonwarenkorb:hover {
 li.produkthead{
 	font-size:16px;
 	font-weight:700;
-	background-color:#FFF;
 	float:left;
-	margin-bottom: 0 0 18px 0;
-	padding-bottom: 0 0 18px 0;
+	height:15px;
+	margin-bottom: 0 0 10px 0;
+	padding-bottom: 0 0 10px 0;
 }
 li.deletehead{
 	float:right;
 	font-size:16px;
 	font-weight:700;
-	background-color:#FFF;
 	width:60px;
-	margin-bottom: 0 0 18px 0;
-	padding-bottom: 0 0 18px 0;
+	height:15px;
+	margin-bottom: 0 0 10px 0;
+	padding-bottom: 0 0 10px 0;
 }
 li.counthead{
 	float:right;
 	font-size:16px;
 	font-weight:700;
-	background-color:#FFF;	
 	width:60px;
-	margin-bottom: 0 0 18px 0;
-	padding-bottom: 0 0 18px 0;
+	height:15px;
+	margin-bottom: 0 0 10px 0;
+	padding-bottom: 0 0 10px 0;
 }
 li.pricehead{
 	float:right;
 	font-size:16px;
 	font-weight:700;
-	background-color:#FFF;
 	width:60px;
-	margin-bottom: 0 0 18px 0;
-	padding-bottom: 0 0 18px 0;
+	height:25px;
+	margin-bottom: 0 0 10px 0;
+	padding-bottom: 0 0 10px 0;
 }
 
-
+ul.searchListsinner#head ul {
+	background-color:#099;
+}
 
 
 
