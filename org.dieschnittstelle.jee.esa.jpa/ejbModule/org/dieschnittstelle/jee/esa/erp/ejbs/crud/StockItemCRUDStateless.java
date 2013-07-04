@@ -10,10 +10,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerTransactionCRUDStateless;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
+import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
+import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+import org.jboss.logging.Logger;
 
 /**
  * Session Bean implementation class StockItemCRUDStateless
@@ -21,6 +25,9 @@ import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 @Stateless
 public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRUDLocal {
 
+	protected static Logger logger = Logger
+			.getLogger(CustomerTransactionCRUDStateless.class);
+	
 	@PersistenceContext(unitName = "crm_erp_PU")
 	private EntityManager em;
 	
@@ -40,11 +47,41 @@ public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRU
     	return em.merge(stockItem);
     }
     
-    public List<StockItem> readUnitsOnStock(PointOfSale pos){
+    public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType){
     	String queryString = "SELECT a FROM StockItem a";
-    	if (pos!=null){
-    		queryString += " WHERE a.pos.id = "+ pos.getId();
+    	if(pos!=null||productType!=null){
+    		queryString += " WHERE";
     	}
+    	if (pos!=null){
+    		queryString += " a.pos.id = "+ pos.getId();
+    	}
+    	
+    	if(productType!=null){
+    		queryString += (pos!=null)?" AND ":"";
+    		queryString += " a.product.productType = org.dieschnittstelle.jee.esa.erp.entities.ProductType." + productType;
+    	}
+    	
+    	if (sortType!= null){
+	    	switch (sortType) {
+			case PRICEUP:
+				queryString += " ORDER BY a.product.price ASC";	
+				break;
+			case PRICEDOWN:
+				queryString += " ORDER BY a.product.price DESC";	
+				break;
+			case ASC:
+				queryString += " ORDER BY a.product.name ASC";	
+				break;
+			case DESC:
+				queryString += " ORDER BY a.product.name DESC";	
+				break;
+			default:
+				break;
+			}
+    	}
+    	
+    	logger.info("JPQL: " + queryString);
+    	
     	return em.createQuery(queryString).getResultList();
     }
     

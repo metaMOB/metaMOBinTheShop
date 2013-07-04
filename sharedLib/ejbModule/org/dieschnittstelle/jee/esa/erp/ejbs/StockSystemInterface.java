@@ -3,6 +3,8 @@ package org.dieschnittstelle.jee.esa.erp.ejbs;
 import java.util.List;
 
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
+import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
+import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 
 public interface StockSystemInterface {
 	
@@ -31,13 +33,15 @@ public interface StockSystemInterface {
 	 * @param pointOfSaleId
 	 * @return
 	 */
-	public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId);
+	public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType);
 
 	/**
 	 * returns all products on stock
 	 * 
 	 * @return
 	 */
+	public List<IndividualisedProductItem> getAllProductsOnStock(ProductType productType, SortType sortType);
+	
 	public List<IndividualisedProductItem> getAllProductsOnStock();
 
 	/**

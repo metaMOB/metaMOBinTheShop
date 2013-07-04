@@ -22,13 +22,13 @@ public class SessionUtil {
 		return (Customer) Session.get().getAttribute(SessionAttributes.USER.toString());
 	}
 	
-	public static void setSelectedTouchPoint(AbstractTouchpoint touchpoint){
+	/*public static void setSelectedTouchPoint(AbstractTouchpoint touchpoint){
 		Session.get().setAttribute(SessionAttributes.SELECTEDTOUCHPOINT.toString(), touchpoint);
 	}
 	
 	public static AbstractTouchpoint getSelectedTouchPoint(){
 		return (AbstractTouchpoint) Session.get().getAttribute(SessionAttributes.SELECTEDTOUCHPOINT.toString());
-	}
+	}*/
 	
 	public static void setCurrentPage(int currentPage){
 		Session.get().setAttribute(SessionAttributes.CURRENTPAGE.toString(), currentPage);
@@ -38,11 +38,23 @@ public class SessionUtil {
 		return (Integer) Session.get().getAttribute(SessionAttributes.CURRENTPAGE.toString());
 	}
 	
-	public static void setItemsPerPage(int itemsPerPage){
+	public static UIUserConfiguration getUIUserConfiguration(){
+		UIUserConfiguration uiuc = (UIUserConfiguration)Session.get().getAttribute(SessionAttributes.UIUSERCONFIG.toString());
+		if(uiuc==null){
+			return new UIUserConfiguration();
+		}
+		return(UIUserConfiguration)Session.get().getAttribute(SessionAttributes.UIUSERCONFIG.toString());
+	}
+	
+	public static void setUIUserConfiguration(UIUserConfiguration uiUserConfiguration){
+		Session.get().setAttribute(SessionAttributes.UIUSERCONFIG.toString(), uiUserConfiguration);
+	}
+	
+	/*public static void setItemsPerPage(int itemsPerPage){
 		Session.get().setAttribute(SessionAttributes.ITEMSPERPAGE.toString(), itemsPerPage);
 	}
 	
 	public static int getItemsPerPage(){
 		return (Integer) Session.get().getAttribute(SessionAttributes.ITEMSPERPAGE.toString());
-	}
+	}*/
 }

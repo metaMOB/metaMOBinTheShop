@@ -11,6 +11,8 @@ import org.dieschnittstelle.jee.esa.erp.ejbs.crud.StockItemCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
+import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
+import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 /**
@@ -54,8 +56,8 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
     	stockItemCRUD.updateStockItem(stockItem);
     }
     
-    private List<IndividualisedProductItem> getProducts(PointOfSale pointOfSale) {
-    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock(pointOfSale);
+    private List<IndividualisedProductItem> getProducts(PointOfSale pointOfSale, ProductType productType, SortType sortType) {
+    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock(pointOfSale, productType, sortType);
     	List<IndividualisedProductItem> result = new ArrayList<IndividualisedProductItem>();
     	for (StockItem stockItem:stockItems){
     		result.add((IndividualisedProductItem) stockItem.getProduct());
@@ -67,15 +69,20 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
     /**
      * @see StockSystemRemote#getProductsOnStock(int)
      */
-    public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId) {
-		return getProducts(pointOfSaleCRUD.readPointOfSale(pointOfSaleId));
+    public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType) {
+		return getProducts(pointOfSaleCRUD.readPointOfSale(pointOfSaleId), productType, sortType);
+    }
+    
+    
+    public List<IndividualisedProductItem> getAllProductsOnStock(ProductType productType, SortType sortType) {
+		return getProducts(null, productType, sortType);
     }
     
     /**
      * @see StockSystemRemote#getAllProductsOnStock()
      */
     public List<IndividualisedProductItem> getAllProductsOnStock() {
-		return getProducts(null);
+		return getAllProductsOnStock(null,null);
     }
     
     

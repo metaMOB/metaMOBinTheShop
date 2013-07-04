@@ -21,6 +21,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 
 import de.metamob.session.SessionUtil;
+import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 
 import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
@@ -57,11 +58,17 @@ public class ItemPanel extends Panel {
 	public void setSelectedItemsPerPage(String selectedItemsPerPage) {
 		this.selectedItemsPerPage = selectedItemsPerPage;
 	}
+	
+	public void setItemsPerPage(int count){
+		UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+		uiuc.setItemsPerPage(count);
+		SessionUtil.setUIUserConfiguration(uiuc);
+	}
 
 	public ItemPanel(String id) {
 		super(id);
 		SessionUtil.setCurrentPage(0);
-		SessionUtil.setItemsPerPage(2);
+		setItemsPerPage(2);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -69,7 +76,8 @@ public class ItemPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		SessionUtil.setCurrentPage(0);
-		SessionUtil.setItemsPerPage(2);
+		
+		setItemsPerPage(2);
 		// TODO Auto-generated constructor stub
 		//addItemPanelModule();
 	}
@@ -99,12 +107,13 @@ public class ItemPanel extends Panel {
 	//private ListView<IndividualisedProductItem> items = null;
 	
 	private void refreshItemList(){
-		AbstractTouchpoint tp = SessionUtil.getSelectedTouchPoint();
+		UIUserConfiguration uuuc = SessionUtil.getUIUserConfiguration();
 		//List<IndividualisedProductItem> myList = null;
-		if(tp==null){
-			itemList = stockSystem.getAllProductsOnStock();
+		
+		if(uuuc.getTouchpont()==null){//uuuc.getProductType()
+			itemList = stockSystem.getAllProductsOnStock(uuuc.getProductType(),uuuc.getSortType());
 		}else{
-			itemList = stockSystem.getProductsOnStock(tp.getErpPointOfSaleId());
+			itemList = stockSystem.getProductsOnStock(uuuc.getTouchpont().getErpPointOfSaleId(),uuuc.getProductType(),uuuc.getSortType());
 		}	
 	}
 	
@@ -112,7 +121,8 @@ public class ItemPanel extends Panel {
 		
 		List<IndividualisedProductItem> itemsReduced = new ArrayList<IndividualisedProductItem>(); 
 		
-		for (int i = SessionUtil.getCurrentPage()*SessionUtil.getItemsPerPage(); i< Math.min(itemList.size(), (SessionUtil.getCurrentPage()+1)*SessionUtil.getItemsPerPage()); i++){
+		int itemsPerPage = SessionUtil.getUIUserConfiguration().getItemsPerPage();
+		for (int i = SessionUtil.getCurrentPage()*itemsPerPage; i< Math.min(itemList.size(), (SessionUtil.getCurrentPage()+1)*itemsPerPage); i++){
 			itemsReduced.add(itemList.get(i));
 		}
 		
@@ -146,7 +156,7 @@ public class ItemPanel extends Panel {
 		    final int currentPage = SessionUtil.getCurrentPage();
 			
 			int numOfItems = itemList.size();
-			int numOfItemsPerPage = SessionUtil.getItemsPerPage();
+			int numOfItemsPerPage = SessionUtil.getUIUserConfiguration().getItemsPerPage();
 			final int numOfPages = (int)Math.ceil(numOfItems / numOfItemsPerPage);
 			
 			
@@ -224,15 +234,18 @@ public class ItemPanel extends Panel {
 	
 	private void addSelectOptions(){
 		List sortValues = new ArrayList();
-		sortValues.add("Preis auf");
-		sortValues.add("Preis auf");
-		sortValues.add("A-Z");
-		sortValues.add("Z-A");
+		sortValues.add(SortType.PRICEUP);
+		sortValues.add(SortType.PRICEDOWN);
+		sortValues.add(SortType.ASC);
+		sortValues.add(SortType.DESC);
 		
 		final DropDownChoice<List> selectSortBy = new DropDownChoice<List>("selectSortyBy", new PropertyModel<List>(this, "selectedSortBy"), sortValues);
 		selectSortBy.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 		      protected void onUpdate(AjaxRequestTarget target) {
-		    	  setResponsePage(getPage());
+		    	  	UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+		    	  	uiuc.setSortType(SortType.valueOf(selectedSortBy));
+					SessionUtil.setUIUserConfiguration(uiuc);
+					setResponsePage(getPage());
 		      }
 		});
 		
@@ -247,7 +260,7 @@ public class ItemPanel extends Panel {
 		//final DropDownChoice<List> selectItemsPerPage = new DropDownChoice<List>("selectItemsPerPage", itemsPerPageValues, "selectedItemsPerPage");
 		selectItemsPerPage.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 		      protected void onUpdate(AjaxRequestTarget target) {
-		    	  SessionUtil.setItemsPerPage(Integer.parseInt(selectedItemsPerPage));
+		    	  setItemsPerPage(Integer.parseInt(selectedItemsPerPage));
 		    	  SessionUtil.setCurrentPage(0);
 		    	  System.out.println(selectedItemsPerPage);
 		    	  setResponsePage(getPage());

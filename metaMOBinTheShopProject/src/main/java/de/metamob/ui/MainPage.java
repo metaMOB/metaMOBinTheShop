@@ -60,8 +60,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	@EJB(name="ProductCRUD")
 	private ProductCRUDLocal productCRUD;
 	
-	
-	
 	private static final long serialVersionUID = 1L;
 	
 	private Panel visiblePanel;

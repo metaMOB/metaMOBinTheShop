@@ -19,6 +19,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
 import de.metamob.session.SessionUtil;
+import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.Item;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
@@ -88,8 +89,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				AjaxLink<Void> link = new AjaxLink<Void>("categoryLink"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						ProductType temp = (ProductType) entry.getModel().getObject();
-						System.out.println("CATEGORY: "+ temp);
+						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+						uiuc.setProductType((ProductType) entry.getModel().getObject());
+						SessionUtil.setUIUserConfiguration(uiuc);
+						
+						SessionUtil.setCurrentPage(0);
+						setResponsePage(getPage());	
 		            }
 				};
 				
@@ -126,7 +131,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 					public void onClick(AjaxRequestTarget target) {
 						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
 						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
-						SessionUtil.setSelectedTouchPoint(temp);
+						
+						//setSelTouchPoint
+						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+						uiuc.setTouchpont(temp);
+						SessionUtil.setUIUserConfiguration(uiuc);
+						
 						SessionUtil.setCurrentPage(0);
 						setResponsePage(getPage());	
 		            }
@@ -164,8 +174,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     		@Override
     		public void onClick(AjaxRequestTarget target) {
     			System.out.println("NO TOUCHPOINT");
-    			SessionUtil.setSelectedTouchPoint(null);
-    			setResponsePage(getPage());	
+    			//setSelTouchPoint
+    			
+				UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+				uiuc.setTouchpont(null);
+				SessionUtil.setUIUserConfiguration(uiuc);
+    			
+				setResponsePage(getPage());	
     		}
     	};
     	add(linkAllTouchpoints);
@@ -173,7 +188,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	AjaxLink<Void> linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
-    			System.out.println("NO CATEGORY");	
+    			
+    			UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+				uiuc.setProductType(null);
+				SessionUtil.setUIUserConfiguration(uiuc);
+				
+				setResponsePage(getPage());	
     		}
     	};
     	add(linkAllCategories);
