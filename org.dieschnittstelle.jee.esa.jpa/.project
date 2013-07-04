@@ -3,6 +3,7 @@
 	<name>org.dieschnittstelle.jee.esa.jpa</name>
 	<comment></comment>
 	<projects>
+		<project>sharedLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
