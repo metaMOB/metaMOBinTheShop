@@ -2,15 +2,17 @@
 	<div class="siteoptions">            	
             	<div class="sholder">
                     <div class="styled-select">
-                        <select class="options">
-                           <option>Beliebtheit</option>
-                           <option>Preis absteigend</option>
-                           <option>Preis aufsteigend</option>
-                           <option>Verfügbarkeit</option>
-                        </select>
+                        <select wicket:id="selectSortyBy"></select>
                     </div>
                 </div>
         	<div class="sort">Sortieren nach</div>
+        	
+        	<div class="sholder">
+                    <div class="styled-select">
+                        <select wicket:id="selectItemsPerPage"></select>
+                    </div>
+                </div>
+        	<div class="sort">Items per Page</div>
     	</div>
     <div class="rightContent">
 
@@ -39,9 +41,9 @@
     <div class="pagenavi"> 
         <nav class="pagenumbers">
             <ul>
-                <li>1</li>
-                <li>2</li>
-               	<li>3</li>
+            	<span wicket:id="pageNavigation"> 
+                	<a href="#" wicket:id="pageLink"><li><span wicket:id="pageLabel"></span></li></a>
+                </span>
            	</ul>
         </nav>
     	<div class="sitenumbertext">Seite: </div>

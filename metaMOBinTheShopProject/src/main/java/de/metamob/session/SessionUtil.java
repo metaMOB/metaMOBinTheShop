@@ -30,4 +30,19 @@ public class SessionUtil {
 		return (AbstractTouchpoint) Session.get().getAttribute(SessionAttributes.SELECTEDTOUCHPOINT.toString());
 	}
 	
+	public static void setCurrentPage(int currentPage){
+		Session.get().setAttribute(SessionAttributes.CURRENTPAGE.toString(), currentPage);
+	}
+	
+	public static int getCurrentPage(){
+		return (Integer) Session.get().getAttribute(SessionAttributes.CURRENTPAGE.toString());
+	}
+	
+	public static void setItemsPerPage(int itemsPerPage){
+		Session.get().setAttribute(SessionAttributes.ITEMSPERPAGE.toString(), itemsPerPage);
+	}
+	
+	public static int getItemsPerPage(){
+		return (Integer) Session.get().getAttribute(SessionAttributes.ITEMSPERPAGE.toString());
+	}
 }

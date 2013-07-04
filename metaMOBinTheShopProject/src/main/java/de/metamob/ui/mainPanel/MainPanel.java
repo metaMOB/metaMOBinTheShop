@@ -127,6 +127,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
 						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
 						SessionUtil.setSelectedTouchPoint(temp);
+						SessionUtil.setCurrentPage(0);
 						setResponsePage(getPage());	
 		            }
 				};
