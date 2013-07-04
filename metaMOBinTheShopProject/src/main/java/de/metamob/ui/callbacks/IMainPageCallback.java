@@ -6,6 +6,5 @@ import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 import de.metamob.ui.Item;
 
 public interface IMainPageCallback {
-	public void itemPanelClicked (StockItem stockItem);
 	public void userLoggedIn ();
 }

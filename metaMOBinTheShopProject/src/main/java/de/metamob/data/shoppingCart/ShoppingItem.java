@@ -2,35 +2,35 @@ package de.metamob.data.shoppingCart;
 
 import java.io.Serializable;
 
+import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public class ShoppingItem implements Serializable {
-	private StockItem stockItem;
-	private int pieces = 1;
 	
-	public StockItem getStockItem() {
-		return stockItem;
-	}
-
-	public void setStockItem(StockItem stockItem) {
-		this.stockItem = stockItem;
+	private AbstractProduct product;
+	int units;
+	
+	public ShoppingItem(AbstractProduct product){
+		this.product = product;
 	}
 	
-	public int getPieces() {
-		return pieces;
-	}
-
-	public void setPieces(int pieces) {
-		if (pieces >=0 ){
-			this.pieces = pieces;
-		}
-	}
-
-	public ShoppingItem (StockItem stockItem){
-		this.stockItem = stockItem;		
+	public AbstractProduct getProduct() {
+		return product;
 	}
 	
-	public void increment(){
-		this.pieces++;
+	public void setProduct(AbstractProduct product) {
+		this.product = product;
+	}
+	
+	public int getUnits() {
+		return units;
+	}
+	
+	public void setUnits(int units) {
+		this.units = units;
+	}
+	
+	public void incUnits() {
+		this.units++;
 	}
 }

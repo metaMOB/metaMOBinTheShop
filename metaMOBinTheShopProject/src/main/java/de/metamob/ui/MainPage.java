@@ -20,10 +20,12 @@ import org.apache.wicket.model.util.ListModel;
 
 import org.dieschnittstelle.jee.esa.crm.entities.Gender;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
+import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 
-import de.metamob.data.shoppingCart.ShoppingCart;
+import de.metamob.data.shoppingCart.ShoppingItem;
+import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
@@ -60,6 +62,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	@EJB(name="ProductCRUD")
 	private ProductCRUDLocal productCRUD;
 	
+	@EJB(name="shoppingSystem")
+	private ShoppingSessionFacadeLocal shoppingSessionFacade;
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Panel visiblePanel;
@@ -70,7 +75,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private AjaxLink<Void> philsButton;
 	private AjaxLink<Void> shoppingCartButton;
 	
-	private ShoppingCart shoppingCart = new ShoppingCart(); 
+	//private ShoppingCart shoppingCart = new ShoppingCart(); 
 	
 	String userNameText = "Gast";
 	public String getUserNameText() {
@@ -167,8 +172,10 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				sttp.setName("Test Touchpoint2");
 				touchpointCRUD.createTouchpoint(sttp);
 				
+				IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
+				
 				//StockItems
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30)), pos1.getId(), 10000);
+				stockSystem.addToStock(product, pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180)), pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);
@@ -178,9 +185,14 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
 				
+				shoppingSessionFacade.addProduct(product, 10);
 				
+				/*UserShoppingCarts carts = SessionUtil.getShoppingCarts();
+				carts.getShoppingCard(sttp).add(new ShoppingItem(product));
+				carts = SessionUtil.getShoppingCarts();
+				System.out.println(carts.getShoppingCard(sttp).size());
 				
-				setResponsePage(getPage());
+				setResponsePage(getPage());*/
 			}
 		};
 		
@@ -206,12 +218,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		link.add(loginLinkLabel);
 		add(link);
-	}
-
-	@Override
-	public void itemPanelClicked(StockItem stockItem) {
-		shoppingCart.addToCart(stockItem);
-		System.out.println("SHOPPING CART "+shoppingCart);
 	}
 
 	@Override

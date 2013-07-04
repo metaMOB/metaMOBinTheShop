@@ -17,7 +17,7 @@ import org.jboss.logging.Logger;
  * provides shopping cart functionality
  */
 @Stateful
-public class ShoppingCartStateful implements ShoppingCartRemote {
+public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLocal {
 	
 	protected static Logger logger = Logger.getLogger(ShoppingCartStateful.class);
 

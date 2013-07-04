@@ -236,6 +236,6 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	@Override
 	public void itemPanelClicked(StockItem stockItem) {
-		iMainPageCallback.itemPanelClicked(stockItem);
+		
 	}
 }
