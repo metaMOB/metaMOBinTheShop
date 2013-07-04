@@ -234,14 +234,16 @@ public class ItemPanel extends Panel {
 	
 	private void addSelectOptions(){
 		List sortValues = new ArrayList();
-		sortValues.add(SortType.PRICEUP);
-		sortValues.add(SortType.PRICEDOWN);
-		sortValues.add(SortType.ASC);
-		sortValues.add(SortType.DESC);
+		sortValues.add(SortType.PRICEUP.toString());
+		sortValues.add(SortType.PRICEDOWN.toString());
+		sortValues.add(SortType.ASC.toString());
+		sortValues.add(SortType.DESC.toString());
 		
 		final DropDownChoice<List> selectSortBy = new DropDownChoice<List>("selectSortyBy", new PropertyModel<List>(this, "selectedSortBy"), sortValues);
 		selectSortBy.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 		      protected void onUpdate(AjaxRequestTarget target) {
+		    	    setSelectedSortBy(selectedSortBy.toString());
+		    	    System.out.println("selectedSortBy: " + selectedSortBy);
 		    	  	UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 		    	  	uiuc.setSortType(SortType.valueOf(selectedSortBy));
 					SessionUtil.setUIUserConfiguration(uiuc);
