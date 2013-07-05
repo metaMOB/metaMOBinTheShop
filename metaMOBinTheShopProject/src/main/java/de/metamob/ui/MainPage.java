@@ -208,6 +208,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				for (ShoppingItem si:usc){
 					System.out.println("----->"+si.getProduct().getName());
 				}*/
+				
+				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
+				setResponsePage(getPage());	
 			}
 		};
 		

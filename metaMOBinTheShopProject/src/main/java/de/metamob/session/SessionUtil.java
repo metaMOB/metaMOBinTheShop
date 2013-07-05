@@ -35,9 +35,10 @@ public class SessionUtil {
 	public static UIUserConfiguration getUIUserConfiguration(){
 		UIUserConfiguration uiuc = (UIUserConfiguration)Session.get().getAttribute(SessionAttributes.UIUSERCONFIG.toString());
 		if(uiuc==null){
-			return new UIUserConfiguration();
+			uiuc = new UIUserConfiguration();
+			setUIUserConfiguration(uiuc);
 		}
-		return(UIUserConfiguration)Session.get().getAttribute(SessionAttributes.UIUSERCONFIG.toString());
+		return uiuc;
 	}
 	
 	public static void setUIUserConfiguration(UIUserConfiguration uiUserConfiguration){
