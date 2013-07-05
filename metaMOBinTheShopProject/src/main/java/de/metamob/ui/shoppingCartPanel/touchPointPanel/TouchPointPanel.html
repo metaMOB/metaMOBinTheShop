@@ -1,24 +1,35 @@
 <wicket:panel>
-<div class="shoppingcart">
+	<div class="touchpoint" >
+           		<div class="touchpointhead"><span wicket:id="touchpointName"></span><div class="carticon"></div></div>
+	<div class="shoppingcart">
 		<ul class="searchLists">
-			<li class="odds">
-				<ul class="searchListsinner" id="head">
-					<li class="produkthead">Produkte</li>
-					<li class="pricehead">Preis</li>
-					<li class="counthead">Anzahl</li>
-					<li class="deletehead">entfernen</li>
-					<li class="touchpointhead">Touchpoint</li>
-				</ul>
+			<li>
+				<div class="searchListsinner" id="head">
+					<div class="produkthead">Produkt</div>
+					<div class="pricehead">Preis</div>
+					<div class="counthead">Anzahl</div>
+					<div class="deletehead">entfernen</div>
+				</div>
 			</li>
-	        	<li class="odd" wicket:id="items">
-	            	<ul class="searchListsinner">	            	
-	                	<li class="produkt"><span wicket:id="itemName"></span></li>
-                       	<li class="price"><span wicket:id="itemPrice"></span> &euro;</li>
-                        <li class="count"><a href="#" wicket:id="itemUnitsDec">-</a><span wicket:id="itemUnits"></span><a href="#"  wicket:id="itemUnitsInc">+</a></li>  
-                        <li class="delete"><a href="#" wicket:id="itemDelete" style="color:#002e40;">entfernen</a></li>
-                        <li class="touchpoint"><span wicket:id="itemTouchpoint"></span></li>
-	                </ul>
-	            </li>                    
+        	<li wicket:id="items">
+            	<div class="searchListsinner">	            	
+                	<div class="produkt"><span wicket:id="itemName"></span></div>
+                    <div class="price"><span wicket:id="itemPrice"></span> &euro;</div>
+                    <div class="count">
+                    	<div class="countbuttonless">
+                    		<a href="#" wicket:id="itemUnitsDec"></a>
+                    	</div>
+                    	<div class="counttext">
+                    		<span wicket:id="itemUnits"></span>
+                    	</div>
+                    	<div class="countbuttonmore">
+                    		<a href="#" wicket:id="itemUnitsInc"></a>
+                    	</div>  
+                    <div class="delete"><a href="#" wicket:id="itemDelete" style="color:#002e40;"></a></div>
+<!--                     <div class="kaufen"><a href="index.html"><button type="submit" class="but">Kostenpflichtig Bestellen</button></a></div> -->
+                    
+                </div>
+            </li>                    
 	    </ul>
 	    <a href="#" wicket:id="order"><span>Bestellen</span></a>
 		<div style="clear:both;margin-bottom:20px;"></div>

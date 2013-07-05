@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
@@ -32,7 +33,7 @@ public class TouchPointPanel extends Panel {
 		super(id);
 	}
 
-	public TouchPointPanel(String id, List<?> model, final int tp) {
+	public TouchPointPanel(String id, List<?> model, final AbstractTouchpoint tp) {
 		super(id);
 		// TODO Auto-generated constructor stub
 		self = this;
@@ -50,7 +51,7 @@ public class TouchPointPanel extends Panel {
 				
 				entry.add(new Label("itemName", temp.getProduct().getName()));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getProduct().getPrice()/100.0)));
-				entry.add(new Label("itemTouchpoint", tp));
+				entry.add(new Label("touchpointName", tp.getName()));
 				
 				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
 					@Override
@@ -65,7 +66,7 @@ public class TouchPointPanel extends Panel {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
 					    System.out.println("ITEMINCREASE");	
-					    temp.setUnits(temp.getUnits()+1);
+					    temp.incUnits();
 					    setResponsePage(getPage());	
 		           }
 				};
@@ -76,7 +77,7 @@ public class TouchPointPanel extends Panel {
 					@Override
 					public void onClick(AjaxRequestTarget target) {						
 		                System.out.println("ITEMDECREASE");
-		                temp.setUnits(temp.getUnits()-1);
+		                temp.decUnits();
 		                setResponsePage(getPage());	
 		            }
 				};
