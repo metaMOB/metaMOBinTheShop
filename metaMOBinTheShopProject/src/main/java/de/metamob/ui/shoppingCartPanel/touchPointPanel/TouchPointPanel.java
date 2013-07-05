@@ -37,6 +37,8 @@ public class TouchPointPanel extends Panel {
 		super(id);
 		// TODO Auto-generated constructor stub
 		self = this;
+		add(new Label("touchpointName", tp.getName()));
+		
 		ListView<ShoppingItem> items = new ListView<ShoppingItem>("items", (List<ShoppingItem>) model){
 			
 			@Override
@@ -51,7 +53,7 @@ public class TouchPointPanel extends Panel {
 				
 				entry.add(new Label("itemName", temp.getProduct().getName()));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getProduct().getPrice()/100.0)));
-				entry.add(new Label("touchpointName", tp.getName()));
+				
 				
 				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
 					@Override

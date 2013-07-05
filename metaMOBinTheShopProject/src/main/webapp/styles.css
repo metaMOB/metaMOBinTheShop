@@ -16,8 +16,22 @@ body {
 	font-weight:300;
 }
 
-a. {
+/*.tttest {
+	height:100%;
+	background-color:#F00;
+	background: url(images/tttest.jpg) 50% 0 no-repeat;
+	margin:-18px 0 0 0;
+	padding:25px 0 0 0;
+}*/
+
+a {
+	text-decoration:none;
 	color:#000;
+}
+
+a:hover {
+	text-decoration:none;
+	color:#F00;
 }
 
 .leftContent a {
@@ -25,14 +39,6 @@ a. {
 	color:#000;
 }
 
-.rightContent a {
-	text-decoration:none;
-	color:#FFF;
-}
-
-a:hover {
-	text-decoration:underline;
-}
 
 h1 {
 	font-size:18px;
@@ -88,7 +94,7 @@ input[type='range'] {
 .container {
 	margin:auto;
 	position:relative;
-	background-color:#fff;
+	background-color:#FFF;
 	width:962px;
 	box-shadow: 0 0 4px #BBB;
 	-moz-box-shadow: 0 0 4px #BBB;
@@ -150,10 +156,11 @@ nav.headerNav li {
 /* ---------------------------- SLIDER -------- */
 
 .slider {
-	margin:10px;
+	margin:10px 10px 20px 10px;
 	width:942px;
+	height:1px;
 	
-	background-color:#0CC;
+	background-color:#DDD;
 }
 
 
@@ -173,9 +180,10 @@ nav.headerNav li {
 .rightContent {
 	padding:10px;
 	width:690px; 
-	border: 1px solid rgba(143,158,139,1.0);
+	border: 1px solid rgba(143,158,139,.2);
 	/*background-color:#F8FFF1;*/
 	float:left;
+	margin-bottom:20px;
 }
 
 /* ---------------------------- SLIDER ENDE -------- */
@@ -191,7 +199,7 @@ nav.list {
 nav.list ul {
 	padding: 10px 10px 10px 10px;
 	margin:0 0 10px 0;
-	border: 1px solid rgba(143,158,139,1.0);
+	border: 1px solid rgba(143,158,139,.4);
 	border-top:0;
 	background-color: #FFF;
 
@@ -201,12 +209,16 @@ nav.list li {
 	cursor:pointer;
 	padding:4px 0 4px 4px;
 	
+	
 }
+
+
 
 nav.list li:hover {
 	cursor:pointer;
 	padding:4px 0 4px 10px;
 	background-color: rgba(255,255,255,.3);
+	font-weight:700;
 	
 }
 /* --- ENDE - List 1 NAVIGATION --- */
@@ -224,10 +236,28 @@ nav.list li:hover {
 }
 
 
+button.cart {
+	background:url(images/cartsmall.png) 4px 4px no-repeat;
+  margin:0 0 0 10px;
+  background-color: #002E40;
+  border-bottom: 2px solid #FF6761;
+  font-weight:700;
+  color: #FFF;
+  padding: 4px 6px 4px 27px;
+  text-align: center;
+  cursor:pointer;
+}
+
+button.cart:hover {
+    background-color: #FF6761;
+	color:#000;
+ 	border-bottom: 5px solid #002E40;
+	cursor:pointer;
+}
 
 button.but {
   margin:0 0 0 10px;
-  background-color: #2A5769;
+  background-color: #002E40;
   border-bottom: 2px solid #FF6761;
   font-weight:700;
   color: #FFF;
@@ -239,19 +269,18 @@ button.but {
 
 
 button.but:hover {
-    background-color: #0C555C;
-	color:#FFF;
- 	border-bottom: 5px solid #FF6761;
+    background-color: #FF6761;
+	color:#000;
+ 	border-bottom: 5px solid #002E40;
 	cursor:pointer;
 }
 /* -------------- SITEOPTIONS ---------------*/
 
 .siteoptions {
 	margin:0 0 10px 240px;
-	width:700px;
+	width:705px;
 	height:43px;
-	padding:12px 12px 0 0;
-	background: EEE;
+	padding:12px 0px 0 0;
 	font-size: 16px;
 }
 
@@ -279,6 +308,9 @@ button.but:hover {
    	background: url(images/selectimage.png) no-repeat right ;
    }*/
    
+
+
+
 .sort{
 	float:right;
 	padding: 5px 10px 0 0;
@@ -290,15 +322,28 @@ button.but:hover {
 
 /* -------------- PRODUCTS ---------------*/
 
+.shopproducts {
+	
+}
+
+li.productitem:hover{
+	background:rgba(166,206,210,0.1);
+	
+}
+
+
+
+
+
 .item {
 	width:688px;
-	border: 1px solid rgba(255,103,97,1.0);
+	border: 1px solid rgba(143,158,139,.2);
 	margin-bottom:10px;
 	clear:both;
 }
 
 .itemdescwrapper {
-	padding:0 10px 10px 160px;
+	padding:0 10px 25px 160px;
 	min-height:140px;
 	position:relative;
 }
@@ -324,12 +369,13 @@ button.but:hover {
 	font-weight:400;
 	text-align:right;
 	position:absolute;
-	bottom:28px;
+	bottom:33px;
 	right:5px;
 }
 
 button.buttonwarenkorb {
-  background-color:#FF6761;
+  background-color: #002E40;
+  border-bottom: 2px solid #FF6761;
   color:#FFF;
   font: bold 11px/1.4 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
   padding: 2px 4px 3px 4px;
@@ -341,115 +387,212 @@ button.buttonwarenkorb {
 }
 
 button.buttonwarenkorb:hover {
-  background-color:#2A5769;
+ background-color: #FF6761;
+	color:#000;
+ 	border-bottom: 5px solid #002E40;
 }
+
+
+
+
 
 /* -------------- PRODUCTS ENDE ---------------*/
+.touchpoint {
+	background:url(images/pointimage.png) 0 0 no-repeat;
+	border:rgba(143,192,217,0.3) solid 1px;
+	margin-bottom:30px;
+}
 
+.carticon {
+	position:absolute;
+	background:url(images/cart.png) no-repeat;
+	right:20px;
+	top:12px;
+	width:28px;
+	height:24px;
+	}
+
+.touchpointhead {
+	padding:10px 0 0 12px;
+	background-color:rgba(143,192,217,0.1);
+	height:40px;
+	color:#002E40;
+	font-size:19px;
+	font-weight:700;
+	position:relative;
+}
 
 .shoppingcart{
-	width:670px;
-	margin-bottom:10px;
+	width:666px;
 	clear:both;
-	margin:0 10px 0 10px;
+	margin:10px 10px 10px 10px;
+	padding:0;
+	border:1px solid rgba(166,206,210,0.1);
+	/*background-color:rgba(0,0,0,0.04);
+	background-color:rgba(166,206,210,0.1);*/
 }
 
 
 
+ul.searchLists {
+	padding:0;
+	margin:0 0 15px 0;
+	background-color:rgba(143,192,217,0.1);
+	}
+	
 
-.searchLists li.odd:nth-child(odd) {
-	background-color: #edf6f8;
+
+ul.searchLists li:nth-child(2n) {
+	background-color:#FFF;
+	/*border:1px solid rgba(166,206,210,0.4);*/
 }
 
-.searchLists li{
-	background:url(../images/icons/liststyleimage.png) no-repeat 3px 5px;
-	padding:0 0 0 20px;
-}
 
 
-.searchListsinner li {
-	margin-top:8px;
-	padding:0px 4px 0 4px;
-	/*border-right:1px solid #ccc;*/
-	vertical-align:middle;
-}
 
 .searchListsinner {
-	clear:both;
-	background-color: #FFF;
+	position:relative;
+	height:42px;
 }
 
-.searchListsinner li {
+
+
+.produkt {
+	position:absolute;
+	top:9px;
+	left:15px;
+}
+.delete {
+	position:absolute;
+	top:9px;
+	left:395px;
+	width:17px;
+	height:18px;
+	cursor:pointer;
+	background:url(images/delete.png) 0 0 no-repeat;
+}
+
+.delete:hover {
+	background:url(images/deletehover.png) 0 0 no-repeat;
+}
+
+.count {
+	position:absolute;
+	top:12px;
+	left:490px;	
+}
+.count .countbuttonless{
+	width:20px;
+	height:20px;
+	background: url(images/remove_item.png) no-repeat;
+	float:left;
+	cursor:pointer;
+}
+.count .counttext{
+	height:20px;
+	float:left;
+	line-height:15px;
 	padding:0 5px 0 5px;
-	margin:0 5px 0 5px;
+}
+.count .countbuttonmore{
+	width:20px;
+	height:20px;
+	background:url(images/add_item.png) no-repeat;
+	float:left;
+	cursor:pointer;
+}
+
+.price {
+	position:absolute;
+	top:9px;
+	left:600px;
 	
 }
 
 
-.searchListsinner li.produkt {
-	float:left;
-	height:40px;
-	padding-top:11px;
+.produkthead{
+	position:absolute;
+	top:8px;
+	left:15px;	
 }
-.searchListsinner li.delete {
-	float:right;
-	width:60px;
-	height:40px;
-	padding-top:11px;
+.deletehead{
+	position:absolute;
+	top:8px;
+	left:380px;
+	
 }
-.searchListsinner li.count {
-	float:right;
-	width:60px;
-	height:40px;
-	padding-top:11px;
+.counthead{
+	position:absolute;
+	top:8px;
+	left:495px;
+	
 }
-.searchListsinner li.price {
-	float:right;
-	width:60px;
+.pricehead{
+	position:absolute;
+	top:8px;
+	left:600px;
+}
+
+.searchListsinner#head {
+	font-size:16px;
+	font-weight:400;
 	height:40px;
-	vertical-align:middle;
-	padding-top:11px;
+	color:#FF6761;
+	background:#002E40 url(images/noisy_trans.png)
 }
 
 
-li.produkthead{
-	font-size:16px;
-	font-weight:700;
-	float:left;
-	height:15px;
-	margin-bottom: 0 0 10px 0;
-	padding-bottom: 0 0 10px 0;
+
+
+/*
+.new li {
+	background-color:#F00;
+	margin:0 0 5px 0;
+	
 }
-li.deletehead{
+*/
+
+/*
+.searchLists li:nth-child(odd) { background-color:green }
+.searchLists li:nth-child(even) { background-color:red }
+.searchLists li:nth-child(odd) ul li:nth-child(odd)  { background-color:red }
+.searchLists li:nth-child(odd) ul li:nth-child(even)  { background-color:green }
+.searchLists li:nth-child(even) ul li:nth-child(odd)  { background-color:green }
+.searchLists li:nth-child(even) ul li:nth-child(even)  { background-color:red}*/
+
+
+
+
+
+
+
+
+.kaufen {
+	clear:both;
 	float:right;
-	font-size:16px;
-	font-weight:700;
-	width:60px;
-	height:15px;
-	margin-bottom: 0 0 10px 0;
-	padding-bottom: 0 0 10px 0;
-}
-li.counthead{
-	float:right;
-	font-size:16px;
-	font-weight:700;
-	width:60px;
-	height:15px;
-	margin-bottom: 0 0 10px 0;
-	padding-bottom: 0 0 10px 0;
-}
-li.pricehead{
-	float:right;
-	font-size:16px;
-	font-weight:700;
-	width:60px;
-	height:25px;
-	margin-bottom: 0 0 10px 0;
-	padding-bottom: 0 0 10px 0;
+	margin:0 34px 10px 0;
 }
 
-ul.searchListsinner#head ul {
-	background-color:#099;
+
+
+
+.results {
+	padding:0 10px 0 0;
+	position:relative;
+}
+
+.results .sum {
+	position:absolute;
+	top:2px;
+	left:448px;	
+
+}
+.results .price {
+	position:absolute;
+	top:6px;
+	left:524px;
+	width:110px;
+	text-align:right;
 }
 
 
@@ -458,38 +601,91 @@ ul.searchListsinner#head ul {
 	clear:both; 
 	height:40px;
 	padding:8px 8px 0 0;
+	background-color:#FFF;
 }
 
 .sitenumbertext {
 	float:right;
-	margin-right:8px
+	margin-right:8px;
+	font-size:12px;
 }
 
 .pagenumbers {
 	float:right;
+	font-size:11px;
+	font-weight:300;
+	margin-right:10px;
+	
 }
 
 .pagenumbers ul {
 	margin:0;
+	background-color:#FFF;
 }
 
 .pagenumbers li {
+	background:url(images/nav_clear.png) -1px 0px no-repeat;
 	float:left;
 	margin-right:5px;
-	padding:1px 6px 1px 6px;
-	background-color:#F60;
-	color: FFF;
+	padding:1px 7px 1px 6px;
 	cursor:pointer;
+	line-height:15px;
+	background-color:#FFF;
 }
 
 .pagenumbers li:hover {
-	background-color:#93F;
-	color: FFF;
+	font-weight:700;
 	cursor:pointer;
+	background-color:#FFF;
+}
+
+.nextprev {
+	line-height:10px;
+	padding-top:2px;
+	padding-bottom:3px;
+}
+
+.nextprev_inactive {
+	color:#EEE;
+}
+
+.pageactive {
+	font-weight:700;
 }
 
 
+
+
 .clear {clear:both;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -502,34 +698,8 @@ footer {
 	margin: 0 10px 0 10px;
 	padding: 0 0 20px 0;
 	line-height:160%;
+	clear:both;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* ------------------------- LOGIN PANEL ----------------------- */
