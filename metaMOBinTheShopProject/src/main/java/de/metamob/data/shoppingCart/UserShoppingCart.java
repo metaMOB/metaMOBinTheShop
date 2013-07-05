@@ -28,6 +28,7 @@ public class UserShoppingCart implements Set<ShoppingItem>, Serializable {
 		AbstractProduct ap = e.getProduct();
 		if (shoppingItemList.containsKey(ap)){
 			shoppingItemList.get(ap).incUnits();
+			return true;
 		}
 		shoppingItemList.put(ap, e);
 		return true;
@@ -128,9 +129,5 @@ public class UserShoppingCart implements Set<ShoppingItem>, Serializable {
 	@Override
 	public <T> T[] toArray(T[] a) {
 		return getAsList().toArray(a);
-	}
-	
-	
-
-	
+	}	
 }
