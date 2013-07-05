@@ -4,6 +4,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
+
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -18,14 +20,19 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
+import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
+import de.metamob.data.shoppingCart.UserShoppingCart;
+import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
 
 public class TouchPointPanel extends Panel {
 	
+	@EJB(name="shoppingSystem")
+	private ShoppingSessionFacadeLocal shoppingSessionFacade;
 	
 	private TouchPointPanel self;
 	private int priceTotal = 0;	
@@ -92,10 +99,30 @@ public class TouchPointPanel extends Panel {
 				entry.add(decrease);
 			}
         };
+        
         AjaxLink<Void> linkOrder = new AjaxLink<Void>("order"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
-    			System.out.println("ORDER");
+    			
+    			if(SessionUtil.isLoggedIn()){
+    				UserShoppingCart userShoppingCart = SessionUtil.getShoppingCarts().getShoppingCard(tp);
+    				shoppingSessionFacade.setCustomer(SessionUtil.getCurrentUser());
+    				shoppingSessionFacade.setTouchpoint(tp);
+    				for (ShoppingItem item : userShoppingCart){
+        				shoppingSessionFacade.addProduct(item.getProduct(), item.getUnits());
+        			}
+    				
+    				try {
+						shoppingSessionFacade.purchase();	
+						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
+					} catch (Exception e) {
+						System.out.println("!!!!! "+e.getMessage()+" !!!!!!");
+					}
+    				
+    				setResponsePage(getPage());	
+    			}else{
+    				System.out.println("!!!!! USER NOT LOGGED IN !!!!!!");
+    			}
     		}
     	};
     	

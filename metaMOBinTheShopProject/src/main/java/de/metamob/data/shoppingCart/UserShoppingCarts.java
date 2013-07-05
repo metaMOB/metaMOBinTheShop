@@ -31,4 +31,9 @@ public class UserShoppingCarts implements Serializable{
 		shoppingCards.put(tochpoint, list);
 		return list;
 	}
+	
+	public void removeShoppingCard(AbstractTouchpoint tochpoint){
+		shoppingCards.remove(tochpoint);
+		System.out.println("keySet: "+getTouchpoints().size());
+	}
 }
