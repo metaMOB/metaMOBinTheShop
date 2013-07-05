@@ -28,7 +28,8 @@ public class TouchPointPanel extends Panel {
 	
 	
 	private TouchPointPanel self;
-		
+	private int priceTotal = 0;	
+	
 	public TouchPointPanel(String id) {
 		super(id);
 	}
@@ -54,6 +55,7 @@ public class TouchPointPanel extends Panel {
 				entry.add(new Label("itemName", temp.getProduct().getName()));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getProduct().getPrice()/100.0)));
 				
+				System.out.println("PRICETOT "+priceTotal);
 				
 				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
 					@Override
@@ -96,6 +98,8 @@ public class TouchPointPanel extends Panel {
     			System.out.println("ORDER");
     		}
     	};
+    	
+    	add(new Label("priceTotal", priceTotal/100.0));
     	add(linkOrder);
         add(items);
 	}

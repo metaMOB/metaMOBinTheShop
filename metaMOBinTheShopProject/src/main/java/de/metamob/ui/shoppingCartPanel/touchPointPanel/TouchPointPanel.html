@@ -11,8 +11,7 @@
 						<div class="deletehead">entfernen</div>
 					</div>
 				</li>
-				<span wicket:id="items"> 
-		        	<li>
+		        	<li wicket:id="items">
 		            	<div class="searchListsinner">	            	
 		                	<div class="produkt"><span wicket:id="itemName"></span></div>
 		                    <div class="price"><span wicket:id="itemPrice"></span> &euro;</div>
@@ -25,12 +24,13 @@
 		                    </div>
 		                    <a href="#" class="delete" wicket:id="itemDelete" style="color:#002e40;"></a>				
 		                </div>
-		            </li>        
-	            </span>            
+		            </li>           
 		    </ul>
 		    <div class="results" >
-	           	<div class="searchListsinner">
-	               	<div class="price">1992323 €</div>
+	           	<div class="searchListsinner">	           	
+	               	<div class="price">
+						<span wicket:id="priceTotal"></span> &euro;
+					</div>
 	               	<div class="sum">Gesamtpreis:</div>
 	           	</div>
 	        </div>
