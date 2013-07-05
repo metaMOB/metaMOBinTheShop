@@ -128,5 +128,10 @@ public abstract class AbstractTouchpoint implements Serializable {
 	public void setTransactions(Collection<CustomerTransaction> transactions) {
 		this.transactions = transactions;
 	}
+	
+	@Override
+	public int hashCode() {
+		return (this.name+this.id).hashCode();
+	}
 
 }

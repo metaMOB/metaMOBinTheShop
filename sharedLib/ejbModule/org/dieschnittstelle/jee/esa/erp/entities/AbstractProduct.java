@@ -56,5 +56,9 @@ public abstract class AbstractProduct implements Serializable {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		return (this.name+this.id).hashCode();
+	}
 }

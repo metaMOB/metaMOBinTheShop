@@ -25,6 +25,7 @@ import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
+import de.metamob.data.shoppingCart.UserShoppingCart;
 import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.ui.callbacks.IMainPageCallback;
@@ -41,6 +42,7 @@ import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
+import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
@@ -165,11 +167,12 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
-				sttp.setName("Test Touchpoint1");
+				
+				sttp.setName("Conys Backstube");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				sttp = new StationaryTouchpoint(pos2.getId());
-				sttp.setName("Test Touchpoint2");
+				sttp.setName("Der Kondidor");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
@@ -185,14 +188,15 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
 				
-				shoppingSessionFacade.addProduct(product, 10);
+				/*shoppingSessionFacade.addProduct(product, 10);
 				
-				/*UserShoppingCarts carts = SessionUtil.getShoppingCarts();
-				carts.getShoppingCard(sttp).add(new ShoppingItem(product));
-				carts = SessionUtil.getShoppingCarts();
-				System.out.println(carts.getShoppingCard(sttp).size());
+				UserShoppingCart usc = new UserShoppingCart();
+				usc.add(new ShoppingItem(product));
+				usc.add(new ShoppingItem(product));
 				
-				setResponsePage(getPage());*/
+				for (ShoppingItem si:usc){
+					System.out.println("----->"+si.getProduct().getName());
+				}*/
 			}
 		};
 		

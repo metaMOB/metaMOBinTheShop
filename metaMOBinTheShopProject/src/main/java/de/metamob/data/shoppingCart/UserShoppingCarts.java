@@ -13,21 +13,21 @@ import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 
 public class UserShoppingCarts implements Serializable{
 	
-	Map<AbstractTouchpoint, List<ShoppingItem>> shoppingCards;
+	Map<AbstractTouchpoint, UserShoppingCart> shoppingCards;
 	
 	public UserShoppingCarts(){
-		shoppingCards = new HashMap<AbstractTouchpoint, List<ShoppingItem>>();
+		shoppingCards = new HashMap<AbstractTouchpoint, UserShoppingCart>();
 	}
 	
 	public Set<AbstractTouchpoint> getTouchpoints(){
 		return shoppingCards.keySet();
 	}
 	
-	public List<ShoppingItem> getShoppingCard(AbstractTouchpoint tochpoint){
+	public UserShoppingCart getShoppingCard(AbstractTouchpoint tochpoint){
 		if(shoppingCards.containsKey(tochpoint)){
 			return shoppingCards.get(tochpoint);
 		}
-		List<ShoppingItem> list = new ArrayList<ShoppingItem>();
+		UserShoppingCart list = new UserShoppingCart();
 		shoppingCards.put(tochpoint, list);
 		return list;
 	}

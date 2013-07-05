@@ -45,4 +45,10 @@ public class ShoppingItem implements Serializable {
 	public void incUnits() {
 		this.units++;
 	}
+	
+	public void decUnits() {
+		if (units>1){
+			this.units--;
+		}
+	}
 }
