@@ -24,10 +24,6 @@ import javax.persistence.Transient;
 public class CrmProductBundle implements Serializable {
 
 	protected static Logger logger = Logger.getLogger(CrmProductBundle.class);
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 5027719621777767575L;
 
 	@Id
