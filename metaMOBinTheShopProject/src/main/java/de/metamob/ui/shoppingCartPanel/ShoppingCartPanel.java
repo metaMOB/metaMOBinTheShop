@@ -58,7 +58,7 @@ public class ShoppingCartPanel extends Panel {
 				// TODO Auto-generated method stub
 				//entry.getModelObject()
 				System.out.println("TP: "+entry.getModelObject().getId());
-				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject())), entry.getModelObject().getId());
+				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject())), entry.getModelObject());
 				entry.add(touchPointPanel);
 			}			
 		};
