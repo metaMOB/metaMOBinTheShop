@@ -2,6 +2,7 @@ package de.metamob.ui.shoppingCartPanel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Set;
 
 import java.util.List;
 
@@ -18,8 +19,12 @@ import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.MobileTouchpoint;
 
+import de.metamob.data.shoppingCart.ShoppingItem;
+import de.metamob.data.shoppingCart.UserShoppingCarts;
+import de.metamob.session.SessionUtil;
 import de.metamob.ui.Item;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
+import de.metamob.ui.shoppingCartPanel.touchPointPanel.TouchPointPanel;
 
 import org.apache.wicket.markup.html.form.NumberTextField;
 
@@ -40,41 +45,27 @@ public class ShoppingCartPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
+		addTouchpointPanel();
+	}
+	
+	private void addTouchpointPanel(){
+		final UserShoppingCarts shoppingCarts = SessionUtil.getShoppingCarts();
 		
-		List<StockItem> myList = generateTestProducts();
-		
-		ListView<StockItem> items = new ListView<StockItem>("items", myList){
+		ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", new ArrayList(shoppingCarts.getTouchpoints())){
 
 			@Override
-			protected void populateItem(final ListItem<StockItem> entry) {
+			protected void populateItem(ListItem<AbstractTouchpoint> entry) {
 				// TODO Auto-generated method stub
-				
-				StockItem temp = (StockItem) entry.getModel().getObject();
-								
-				entry.add(new Label("itemName", temp.getProduct().getName()));
-				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getPrice()/100.0)));
-				
-				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
-					@Override
-					public void onClick(AjaxRequestTarget target) {
-						
-		                System.out.println("ITEMDELETE");
-		            }
-				};
-				
-				NumberTextField<Integer> number = new NumberTextField<Integer>("itemNumber");
-				number.add(new AjaxEventBehavior("onclick") {
-				    @Override
-				    protected void onEvent(AjaxRequestTarget target) {
-				    	System.out.println("NUMBER");
-				    }
-				});
-				
-				entry.add(delete);
-				entry.add(number);
-			}
-        };
-        add(items);
+				//entry.getModelObject()
+				System.out.println("TP: "+entry.getModelObject().getId());
+				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", shoppingCarts.getShoppingCard(entry.getModelObject()), entry.getModelObject().getId());
+				entry.add(touchPointPanel);
+			}			
+		};
+		if (touchpoints!=null){
+        	remove(touchpoints);
+        }
+		add(touchpoints);
 	}
 	
 	private List<StockItem> generateTestProducts(){
@@ -98,4 +89,9 @@ public class ShoppingCartPanel extends Panel {
     	}
     	return myList;
     }
+	
+	@Override
+	public void onBeforeRender(){
+		super.onBeforeRender();
+	}
 }

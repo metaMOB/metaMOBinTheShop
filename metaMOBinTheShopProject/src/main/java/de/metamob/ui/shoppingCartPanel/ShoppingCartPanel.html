@@ -1,27 +1,7 @@
 <wicket:panel>
 	<div class="rightContent">
-
-		<div class="shoppingcart">
-			<ul class="searchLists">
-				<li class="odds">
-					<ul class="searchListsinner" id="head">
-						<li class="produkthead">Produkte</li>
-						<li class="pricehead">Preis</li>
-						<li class="counthead">Anzahl</li>
-						<li class="deletehead">entfernen</li>
-					</ul>
-				</li>
-		        	<li class="odd" wicket:id="items">
-		            	<ul class="searchListsinner">
-		                	<li class="produkt"><span wicket:id="itemName"></span></li>
-                        	<li class="price"><span wicket:id="itemPrice"></span> &euro;</li>
-                            <li class="count"><input type="number" min="0" max="100" style="width:45px;" wicket:id="itemNumber"></li>
-                            <li class="delete"><a href="#" wicket:id="itemDelete" style="color:#002e40;">entfernen</a></li>
-		                </ul>
-		            </li>                    
-		    </ul>
-			<div style="clear:both;margin-bottom:20px;"></div>
-		</div>			
-			
+		<span wicket:id="touchpoints">
+			<span wicket:id="oneTouchpoint"></span>
+		</span>
     </div>  
 </wicket:panel>

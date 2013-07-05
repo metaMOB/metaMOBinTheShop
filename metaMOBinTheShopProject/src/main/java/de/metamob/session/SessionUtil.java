@@ -31,7 +31,7 @@ public class SessionUtil {
 	public static int getCurrentPage(){
 		return (Integer) Session.get().getAttribute(SessionAttributes.CURRENTPAGE.toString());
 	}
-	
+		
 	public static UIUserConfiguration getUIUserConfiguration(){
 		UIUserConfiguration uiuc = (UIUserConfiguration)Session.get().getAttribute(SessionAttributes.UIUSERCONFIG.toString());
 		if(uiuc==null){

@@ -40,12 +40,14 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	private Panel itemPanel = new ItemPanel("itemPanel", this);
 	private Panel shoppingCartPanel;
 	private Panel visiblePanel = itemPanel;
+	private MainPanel self;
 
 	@EJB(name="TouchpointCRUD")
     private TouchpointCRUDLocal touchpointCRUDRemote;
 	
 	public MainPanel(String id, IMainPageCallback mainPageCallback) {
 		super(id);
+		self = this;
 		this.iMainPageCallback = mainPageCallback;
 		// TODO Auto-generated constructor stub
 		
@@ -56,7 +58,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	    form.add(new TextField<String>("msgInput", messageModel));
 	    add(form);*/
 	        
-	        addAllSelectors();
+	        //addAllSelectors();
 	        addCategoryModule();  
 	        
 	        add (itemPanel);
@@ -89,6 +91,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				AjaxLink<Void> link = new AjaxLink<Void>("categoryLink"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
+						self.mode = "SHOPPINGCART";
+						currentDisplay(target);
 						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 						uiuc.setProductType((ProductType) entry.getModel().getObject());
 						SessionUtil.setUIUserConfiguration(uiuc);
@@ -131,7 +135,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 					public void onClick(AjaxRequestTarget target) {
 						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
 						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
-						
+						self.mode = "SHOPPINGCART";
+						currentDisplay(target);
 						//setSelTouchPoint
 						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 						uiuc.setTouchpont(temp);
@@ -179,7 +184,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 				uiuc.setTouchpont(null);
 				SessionUtil.setUIUserConfiguration(uiuc);
-    			
+				
 				setResponsePage(getPage());	
     		}
     	};
@@ -188,11 +193,10 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     	AjaxLink<Void> linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
-    			
+    			System.out.println("NO CATEGORY");
     			UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 				uiuc.setProductType(null);
 				SessionUtil.setUIUserConfiguration(uiuc);
-				
 				setResponsePage(getPage());	
     		}
     	};

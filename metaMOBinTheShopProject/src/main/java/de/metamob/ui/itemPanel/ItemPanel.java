@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 
+import de.metamob.data.shoppingCart.ShoppingItem;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
@@ -133,7 +134,8 @@ public class ItemPanel extends Panel {
 				AjaxLink<Void> link = new AjaxLink<Void>("itemLink"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-		                System.out.println("ITEM: "+ entry.getModelObject().getName());
+		                System.out.println("ITEM: "+ entry.getModelObject().getName());	
+		                SessionUtil.getShoppingCarts().getShoppingCard(SessionUtil.getUIUserConfiguration().getTouchpont()).add(new ShoppingItem(entry.getModelObject()));
 		            }
 				};
 				entry.add(link);
