@@ -9,15 +9,15 @@ public class ShoppingItem implements Serializable {
 	
 	private AbstractProduct product;
 	int units;
-	int touchPoint;
+	//int touchPoint;
 	
-	public int getTouchPoint() {
+	/*public int getTouchPoint() {
 		return touchPoint;
-	}
+	}*/
 
-	public void setTouchPoint(int touchPoint) {
+	/*public void setTouchPoint(int touchPoint) {
 		this.touchPoint = touchPoint;
-	}
+	}*/
 
 	public ShoppingItem(AbstractProduct product){
 		this.product = product;
