@@ -212,7 +212,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					e.printStackTrace();
 				}
 				
-				//Zweite shopping Action
+			/*	//Zweite shopping Action
 				shoppingSessionFacade.setCustomer(customer);
 				shoppingSessionFacade.setTouchpoint(sttp);
 				shoppingSessionFacade.addProduct(product, 10);
@@ -222,7 +222,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					shoppingSessionFacade.purchase();
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 				
 				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
 				setResponsePage(getPage());	
