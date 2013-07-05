@@ -73,8 +73,7 @@ public class CustomerTransactionCRUDStateless implements
 	}
 
 	@Override
-	public Collection<CustomerTransaction> readAllTransactionsForCustomer(
-			Customer customer) {
+	public Collection<CustomerTransaction> readAllTransactionsForCustomer(Customer customer) {
 		logger.info("readAllTransactionsForCustomer(): " + customer);
 
 		Query query = em

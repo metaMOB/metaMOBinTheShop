@@ -163,7 +163,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 			@Override
 			public void onClick(AjaxRequestTarget target) {
 				//customer
-				customerCRUD.createCustomer(new Customer("Hans", "Heimlich", Gender.M, "01234579", "hans@wurst.de", "test123"));
+				
+				Customer customer = new Customer("Hans", "Heimlich", Gender.M, "01234579", "hans@wurst.de", "test123");
+				customerCRUD.createCustomer(customer);
 				customerCRUD.createCustomer(new Customer("Felix", "Helix", Gender.M, "01234579", "felix@helix.de", "test123"));
 				customerCRUD.createCustomer(new Customer("Philipp", "UelksMulks", Gender.M, "01234579", "moep@boep.de", "test123"));
 				
@@ -182,10 +184,11 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
+				IndividualisedProductItem product2= (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180));
 				
 				//StockItems
 				stockSystem.addToStock(product, pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180)), pos1.getId(), 10000);
+				stockSystem.addToStock(product2, pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zimtstern",ProductType.PASTRY,0 , 35)), pos1.getId(), 10000);
@@ -193,21 +196,20 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Kraftmeier",ProductType.ROLL,0, 65)), pos1.getId(), 10000);
 
 				stockSystem.addToStock(product, pos2.getId(), 10000);
+				stockSystem.addToStock(product2, pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
 				
+				shoppingSessionFacade.setCustomer(customer);
+				shoppingSessionFacade.setTouchpoint(sttp);
+				shoppingSessionFacade.addProduct(product, 10);
+				shoppingSessionFacade.addProduct(product2, 3);
 				
-				
-				
-				/*shoppingSessionFacade.addProduct(product, 10);
-				
-				UserShoppingCart usc = new UserShoppingCart();
-				usc.add(new ShoppingItem(product));
-				usc.add(new ShoppingItem(product));
-				
-				for (ShoppingItem si:usc){
-					System.out.println("----->"+si.getProduct().getName());
-				}*/
+				try {
+					shoppingSessionFacade.purchase();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
 				setResponsePage(getPage());	
