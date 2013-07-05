@@ -107,10 +107,8 @@ public class CustomerTransactionCRUDStateless implements
 		List<CustomerTransaction> trans = query.getResultList();
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): " + trans);
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): class is: "
-				+ (trans == null ? "<null pointer>" : String.valueOf(trans
-						.getClass())));
+				+ (trans == null ? "<null pointer>" : String.valueOf(trans.getClass())));
 
 		return trans;
 	}
-
 }

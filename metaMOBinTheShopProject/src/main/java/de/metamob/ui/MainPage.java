@@ -200,6 +200,19 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
 				
+				//Erste shopping Action
+				shoppingSessionFacade.setCustomer(customer);
+				shoppingSessionFacade.setTouchpoint(sttp);
+				shoppingSessionFacade.addProduct(product, 10);
+				shoppingSessionFacade.addProduct(product2, 3);
+				
+				try {
+					shoppingSessionFacade.purchase();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				//Zweite shopping Action
 				shoppingSessionFacade.setCustomer(customer);
 				shoppingSessionFacade.setTouchpoint(sttp);
 				shoppingSessionFacade.addProduct(product, 10);

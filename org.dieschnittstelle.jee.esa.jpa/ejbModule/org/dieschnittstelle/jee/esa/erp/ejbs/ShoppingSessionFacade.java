@@ -144,11 +144,10 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 		}
 		
 		// then we add a new customer transaction for the current purchase
-		CustomerTransaction transaction = new CustomerTransaction(
-				this.customer, this.touchpoint, products);
+		CustomerTransaction transaction = new CustomerTransaction(this.customer, this.touchpoint, products);
 		transaction.setCompleted(true);
 		customerTracking.createTransaction(transaction);
-
+		products.clear();
 		logger.info("commit(): done.");
 	}
 	
