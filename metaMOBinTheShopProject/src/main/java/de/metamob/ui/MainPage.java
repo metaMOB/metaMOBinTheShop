@@ -37,8 +37,10 @@ import org.apache.wicket.authroles.authentication.panel.SignInPanel;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.behavior.Behavior;
 import org.dieschnittstelle.jee.esa.crm.ejbs.UserCheckLocal;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.AdressCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.Address;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
@@ -58,11 +60,14 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	@EJB(name="CustomerCRUD")
 	private CustomerCRUDLocal customerCRUD;
 	
-	@EJB(name="StockSystem")
-	private StockSystemLocal stockSystem;
-	
 	@EJB(name="ProductCRUD")
 	private ProductCRUDLocal productCRUD;
+	
+	@EJB(name="AdressCRUD")
+	private AdressCRUDLocal adressCRUD;
+	
+	@EJB(name="StockSystem")
+	private StockSystemLocal stockSystem;
 	
 	@EJB(name="shoppingSystem")
 	private ShoppingSessionFacadeLocal shoppingSessionFacade;
@@ -167,11 +172,12 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
-				
+				sttp.setLocation(new Address("Luxemburger Straﬂe", "10", "DE-13353", "Berlin", 52.54478f, 13.35320f));
 				sttp.setName("Conys Backstube");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				sttp = new StationaryTouchpoint(pos2.getId());
+				sttp.setLocation(new Address("Pettenkofer Straﬂe", "13", "DE-10353", "Berlin", 52.51757f, 13.47216f));
 				sttp.setName("Der Kondidor");
 				touchpointCRUD.createTouchpoint(sttp);
 				
@@ -185,8 +191,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zimtstern",ProductType.PASTRY,0 , 35)), pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85)), pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Kraftmeier",ProductType.ROLL,0, 65)), pos1.getId(), 10000);
+
+				stockSystem.addToStock(product, pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
+				
+				
+				
 				
 				/*shoppingSessionFacade.addProduct(product, 10);
 				

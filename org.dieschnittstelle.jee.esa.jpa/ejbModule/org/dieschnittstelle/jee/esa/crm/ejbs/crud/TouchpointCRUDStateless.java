@@ -22,7 +22,6 @@ protected static Logger logger = Logger.getLogger(TouchpointCRUDStateless.class)
 	public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) {
 		logger.info("createTouchpoint(): before persist(): " + touchpoint);
 		em.persist(touchpoint);
-		
 		logger.info("createdtouchpoint(): after persist(): " + touchpoint);
 
 		return touchpoint;

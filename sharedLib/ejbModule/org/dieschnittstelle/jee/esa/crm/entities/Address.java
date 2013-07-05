@@ -12,10 +12,7 @@ import org.jboss.logging.Logger;
 public class Address extends Location  implements Serializable {
 	
 	protected static Logger logger = Logger.getLogger(Address.class);
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private String street;
@@ -37,7 +34,7 @@ public class Address extends Location  implements Serializable {
 		this.city = city;
 	}
 
-	public Address(String street,String houseNr,String zipCode,String city, long geoLat,long geoLong) {
+	public Address(String street,String houseNr,String zipCode,String city, float geoLat, float geoLong) {
 		this(street,houseNr,zipCode,city);
 		this.setGeoLat(geoLat);
 		this.setGeoLong(geoLong);
@@ -86,5 +83,4 @@ public class Address extends Location  implements Serializable {
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-
 }

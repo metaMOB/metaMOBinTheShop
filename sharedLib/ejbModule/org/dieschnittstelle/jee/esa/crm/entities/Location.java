@@ -32,9 +32,9 @@ public class Location implements Serializable {
 
 	private int id = -1;
 	
-	private long geoLat;
+	private float geoLat;
 	
-	private long geoLong;
+	private float geoLong;
 	
 	@Id
 	@GeneratedValue
@@ -46,19 +46,19 @@ public class Location implements Serializable {
 		this.id = id;
 	}
 
-	public long getGeoLat() {
+	public float getGeoLat() {
 		return geoLat;
 	}
 
-	public void setGeoLat(long geoLat) {
+	public void setGeoLat(float geoLat) {
 		this.geoLat = geoLat;
 	}
 
-	public long getGeoLong() {
+	public float getGeoLong() {
 		return geoLong;
 	}
 
-	public void setGeoLong(long geoLong) {
+	public void setGeoLong(float geoLong) {
 		this.geoLong = geoLong;
 	}
 	
