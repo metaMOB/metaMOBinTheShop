@@ -15,9 +15,12 @@ import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
+import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.Campaign;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductNotInStockException;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductUnitCountToLowInStockException;
 import org.jboss.logging.Logger;
 
 @Stateful
@@ -36,6 +39,8 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 	//private CampaignTrackingRemote campaignTracking;
 	@EJB(beanName="StockSystem")
 	private StockSystemLocal stockSystem;
+	@EJB(beanName="ProductCRUD")
+	private ProductCRUDLocal productCRUD;
 	
 	private Customer customer;
 	private AbstractTouchpoint touchpoint;
@@ -80,7 +85,7 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 		}
 	}
 	
-	private ProductCount checkStock(CrmProductBundle productBundle, List<IndividualisedProductItem> stockProducts) throws Exception{
+	private ProductCount checkStock(CrmProductBundle productBundle, List<IndividualisedProductItem> stockProducts) throws ProductNotInStockException{
 		int id = productBundle.getErpProductId();
 		int count = productBundle.getUnits();
 		IndividualisedProductItem currentProduct = null;
@@ -91,18 +96,18 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 		}
 		if(currentProduct==null){
 			// product not in stock:
-			throw new Exception("purchase() failed because product (ID: "+id+") not in stock");
+			throw new ProductNotInStockException(productCRUD.readProduct(id),productBundle.getUnits());
 			//throw new RuntimeException("purchase() failed because product (ID: "+id+") not in stock");
 		}else if(stockSystem.getUnitsOnStock(currentProduct, touchpoint.getErpPointOfSaleId())<count){
 			// prouct unit count to low:
-			throw new Exception("purchase() failed because product (ID: "+id+") unit count to low in stock");
+			throw new ProductUnitCountToLowInStockException(productCRUD.readProduct(id),productBundle.getUnits());
 		}else{
 			return new ProductCount(count, currentProduct);
 		}
 	}
 	
 	@Override
-	public void purchase() throws Exception {
+	public void purchase() throws ProductNotInStockException{
 		logger.info("commit()");
 		if (this.customer == null || this.touchpoint == null) {
 			throw new RuntimeException(

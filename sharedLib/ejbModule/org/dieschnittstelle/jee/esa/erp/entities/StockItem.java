@@ -45,7 +45,6 @@ public class StockItem implements Serializable{
 	public StockItem(AbstractProduct product, PointOfSale pos, int units) {
 		this.product = product;
 		this.pos = pos;
-		this.price = price;
 	}
 
 	public PointOfSale getPos() {
