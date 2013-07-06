@@ -145,6 +145,7 @@ public class TouchPointPanel extends Panel {
     		public void onClick(AjaxRequestTarget target) {
     			
     			if(SessionUtil.isLoggedIn()){
+    				shoppingSession.reset();
     				UserShoppingCart userShoppingCart = SessionUtil.getShoppingCarts().getShoppingCard(tp);
     				shoppingSession.setCustomer(SessionUtil.getCurrentUser());
     				shoppingSession.setTouchpoint(tp);
