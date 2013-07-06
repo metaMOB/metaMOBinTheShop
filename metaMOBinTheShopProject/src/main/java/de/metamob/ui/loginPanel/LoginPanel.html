@@ -1,22 +1,21 @@
 <wicket:panel>
 	<div class="wrapper">
-          <div class="head">
-            <h1>Login</h1>
-          </div>
-          <div class="content">
-          <div wicket:id="feedback"></div>
-          
-          		<form wicket:id="formLogin">
-              <label id="inputs">E-Mail</label>
-              <input type="text" placeholder="Ihre E-Mailadresse" name="email" wicket:id="emailLogin" required>
-              <div style="clear:both;"></div>
-              <label id="inputs">Passwort</label>
-              <input type="password" placeholder="Ihr Passwort" name="passwort" wicket:id="passwordLogin">
-          	<button type="submit" class="butlogin" wicket:id="submitLogin">Einloggen</button>
-            <span style="clear:both;"></span>
-          	</form>
-        <div class="underline"></div>
-        <p><a href="#">Passwort vergessen?</a></p>
-      </div>
-    </div>
+		<div class="head" style="padding-top:4px; padding-bottom:3px;">
+			<h1>Login</h1>
+		</div>
+		<div class="content">
+			<div wicket:id="feedback"></div>
+			<form wicket:id="formLogin">
+				<label id="inputs">E-Mail</label> <input type="text"
+					placeholder="Ihre E-Mailadresse" name="email"
+					wicket:id="emailLogin" required>
+				<label id="inputs">Passwort</label> <input type="password"
+					placeholder="Ihr Passwort" name="passwort"
+					wicket:id="passwordLogin">
+				<button type="submit" class="butlogin" wicket:id="submitLogin">Einloggen</button>
+			</form>
+			<div class="underline"></div>
+			<a href="#">Passwort vergessen?</a>
+		</div>
+	</div>
 </wicket:panel>

@@ -13,6 +13,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
+import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
 import org.wicketstuff.gmap.api.GMarker;
@@ -35,7 +36,7 @@ public class TouchPointAlternatives extends Panel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TouchPointAlternatives(String id, List <AbstractTouchpoint> alternativeTP) {
+	public TouchPointAlternatives(String id, List <AbstractTouchpoint> alternativeTP, String productName) {
 		super(id);
 		// TODO Auto-generated constructor stub
 		positionDummy = new MapPanel ("position");
@@ -43,21 +44,21 @@ public class TouchPointAlternatives extends Panel {
 		positionDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
 		messageDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
 		
-		addTouchpointAlternatives(alternativeTP);
+		addTouchpointAlternatives(alternativeTP, productName);
 	}
 	
-	public void updateData(List <AbstractTouchpoint> alternativeTP){
-		addTouchpointAlternatives(alternativeTP);
+	public void updateData(List <AbstractTouchpoint> alternativeTP, String productName){
+		addTouchpointAlternatives(alternativeTP, productName);
 	}
 	
-	private void addTouchpointAlternatives(List <AbstractTouchpoint> alternativeTP){
+	private void addTouchpointAlternatives(List <AbstractTouchpoint> alternativeTP, String productName){
 		if (alternativeTP.size()> 0){		
 			remove(positionDummy);
 			remove(messageDummy);
 			
 			map = new MapPanel("position");
 			map.add(new AttributeAppender("style", new Model<String>("height:300px;")));
-			add(new MessagePanel("message"));
+			add(new MessagePanel("message", productName));
 			add(map);
 	                        
 	        for (AbstractTouchpoint at: alternativeTP){

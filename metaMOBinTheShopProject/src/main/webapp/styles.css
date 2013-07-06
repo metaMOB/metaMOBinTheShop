@@ -15,6 +15,8 @@ body {
 	background: url(images/sitegrey.png);
 	margin:18px 0 0 0;
 	font-weight:300;
+		-webkit-font-smoothing: antialiased;
+
 }
 
 /*.tttest {
@@ -241,14 +243,35 @@ nav.list li:last-child {
 }
 
 
-nav.list li:hover {
+nav.list a:hover {
 	padding-left:17px;
 	background-color: rgba(255,255,255,.3);
 	
 	font-weight:700;
-	background:url(images/actkat.png) 0 14px no-repeat;
+	background:url(images/actkat.png) 0 5px no-repeat;
 	
 }
+
+nav.list a.aktiv {
+	padding-left:17px;
+	background-color: rgba(255,255,255,.3);
+	
+	font-weight:700;
+	background:url(images/actkat.png) 0 5px no-repeat;
+}
+
+
+nav.list a.aktiv:hover {
+	padding-left:17px;
+	background-color: rgba(255,255,255,.3);
+	font-weight:700;
+	background:url(images/actkat.png) 0 5px no-repeat;
+}
+
+
+
+
+
 /* --- ENDE - List 1 NAVIGATION --- */
 
 .listhead {
@@ -287,13 +310,12 @@ button.cart:hover {
 	margin:0 5px 0 -2px;
   background-color: #FF6761;
   /*border-bottom: 2px solid #FF6761;*/
-  font-weight:700;
   color: #002E40;
-  padding: 4px 10px 3px 10px;
-  text-align: center;
+  padding: 4px 10px 0px 10px;
+  text-align:center;
   cursor:default;
   font-weight:300;
-  
+  height:22px;
 }
 
 
@@ -337,24 +359,26 @@ button.ordernow:hover {
 
 
 a.buttonwarenkorb {
-  cursor:pointer;
-  position:absolute;
-  bottom:5px;
-  right:5px;
-	  background-color: #002E40;
-	  /*border-bottom: 2px solid #FF6761;*/
-	  font-weight:700;
-	  color: #FFF;
-	  padding: 10px 15px 10px 15px;
-	  font-size:14px;
-	  cursor:pointer;
+  	cursor:pointer;
+  	position:absolute;
+  	bottom:5px;
+  	right:5px;
+	background-color: #002E40;
+	font-family: Tahoma, Geneva, sans-serif, sans-serif;
+	/*border-bottom: 2px solid #FF6761;*/
+	color: #FFF;
+	padding: 10px 15px 10px 15px;
+	font-size:14px;
+	font-weight:bold;
+	cursor:pointer;
+	font- 
 }
 
 a.buttonwarenkorb:hover {
 	padding: 10px 15px 10px 31px;
 	background:url(images/cartsmaller.png) 7px 12px no-repeat;
 	background-color: #FF6761;
-	color:#000;
+	color:#002E40;
 	
 }
 
@@ -419,13 +443,6 @@ li.productitem:hover{
 
 
 
-.productitem a{
-	color:#FFF;
-}
-
-.productitem a:hover{
-	color:#002E40;
-}
 
 .item {
 	width:688px;
@@ -448,11 +465,12 @@ li.productitem:hover{
 .titel{
 	font-weight:700;
 	padding:6px 5px 5px 0;
+	font-size:14px;
 }
 
 .description {
 	line-height:140%;
-	font-size:12px;
+	font-size:13px;
 	margin-bottom:50px;
 }
 
@@ -780,11 +798,6 @@ ul.searchLists li:nth-child(2n) {
 	 margin:15px 0 0 0;
 	 padding:10px;
 	 background-color:#FDFDFD;
-	 height:0px;
-	visibility:hidden;
-	overflow:hidden;
-	margin:0;
-	padding:0px;
 }
 
 .orderdetails{
@@ -857,7 +870,7 @@ footer {
 
 
 
-input[type=text], textarea {
+input[type=text], textarea, input[type=password] {
 	border:1px solid #C5C5C5;
 	border-radius: 2px;
 	box-shadow: 0px 0px 2px 1px rgba(255, 255, 255, 0.35), 0px 0px 3px 0px rgba(0, 0, 0, 0.2) inset;
@@ -866,6 +879,11 @@ input[type=text], textarea {
 	border:inset 2px solid rgb(231, 239, 241);
 	font: normal 12px arial, helvetica;
 	line-height:15px;
+	
+	width:229px;
+	height:25px;
+	padding:0 0 1px 7px;
+	margin:0 0 10px 8px;
 }
 
 
@@ -925,13 +943,6 @@ label {
 	float:left;
 }
 
-.content input[type=text] {
-	width:220px;
-	height:25px;
-	padding:0 0 1px 7px;
-	margin:0 0 10px 8px;
-	line-height:23px;
-}
 
 .underline {
 	height:1px;

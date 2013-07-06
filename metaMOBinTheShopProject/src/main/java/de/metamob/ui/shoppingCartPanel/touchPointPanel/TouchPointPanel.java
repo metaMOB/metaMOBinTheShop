@@ -79,7 +79,7 @@ public class TouchPointPanel extends Panel {
 		add(new Label("touchpointName", tp.getName()));
 		
 		if (touchPointAlternatives == null){
-			touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>());
+			touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>(), "");
 		}
 		touchPointAlternatives.setOutputMarkupId(true);
 		//touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:0px; overflow:hidden; margin:0px; padding:0px;")));
@@ -182,7 +182,7 @@ public class TouchPointPanel extends Panel {
 						System.out.println(errorMSG);
 						List<AbstractTouchpoint> lst = touchpointCRUD.readTouchpoins(stockSystem.getPointsOfSale((IndividualisedProductItem) product,e.getUnits()));
 						//touchPointAlternatives = new TouchPointAlternatives("alternatives", lst);
-						touchPointAlternatives.updateData(lst);
+						touchPointAlternatives.updateData(lst, product.getName());
 						touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
 						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + lst.size());
 						

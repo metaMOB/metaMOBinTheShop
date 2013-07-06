@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -17,6 +18,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import de.metamob.data.shoppingCart.UserTransaction;
@@ -47,6 +49,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	private Panel transactionPanel;
 	private MainPanel self;
 
+	private AjaxLink<Void> linkAllCategories;
+	
 	@EJB(name="TouchpointCRUD")
     private TouchpointCRUDLocal touchpointCRUDRemote;
 	
@@ -58,15 +62,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		self = this;
 		this.iMainPageCallback = mainPageCallback;
 		// TODO Auto-generated constructor stub
-		
-		/*PropertyModel<String> messageModel = new PropertyModel<String>(this, "message");
-		 	
-		add(new Label("msg", messageModel));
-	    Form<?> form = new Form("form");
-	    form.add(new TextField<String>("msgInput", messageModel));
-	    add(form);*/
-	        
-	        //addAllSelectors();
+		    
 	        addCategoryModule();  
 	        
 	        add (itemPanel);
@@ -87,6 +83,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		super.onBeforeRender();
 		addTouchpointModule();
 		addLastOrders();
+		addAllSelectors();
 	}
 	
     private void addCategoryModule() {
@@ -110,7 +107,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 						setResponsePage(getPage());	
 		            }
 				};
-				
+				if (SessionUtil.getUIUserConfiguration().getProductType()==ProductType.fromReadableString((String) entry.getModel().getObject())){
+					link.add(new AttributeAppender("class", new Model<String>("aktiv")));
+		    	}
 				link.add(new Label("categoryName", entry.getModel().getObject()));
 				entry.add(link);	
 			}
@@ -158,7 +157,10 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		            }
 				};
 				
-				link.add(new Label("touchpointName", "TOUCHPOINT: "+entry.getModel().getObject().getName()));
+				link.add(new Label("touchpointName", entry.getModel().getObject().getName()));
+				if (SessionUtil.getUIUserConfiguration().getTouchpont().getId()==entry.getModel().getObject().getId()){
+					link.add(new AttributeAppender("class", new Model<String>("aktiv")));
+		    	}				
 				entry.add(link);
 			}       	
         };
@@ -170,47 +172,24 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
         add(touchpoints);
     }
     
-
-    
-    private void addItemModule() {
-    	
-    	List<Item> myList = new ArrayList<Item>();
-    	myList.add(new Item("0001", "Broetchen", "Bal bal blub... juhu das funzt", (float) 10.99, "images/products/example.jpg"));
-      	myList.add(new Item("0002", "Stulle", "Bal bal blub... juhu das funzt", (float) 1.99, "images/products/example.jpg"));
-      	myList.add(new Item("0003", "Brot", "Bal bal blub... juhu das funzt", (float) 2.99, "images/products/example.jpg"));
-      	myList.add(new Item("0004", "Hoernchen", "Bal bal blub... juhu das funzt", (float) 2.50, "images/products/example.jpg"));
-      	myList.add(new Item("0005", "Frankfurter Kranz", "Bal bal blub... juhu das funzt", (float) 15.00, "images/products/example.jpg"));
-      	myList.add(new Item("0006", "Mohnbroetchen", "Bal bal blub... juhu das funzt", (float) 0.99, "images/products/example.jpg"));
-    
-      	add (new ItemPanel("itemPanel", this));
-    }
-
     private void addAllSelectors(){
-    	AjaxLink<Void> linkAllTouchpoints = new AjaxLink<Void>("touchpointAllLink"){
-    		@Override
-    		public void onClick(AjaxRequestTarget target) {
-    			System.out.println("NO TOUCHPOINT");
-    			//setSelTouchPoint
-    			
-				UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
-				uiuc.setTouchpont(null);
-				SessionUtil.setUIUserConfiguration(uiuc);
-				
-				setResponsePage(getPage());	
-    		}
-    	};
-    	add(linkAllTouchpoints);
-    	
-    	AjaxLink<Void> linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
+    	linkAllCategories = new AjaxLink<Void>("categoryAllLink"){
     		@Override
     		public void onClick(AjaxRequestTarget target) {
     			System.out.println("NO CATEGORY");
     			UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 				uiuc.setProductType(null);
 				SessionUtil.setUIUserConfiguration(uiuc);
+				
 				setResponsePage(getPage());	
     		}
     	};
+    	if (SessionUtil.getUIUserConfiguration().getProductType()==null){
+    		linkAllCategories.add(new AttributeAppender("class", new Model<String>("aktiv")));
+    	}
+    	if (linkAllCategories != null){
+    		remove(linkAllCategories);
+    	}
     	add(linkAllCategories);
     }
     
@@ -278,19 +257,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 					// TODO Auto-generated method stub	        		
 					AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
 						@Override
-						public void onClick(AjaxRequestTarget target) {
-							/*AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
-							System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
-							self.mode = "SHOPPINGCART";
-							currentDisplay(target);
-							//setSelTouchPoint
-							UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
-							uiuc.setTouchpont(temp);
-							SessionUtil.setUIUserConfiguration(uiuc);
-							
-							SessionUtil.setCurrentPage(0);
-							setResponsePage(getPage());	*/
-							
+						public void onClick(AjaxRequestTarget target) {							
 							currentDisplay(target, "TRANSACTIONDISPLAY", tempOrder);
 							setResponsePage(getPage());	
 			            }
