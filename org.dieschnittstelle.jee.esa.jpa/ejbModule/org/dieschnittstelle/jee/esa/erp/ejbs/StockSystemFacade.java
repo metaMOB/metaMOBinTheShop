@@ -1,7 +1,9 @@
 package org.dieschnittstelle.jee.esa.erp.ejbs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -14,6 +16,7 @@ import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductUnitCountToLowInStockException;
 
 /**
  * Session Bean implementation class StockSystemFacade
@@ -47,10 +50,10 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
      * @throws Exception 
      * @see StockSystemRemote#removeFromStock(IndividualisedProductItem, int, int)
      */
-    public void removeFromStock(IndividualisedProductItem product, int pointOfSaleId, int units) throws Exception {
+    public void removeFromStock(IndividualisedProductItem product, int pointOfSaleId, int units) throws ProductUnitCountToLowInStockException {
     	StockItem stockItem = stockItemCRUD.getStockItem(product, pointOfSaleCRUD.readPointOfSale(pointOfSaleId));
     	if(stockItem.getUnits()<units){
-    		throw new Exception("Not enough units of product ("+product.getId()+") at Point of Sale ("+pointOfSaleId+")");
+    		throw new ProductUnitCountToLowInStockException(product, units);
     	}
     	stockItem.setUnits(stockItem.getUnits()-units);
     	stockItemCRUD.updateStockItem(stockItem);
@@ -103,12 +106,19 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
 	/**
      * @see StockSystemRemote#getPointsOfSale(IndividualisedProductItem)
      */
-    public List<Integer> getPointsOfSale(IndividualisedProductItem product) {    
-    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock((AbstractProduct)product);
-    	List<Integer> result = new ArrayList<Integer>();
+    
+    public List<Integer> getPointsOfSale(IndividualisedProductItem product, int minUnits) {    
+    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock((AbstractProduct)product, minUnits);
+    	Set<Integer> ids = new HashSet<Integer>();
+    	
     	for (StockItem stockItem:stockItems){
-    		result.add(stockItem.getProduct().getId());
+    		ids.add(stockItem.getPos().getId());
     	}
-		return result;
+    	
+		return new ArrayList<Integer>(ids);
+    }
+    
+    public List<Integer> getPointsOfSale(IndividualisedProductItem product) {    
+    	return getPointsOfSale(product,0);
     }
 }

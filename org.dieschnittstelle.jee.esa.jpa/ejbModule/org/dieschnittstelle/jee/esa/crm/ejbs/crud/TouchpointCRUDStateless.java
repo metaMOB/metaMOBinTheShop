@@ -61,15 +61,17 @@ protected static Logger logger = Logger.getLogger(TouchpointCRUDStateless.class)
 	@Override
 	public List<AbstractTouchpoint> readAllTouchpoints() {
 		logger.info("readAllTouchpoint()");
-		
 		Query query = em.createQuery("FROM AbstractTouchpoint");
-
-		List<AbstractTouchpoint> tps = (List<AbstractTouchpoint>) query
-				.getResultList();
-		
+		List<AbstractTouchpoint> tps = (List<AbstractTouchpoint>) query.getResultList();
 		logger.info("readAllTouchpoints(): " + tps);
-
 		return tps;
+	}
+
+	@Override
+	public List<AbstractTouchpoint> readTouchpoins(List<Integer> posIds) {
+		Query query = em.createQuery("SELECT a FROM AbstractTouchpoint a WHERE a.erpPointOfSaleId IN :values",AbstractTouchpoint.class);
+		query.setParameter("values", posIds);
+		return (List<AbstractTouchpoint>) query.getResultList();
 	}
 
 }

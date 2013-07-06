@@ -5,6 +5,7 @@ import java.util.List;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 import org.dieschnittstelle.jee.esa.erp.entities.SortType;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductUnitCountToLowInStockException;
 
 public interface StockSystemInterface {
 	
@@ -25,7 +26,7 @@ public interface StockSystemInterface {
 	 * @param units
 	 * @throws Exception 
 	 */
-	public void removeFromStock(IndividualisedProductItem product,int pointOfSaleId,int units) throws Exception;
+	public void removeFromStock(IndividualisedProductItem product,int pointOfSaleId,int units) throws ProductUnitCountToLowInStockException;
 	
 	/**
 	 * returns all products on stock of some pointOfSale
@@ -68,6 +69,6 @@ public interface StockSystemInterface {
 	 * @return
 	 */
 	public List<Integer> getPointsOfSale(IndividualisedProductItem product);
-
+	public List<Integer> getPointsOfSale(IndividualisedProductItem product, int minUnits);
 
 }

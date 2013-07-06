@@ -165,9 +165,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				//customer
 				
 				Customer customer = new Customer("Hans", "Heimlich", Gender.M, "01234579", "hans@wurst.de", "test123");
-				customerCRUD.createCustomer(customer);
+				customer = customerCRUD.createCustomer(customer);
 				customerCRUD.createCustomer(new Customer("Felix", "Helix", Gender.M, "01234579", "felix@helix.de", "test123"));
 				customerCRUD.createCustomer(new Customer("Philipp", "UelksMulks", Gender.M, "01234579", "moep@boep.de", "test123"));
+				
+				SessionUtil.login(customer);
+				userLoggedIn();
+				
 				
 				//points of sale
 				PointOfSale pos1 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
@@ -187,7 +191,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				IndividualisedProductItem product2= (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180));
 				
 				//StockItems
-				stockSystem.addToStock(product, pos1.getId(), 10000);
+				stockSystem.addToStock(product, pos1.getId(), 2);
 				stockSystem.addToStock(product2, pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);

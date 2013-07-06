@@ -85,12 +85,17 @@ public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRU
     	return em.createQuery(queryString).getResultList();
     }
     
-    public List<StockItem> readUnitsOnStock(AbstractProduct product){
+    public List<StockItem> readUnitsOnStock(AbstractProduct product, int minUnits){
     	if (product==null){
     		return null;
     	}
     	String queryString = "SELECT a FROM StockItem a WHERE a.product.id = " + product.getId();
+    	queryString += " AND a.units >= "+minUnits;
     	return em.createQuery(queryString).getResultList();
+    }
+    
+    public List<StockItem> readUnitsOnStock(AbstractProduct product){
+    	return readUnitsOnStock(product, 0);
     }
     
     public StockItem getStockItem(AbstractProduct product, PointOfSale pos){

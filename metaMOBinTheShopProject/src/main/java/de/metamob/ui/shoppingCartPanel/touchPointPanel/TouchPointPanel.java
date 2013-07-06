@@ -27,7 +27,12 @@ import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
+import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
+import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
+import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductNotInStockException;
+import org.dieschnittstelle.jee.esa.erp.exceptions.ProductUnitCountToLowInStockException;
 import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GMarker;
 import org.wicketstuff.gmap.api.GMarkerOptions;
@@ -41,12 +46,16 @@ import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.shoppingCartPanel.touchPointAlternatives.TouchPointAlternatives;
 
 public class TouchPointPanel extends Panel {
-	
+	private static final long serialVersionUID = -2165796168630701367L;
+
 	@EJB(name="shoppingSystem")
-	private ShoppingSessionFacadeLocal shoppingSessionFacade;
+	private ShoppingSessionFacadeLocal shoppingSession;
 	
 	@EJB(name="TouchpointCRUD")
-    private TouchpointCRUDLocal touchpointCRUDRemote;
+    private TouchpointCRUDLocal touchpointCRUD;
+	
+	@EJB(name="StockSystem")
+	private StockSystemLocal stockSystem;
 	
 	private TouchPointPanel self;
 	private int priceTotal = 0;	
@@ -134,36 +143,46 @@ public class TouchPointPanel extends Panel {
     			
     			if(SessionUtil.isLoggedIn()){
     				UserShoppingCart userShoppingCart = SessionUtil.getShoppingCarts().getShoppingCard(tp);
-    				shoppingSessionFacade.setCustomer(SessionUtil.getCurrentUser());
-    				shoppingSessionFacade.setTouchpoint(tp);
+    				shoppingSession.setCustomer(SessionUtil.getCurrentUser());
+    				shoppingSession.setTouchpoint(tp);
     				for (ShoppingItem item : userShoppingCart){
-        				shoppingSessionFacade.addProduct(item.getProduct(), item.getUnits());
+        				shoppingSession.addProduct(item.getProduct(), item.getUnits());
         				// MAP
         				
     				}
     				
     				try {
-						shoppingSessionFacade.purchase();	
+						shoppingSession.purchase();	
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
 						remove(touchPointAlternatives);
-        				touchPointAlternatives = new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints());
-        				add(touchPointAlternatives);
-					} catch (Exception e) {
-						System.out.println("!!!!! "+e.getMessage()+" !!!!!!");
-						// MAP
-						remove(touchPointAlternatives);
-						touchPointAlternatives = new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints());
+						
+					} catch (ProductNotInStockException e) {
+						AbstractProduct product = e.getProduct();
+						String errorMSG = "Product '"+product.getName()+"' befindet sich nicht im Lager des Touchpoints.";
+						if (e instanceof ProductUnitCountToLowInStockException) {
+							errorMSG = "Touchpoint verfügt nicht über genügend einheiten des Products '"+product.getName()+"'";
+						}
+						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+						System.out.println(errorMSG);
+						List<AbstractTouchpoint> lst = touchpointCRUD.readTouchpoins(stockSystem.getPointsOfSale((IndividualisedProductItem) product,e.getUnits()));
+						touchPointAlternatives = new TouchPointAlternatives("alternatives", lst);
+						
+						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + lst.size());
 						
 						add(touchPointAlternatives);
+        				setResponsePage(getPage());
+					} catch (Exception e) {
+						
+						e.printStackTrace();
 					}
     				
     				setResponsePage(getPage());	
     			}else{
     				System.out.println("!!!!! USER NOT LOGGED IN !!!!!!");
     				//touchPointAlternatives = new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints());
-    				touchPointAlternatives.updateData(touchpointCRUDRemote.readAllTouchpoints());
-    				touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
-					target.add(touchPointAlternatives);
+    				//touchPointAlternatives.updateData(touchpointCRUD.readAllTouchpoints());
+    				//touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
+					//target.add(touchPointAlternatives);
 					//setResponsePage(getPage());	
     			}
     		}

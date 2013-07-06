@@ -13,6 +13,7 @@ public interface StockItemCRUDInterface {
 	 public StockItem updateStockItem(StockItem stockItem);
 	 public StockItem getStockItem(AbstractProduct product, PointOfSale pos);
 	 public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType);
+	 public List<StockItem> readUnitsOnStock(AbstractProduct product, int minUnits);
 	 public List<StockItem> readUnitsOnStock(AbstractProduct product);
 	 public Integer getStockItemUnitCount(IndividualisedProductItem product, PointOfSale pos);
 }
