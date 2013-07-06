@@ -1,5 +1,6 @@
 package de.metamob.data.shoppingCart;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 
-public class UserTransaction {
+public class UserTransaction implements Serializable {
 	
 	@EJB(name="ProductCRUD")
 	private ProductCRUDLocal productCRUD;

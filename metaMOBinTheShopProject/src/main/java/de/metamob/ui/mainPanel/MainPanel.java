@@ -27,6 +27,7 @@ import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.itemPanel.ItemPanel;
 import de.metamob.ui.shoppingCartPanel.ShoppingCartPanel;
+import de.metamob.ui.transactions.TransactionPanel;
 
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerTransactionCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
@@ -43,6 +44,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	private Panel itemPanel = new ItemPanel("itemPanel", this);
 	private Panel shoppingCartPanel;
 	private Panel visiblePanel = itemPanel;
+	private Panel transactionPanel;
 	private MainPanel self;
 
 	@EJB(name="TouchpointCRUD")
@@ -66,7 +68,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        
 	        //addAllSelectors();
 	        addCategoryModule();  
-	        addLastOrders();
+	        
 	        add (itemPanel);
 	        //addItemModule();
 	}
@@ -84,6 +86,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	public void onBeforeRender(){
 		super.onBeforeRender();
 		addTouchpointModule();
+		addLastOrders();
 	}
 	
     private void addCategoryModule() {
@@ -97,8 +100,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				AjaxLink<Void> link = new AjaxLink<Void>("categoryLink"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						self.mode = "SHOPPINGCART";
-						currentDisplay(target);
+						self.mode = "ITEMDISPLAY";
+						currentDisplay(target, "ITEMDISPLAY", null);
 						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 						uiuc.setProductType((ProductType) entry.getModel().getObject());
 						SessionUtil.setUIUserConfiguration(uiuc);
@@ -141,8 +144,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 					public void onClick(AjaxRequestTarget target) {
 						AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
 						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
-						self.mode = "SHOPPINGCART";
-						currentDisplay(target);
+						self.mode = "ITEMDISPLAY";
+						currentDisplay(target, "ITEMDISPLAY", null);
 						//setSelTouchPoint
 						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 						uiuc.setTouchpont(temp);
@@ -217,8 +220,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		this.message = message;
 	}*/
 	
-	public void currentDisplay(AjaxRequestTarget target){
-		if (mode.equals("SHOPPINGCART")){
+	public void currentDisplay(AjaxRequestTarget target, String view, Object object){
+		if (view.equals("ITEMDISPLAY")){
 			System.out.println("CHANGE TO ITEMPANEL");
 			itemPanel = new ItemPanel("itemPanel", this); 
 			visiblePanel.replaceWith(itemPanel);
@@ -227,19 +230,23 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 			//visiblePanel.setOutputMarkupId(true);
 			
 			add(visiblePanel);
-			this.mode = "ITEMDISPLAY";
 			setResponsePage(getPage());	
 		}
-		else if (mode.equals("ITEMDISPLAY")){
+		else if (view.equals("SHOPPINGCART")){
 			System.out.println("CHANGE TO SHOPPINGCART");
 			shoppingCartPanel = new ShoppingCartPanel("itemPanel", this); 
 			visiblePanel.replaceWith(shoppingCartPanel);
 			visiblePanel = shoppingCartPanel;
 			
-			//visiblePanel.setOutputMarkupId(true);
-			
 			add(visiblePanel);
-			this.mode = "SHOPPINGCART";
+			setResponsePage(getPage());	
+		}
+		else if (view.equals("TRANSACTIONDISPLAY")){
+			System.out.println("CHANGE TO TRANSACTIONDISPLAY");
+			transactionPanel = new TransactionPanel("itemPanel", this, (UserTransaction) object);
+			visiblePanel.replaceWith(transactionPanel);
+			visiblePanel = transactionPanel;
+			add(visiblePanel);
 			setResponsePage(getPage());	
 		}
 	}
@@ -263,7 +270,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				protected void populateItem(final ListItem<CustomerTransaction> entry) {
 	        		
 	        		//UserTransaction tempOrd = new UserTransaction(entry.getModelObject());
-	        		UserTransaction tempOrd = new UserTransaction();
+	        		final UserTransaction tempOrder = new UserTransaction();
 					// TODO Auto-generated method stub	        		
 					AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
 						@Override
@@ -279,10 +286,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 							
 							SessionUtil.setCurrentPage(0);
 							setResponsePage(getPage());	*/
+							
+							currentDisplay(target, "TRANSACTIONDISPLAY", tempOrder);
+							setResponsePage(getPage());	
 			            }
 					};
 					
-					link.add(new Label("lastOrderName", "ORDER: "+tempOrd.getDate()));
+					link.add(new Label("lastOrderName", "ORDER: "+tempOrder.getDate()));
 					entry.add(link);
 				}       	
 	        };

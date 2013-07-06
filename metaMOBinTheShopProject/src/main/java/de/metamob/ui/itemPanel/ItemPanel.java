@@ -2,6 +2,7 @@ package de.metamob.ui.itemPanel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Set;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
+import de.metamob.data.shoppingCart.UserShoppingCart;
+import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
@@ -38,8 +41,8 @@ public class ItemPanel extends Panel {
 	private IMainPageItemCallback iMainPageItemCallback;
 	private List<IndividualisedProductItem> itemList = null;
 		
-	private String prevMarker="<<"; 
-	private String nextMarker=">>"; 
+	private String prevMarker="<"; 
+	private String nextMarker=">"; 
 	
 	private String selectedSortBy;
 	private String selectedItemsPerPage;
@@ -136,7 +139,13 @@ public class ItemPanel extends Panel {
 					public void onClick(AjaxRequestTarget target) {
 		                System.out.println("ITEM: "+ entry.getModelObject().getName());	
 		                SessionUtil.getShoppingCarts().getShoppingCard(SessionUtil.getUIUserConfiguration().getTouchpont()).add(new ShoppingItem(entry.getModelObject()));
-		            }
+		                
+		                int numOfProducts = 0;
+		                Set <AbstractTouchpoint> allTouchpoints = SessionUtil.getShoppingCarts().getTouchpoints();
+		                UserShoppingCarts allShoppingCarts = SessionUtil.getShoppingCarts(); 
+		               // itemPanelCallback
+		                //System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
+					}
 				};
 				entry.add(link);
 				entry.add(new Label("itemName", entry.getModelObject().getName()));
@@ -175,7 +184,7 @@ public class ItemPanel extends Panel {
 			
 			for (int i=startPage; i<=endPage; i++){
 				if (i==currentPage){
-					myList.add(new String[]{String.valueOf((i+1)), "<div class=\"selectedPage\">#"+(i+1)+"</div>"});
+					myList.add(new String[]{String.valueOf((i+1)), "<div class=\"pageactive\">"+(i+1)+"</div>"});
 				} else {
 					myList.add(new String[]{String.valueOf(i+1), String.valueOf(i+1)});
 				}				
