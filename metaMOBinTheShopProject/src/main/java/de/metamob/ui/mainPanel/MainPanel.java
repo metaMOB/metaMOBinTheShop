@@ -257,12 +257,14 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		//List<CustomerTransaction> myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
 		List<CustomerTransaction> myList = new ArrayList<CustomerTransaction>();
 		//DUMMYDATEN
-		for (int i=0; i<10; i++){
+		/*for (int i=0; i<10; i++){
 			myList.add(new CustomerTransaction());
-		}
+		}*/
 		//DUMMYDATEN
-		myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
-		////myList = myList.subList(myList.size()-6, myList.size()-1);
+		if (SessionUtil.isLoggedIn()){
+			myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
+		} 
+			////myList = myList.subList(myList.size()-6, myList.size()-1);
     	
 	        orders = new ListView<CustomerTransaction>("lastOrders", myList){
 				
