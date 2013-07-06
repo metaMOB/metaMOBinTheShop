@@ -13,29 +13,42 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
+import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+import org.wicketstuff.gmap.GMap;
+import org.wicketstuff.gmap.api.GMarker;
+import org.wicketstuff.gmap.api.GMarkerOptions;
+import org.wicketstuff.gmap.api.GLatLng;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
 import de.metamob.data.shoppingCart.UserShoppingCart;
 import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
+import de.metamob.ui.shoppingCartPanel.touchPointAlternatives.TouchPointAlternatives;
 
 public class TouchPointPanel extends Panel {
 	
 	@EJB(name="shoppingSystem")
 	private ShoppingSessionFacadeLocal shoppingSessionFacade;
 	
+	@EJB(name="TouchpointCRUD")
+    private TouchpointCRUDLocal touchpointCRUDRemote;
+	
 	private TouchPointPanel self;
 	private int priceTotal = 0;	
+	
+	
 	
 	public TouchPointPanel(String id) {
 		super(id);
@@ -46,6 +59,8 @@ public class TouchPointPanel extends Panel {
 		// TODO Auto-generated constructor stub
 		self = this;
 		add(new Label("touchpointName", tp.getName()));
+		//add(new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>()));
+		add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
 		
 		ListView<ShoppingItem> items = new ListView<ShoppingItem>("items", (List<ShoppingItem>) model){
 			
@@ -110,6 +125,9 @@ public class TouchPointPanel extends Panel {
     				shoppingSessionFacade.setTouchpoint(tp);
     				for (ShoppingItem item : userShoppingCart){
         				shoppingSessionFacade.addProduct(item.getProduct(), item.getUnits());
+        				// MAP
+        				add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
+        				
         			}
     				
     				try {
@@ -117,6 +135,8 @@ public class TouchPointPanel extends Panel {
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
 					} catch (Exception e) {
 						System.out.println("!!!!! "+e.getMessage()+" !!!!!!");
+						// MAP
+						add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
 					}
     				
     				setResponsePage(getPage());	
@@ -127,8 +147,12 @@ public class TouchPointPanel extends Panel {
     	};
     	
     	add(new Label("priceTotal", priceTotal/100.0));
+    	//add(new Label("alternatives", ""));
+    	
+    	//addTouchpointAlternatives(touchpointCRUDRemote.readAllTouchpoints());
     	add(linkOrder);
         add(items);
 	}
-
+	
+	
 }

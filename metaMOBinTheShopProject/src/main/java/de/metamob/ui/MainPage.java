@@ -174,12 +174,12 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
-				sttp.setLocation(new Address("Luxemburger Straße", "10", "DE-13353", "Berlin", 52.54478f, 13.35320f));
+				sttp.setLocation(new Address("Luxemburger Straï¿½e", "10", "DE-13353", "Berlin", 50.920602f,6.932407f));
 				sttp.setName("Conys Backstube");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				sttp = new StationaryTouchpoint(pos2.getId());
-				sttp.setLocation(new Address("Pettenkofer Straße", "13", "DE-10353", "Berlin", 52.51757f, 13.47216f));
+				sttp.setLocation(new Address("Pettenkofer Straï¿½e", "13", "DE-10353", "Berlin", 51.920602f,5.932407f));
 				sttp.setName("Der Kondidor");
 				touchpointCRUD.createTouchpoint(sttp);
 				

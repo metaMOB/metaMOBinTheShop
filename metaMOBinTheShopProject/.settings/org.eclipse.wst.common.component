@@ -45,6 +45,9 @@
     <dependent-module archiveName="commons-codec-1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.2/commons-codec-1.2.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+        <dependent-module archiveName="wicketstuff-gmap3-6.8.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/MetaMOBinTheShopWicketUI/lib/wicketstuff-gmap3-6.8.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>

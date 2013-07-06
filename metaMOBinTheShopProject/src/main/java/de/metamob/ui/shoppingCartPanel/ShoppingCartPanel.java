@@ -58,6 +58,12 @@ public class ShoppingCartPanel extends Panel {
 				// TODO Auto-generated method stub
 				//entry.getModelObject()
 				System.out.println("TP: "+entry.getModelObject().getId());
+				List<ShoppingItem> test = new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject()));
+				System.out.println("TP SIZE "+test.size());
+				for (ShoppingItem si:test){
+					System.out.println("TPIT: "+si.getProduct().getName());
+				}
+				
 				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject())), entry.getModelObject());
 				entry.add(touchPointPanel);
 			}			
@@ -93,5 +99,6 @@ public class ShoppingCartPanel extends Panel {
 	@Override
 	public void onBeforeRender(){
 		super.onBeforeRender();
+		addTouchpointPanel();
 	}
 }
