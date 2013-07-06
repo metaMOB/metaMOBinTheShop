@@ -54,6 +54,14 @@
       <ejb-name>ProductCRUD</ejb-name>
       <ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDStateless</ejb-class>
     </session>
+    <session>
+      <ejb-name>AdressCRUD</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.AdressCRUDStateless</ejb-class>
+    </session>
+    <session>
+      <ejb-name>CustomerTransactionCRUD</ejb-name>
+      <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerTransactionCRUDStateless</ejb-class>
+    </session>
      <session>
       <ejb-name>LoginSystem</ejb-name>
       <ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.UserCheckStateless</ejb-class>
