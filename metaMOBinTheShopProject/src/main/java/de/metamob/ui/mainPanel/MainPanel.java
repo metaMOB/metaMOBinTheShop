@@ -90,12 +90,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	}
 	
     private void addCategoryModule() {
-    	List<ProductType> myList = generateProductTypes();
+    	List<String> myList = generateProductTypes();
     	
-        ListView<ProductType> categories = new ListView<ProductType>("categories", myList){
+        ListView<String> categories = new ListView<String>("categories", myList){
 
 			@Override
-			protected void populateItem(final ListItem<ProductType> entry) {
+			protected void populateItem(final ListItem<String> entry) {
 				// TODO Auto-generated method stub
 				AjaxLink<Void> link = new AjaxLink<Void>("categoryLink"){
 					@Override
@@ -103,7 +103,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 						self.mode = "ITEMDISPLAY";
 						currentDisplay(target, "ITEMDISPLAY", null);
 						UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
-						uiuc.setProductType((ProductType) entry.getModel().getObject());
+						uiuc.setProductType(ProductType.fromReadableString((String) entry.getModel().getObject()));
 						SessionUtil.setUIUserConfiguration(uiuc);
 						
 						SessionUtil.setCurrentPage(0);
@@ -111,7 +111,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		            }
 				};
 				
-				link.add(new Label("categoryName", entry.getModel().getObject().name()));
+				link.add(new Label("categoryName", entry.getModel().getObject()));
 				entry.add(link);	
 			}
         	
@@ -120,13 +120,15 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
         add(categories);
     }
     
-    private List<ProductType> generateProductTypes(){
-    	List<ProductType> myList = new ArrayList<ProductType>();
-    	myList.add(ProductType.BREAD);
-    	myList.add(ProductType.PASTRY);
-    	myList.add(ProductType.ROLL);
+    private List<String> generateProductTypes(){
+    	List<String> myList = new ArrayList<String>();
+    	myList.add(ProductType.toReadableString(ProductType.BREAD));
+    	myList.add(ProductType.toReadableString(ProductType.PASTRY));
+    	myList.add(ProductType.toReadableString(ProductType.ROLL));
     	return myList;
     }
+    
+    
     
     ListView<AbstractTouchpoint> touchpoints = null;
     
