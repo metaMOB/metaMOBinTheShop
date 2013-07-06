@@ -11,4 +11,5 @@ public interface ShoppingSessionFacadeInterface {
 	public void addProduct(AbstractProduct product, int units);
 	public void verifyCampaigns();
 	public void purchase() throws ProductNotInStockException;
+	public void reset();
 }

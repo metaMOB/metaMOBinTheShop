@@ -179,4 +179,10 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 			this.product = product;
 		}
 	}
+	
+	public void reset(){
+		this.customer = null;
+		this.touchpoint = null;
+		this.shoppingCart.clear();
+	}
 }

@@ -39,6 +39,11 @@ public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLoc
 		return this.productBundles;
 	}
 	
+	@Override
+	public void clear() {
+		productBundles.clear();
+	}
+	
 	@PostConstruct
 	public void beginn() {
 		logger.info("@PostConstruct");
@@ -58,5 +63,7 @@ public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLoc
 	public void aktiviere() {
 		logger.info("@PostActivate");
 	}
+
+	
 
 }
