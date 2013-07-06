@@ -66,7 +66,7 @@ public class TouchPointPanel extends Panel {
 		super(id);
 	}
 
-	public TouchPointPanel(String id, final List<ShoppingItem> model, final AbstractTouchpoint tp) {
+	public TouchPointPanel(String id, final UserShoppingCart model, final AbstractTouchpoint tp) {
 		super(id);
 		System.out.println("NEW TPPANEL################################");
 		
@@ -84,7 +84,7 @@ public class TouchPointPanel extends Panel {
 		add(touchPointAlternatives);
 		//add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
 
-		ListView<ShoppingItem> items = new ListView<ShoppingItem>("items", model){
+		ListView<ShoppingItem> items = new ListView<ShoppingItem>("items", new ArrayList<ShoppingItem>(model)){
 			
 			@Override
 			protected void populateItem(final ListItem<ShoppingItem> entry) {
@@ -109,6 +109,7 @@ public class TouchPointPanel extends Panel {
 		                // FEHLT NOCH
 		                // temp.remove();
 		                // FEHLT NOCH
+		                model.remove(temp);
 		                setResponsePage(getPage());
 		            }
 				};
