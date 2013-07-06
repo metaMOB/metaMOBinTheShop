@@ -156,12 +156,13 @@ public class TouchPointPanel extends Panel {
         				System.out.println("PRODUCTS "+item.getProduct().getName()+" "+item.getUnits());
         				
     				}
-    				
     				try {
-						shoppingSession.purchase();	
-						
+						shoppingSession.purchase();							
+						System.out.println("TP SIZE#######1!'!'!'!'!' "+	SessionUtil.getShoppingCarts().getTouchpoints().size());
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
+						System.out.println("TP SIZE#######2!'!'!'!'!' "+	SessionUtil.getShoppingCarts().getTouchpoints().size());
 						remove(touchPointAlternatives);
+						
 						setResponsePage(getPage());
 						
 					} catch (ProductNotInStockException e) {

@@ -261,8 +261,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 			myList.add(new CustomerTransaction());
 		}
 		//DUMMYDATEN
-		
-		myList = myList.subList(myList.size()-6, myList.size()-1);
+		myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
+		////myList = myList.subList(myList.size()-6, myList.size()-1);
     	
 	        orders = new ListView<CustomerTransaction>("lastOrders", myList){
 				

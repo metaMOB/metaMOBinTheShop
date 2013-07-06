@@ -50,7 +50,7 @@ public class ShoppingCartPanel extends Panel {
 	
 	private void addTouchpointPanel(){
 		final UserShoppingCarts shoppingCarts = SessionUtil.getShoppingCarts();
-		
+		System.out.println("TP SIZE!!!!!!!!!!!! " +shoppingCarts.getTouchpoints().size());
 		ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", new ArrayList(shoppingCarts.getTouchpoints())){
 
 			@Override
@@ -60,13 +60,19 @@ public class ShoppingCartPanel extends Panel {
 				System.out.println("TP: "+entry.getModelObject().getId());
 				List<ShoppingItem> test = new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject()));
 				System.out.println("TP SIZE "+test.size());
+				
 				for (ShoppingItem si:test){
 					System.out.println("TPIT: "+si.getProduct().getName());
 				}
-				
+				if (test.size()>0){
 				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject())), entry.getModelObject());
 				System.out.println("GENERATE TOUCHPOINTPANEL BY SHOPPINGCART");
 				entry.add(touchPointPanel);
+				}
+				else {
+					Label touchPointPanel = new Label("oneTouchpoint","");
+					entry.add(touchPointPanel);
+				}
 			}			
 		};
 		if (touchpoints!=null){
