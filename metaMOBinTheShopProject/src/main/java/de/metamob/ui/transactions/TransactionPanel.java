@@ -1,69 +1,63 @@
-package de.metamob.ui.shoppingCartPanel.touchPointPanel;
+package de.metamob.ui.transactions;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Set;
+
 import java.util.List;
 
-import javax.ejb.EJB;
-
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.NumberTextField;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
+import org.apache.wicket.request.resource.ContextRelativeResource;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
-import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
-import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
-import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
-import org.wicketstuff.gmap.GMap;
-import org.wicketstuff.gmap.api.GMarker;
-import org.wicketstuff.gmap.api.GMarkerOptions;
-import org.wicketstuff.gmap.api.GLatLng;
+import org.dieschnittstelle.jee.esa.crm.entities.MobileTouchpoint;
 
 import de.metamob.data.shoppingCart.ShoppingItem;
 import de.metamob.data.shoppingCart.UserShoppingCart;
 import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
-import de.metamob.session.UIUserConfiguration;
+import de.metamob.ui.Item;
+import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.shoppingCartPanel.touchPointAlternatives.TouchPointAlternatives;
+import de.metamob.ui.shoppingCartPanel.touchPointPanel.TouchPointPanel;
 
-public class TouchPointPanel extends Panel {
+import org.apache.wicket.markup.html.form.NumberTextField;
+
+import java.text.DecimalFormat;
+
+import org.dieschnittstelle.jee.esa.erp.entities.*;
+
+public class TransactionPanel extends Panel {
 	
-	@EJB(name="shoppingSystem")
-	private ShoppingSessionFacadeLocal shoppingSessionFacade;
-	
-	@EJB(name="TouchpointCRUD")
-    private TouchpointCRUDLocal touchpointCRUDRemote;
-	
-	private TouchPointPanel self;
-	private int priceTotal = 0;	
-	private TouchPointAlternatives touchPointAlternatives;
-	private Panel visiblePanel;
-	
-	public TouchPointPanel(String id) {
+	private IMainPageItemCallback iMainPageItemCallback;
+
+	public TransactionPanel(String id) {
 		super(id);
+		// TODO Auto-generated constructor stub
 	}
 
-	public TouchPointPanel(String id, final List<ShoppingItem> model, final AbstractTouchpoint tp) {
+	public TransactionPanel(String id, IMainPageItemCallback itemPanelCallback) {
 		super(id);
+		this.iMainPageItemCallback = itemPanelCallback;
+		// TODO Auto-generated constructor stub
+		addTransactionModule();
+	}
+	
+	public void addTransactionModule() {
 		System.out.println("NEW TPPANEL################################");
-		
+		/*
 		
 		// TODO Auto-generated constructor stub
-		self = this;
 		add(new Label("touchpointName", tp.getName()));
 		touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>());
 		touchPointAlternatives.setOutputMarkupId(true);
@@ -178,7 +172,12 @@ public class TouchPointPanel extends Panel {
     	//addTouchpointAlternatives(touchpointCRUDRemote.readAllTouchpoints());
     	add(linkOrder);
         add(items);
+        */
 	}
 	
-	
+	@Override
+	public void onBeforeRender(){
+		super.onBeforeRender();	
+
+	}
 }

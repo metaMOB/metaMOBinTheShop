@@ -2,12 +2,15 @@ package de.metamob.ui.shoppingCartPanel.touchPointAlternatives;
 
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.wicketstuff.gmap.GMap;
@@ -20,7 +23,12 @@ import de.metamob.session.SessionUtil;
 public class TouchPointAlternatives extends Panel {
 	
 	private GLatLng centerCoordinate;
-	private GMap map;
+	
+	
+	private MapPanel positionDummy;
+	private Label messageDummy;
+	private ListView<AbstractTouchpoint> alternativeTouchpoints;
+	private MapPanel map;
 	
 	public TouchPointAlternatives(String id) {
 		super(id);
@@ -30,34 +38,48 @@ public class TouchPointAlternatives extends Panel {
 	public TouchPointAlternatives(String id, List <AbstractTouchpoint> alternativeTP) {
 		super(id);
 		// TODO Auto-generated constructor stub
+		positionDummy = new MapPanel ("position");
+		messageDummy = new Label("message", "");
+		positionDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
+		messageDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
+		
+		addTouchpointAlternatives(alternativeTP);
+	}
+	
+	public void updateData(List <AbstractTouchpoint> alternativeTP){
 		addTouchpointAlternatives(alternativeTP);
 	}
 	
 	private void addTouchpointAlternatives(List <AbstractTouchpoint> alternativeTP){
 		if (alternativeTP.size()> 0){		
-			map = new GMap("position");
+			remove(positionDummy);
+			remove(messageDummy);
+			
+			map = new MapPanel("position");
+			map.add(new AttributeAppender("style", new Model<String>("height:300px;")));
 			add(new MessagePanel("message"));
 			add(map);
-			map.setStreetViewControlEnabled(false);
-	        map.setScaleControlEnabled(true);
-	        map.setScrollWheelZoomEnabled(true);        
 	                        
 	        for (AbstractTouchpoint at: alternativeTP){
 	        	if (at instanceof StationaryTouchpoint){
 	        		StationaryTouchpoint temp = (StationaryTouchpoint) at;
 	        		GLatLng tempCoord = new GLatLng(temp.getLocation().getGeoLat(), temp.getLocation().getGeoLong());
-	        		map.addOverlay(new GMarker(new GMarkerOptions(map, tempCoord))); 
+	        		map.addMarker(tempCoord); 
 	        		if (centerCoordinate == null){
 	                	map.setCenter(tempCoord);
 	                }
 	        	}        	
 	        }    
 		} else {
-			add(new Label("position", ""));
-			add(new Label("message", ""));
+			add(positionDummy);
+			add(messageDummy);
 		}
 		
-        ListView<AbstractTouchpoint> alternativeTouchpoints = new ListView<AbstractTouchpoint>("alternativeTouchpoints", (List<AbstractTouchpoint>) alternativeTP){
+		if (alternativeTouchpoints != null){
+			remove(alternativeTouchpoints);
+		}
+		
+		alternativeTouchpoints = new ListView<AbstractTouchpoint>("alternativeTouchpoints", (List<AbstractTouchpoint>) alternativeTP){
         	@Override
 			protected void populateItem(final ListItem<AbstractTouchpoint> entry) {
         		if (entry.getModelObject() instanceof StationaryTouchpoint){
@@ -70,12 +92,12 @@ public class TouchPointAlternatives extends Panel {
     		                map.setCenter(tempCoord);
     		            }
     				};
-    				link.add(new Label("touchpointAlternative", entry.getModelObject().getName()));
-    				
+    				link.add(new Label("touchpointAlternative", entry.getModelObject().getName()));    				
         			entry.add(link);
         		}
         	}
         };
+        
         add(alternativeTouchpoints);       	
 	}
 }

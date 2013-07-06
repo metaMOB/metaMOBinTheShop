@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.basic.Label;
@@ -18,6 +19,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 
+import de.metamob.data.shoppingCart.UserTransaction;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
 import de.metamob.ui.Item;
@@ -26,6 +28,7 @@ import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.itemPanel.ItemPanel;
 import de.metamob.ui.shoppingCartPanel.ShoppingCartPanel;
 
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerTransactionCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.*;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
@@ -45,6 +48,9 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	@EJB(name="TouchpointCRUD")
     private TouchpointCRUDLocal touchpointCRUDRemote;
 	
+	@EJB(name="CustomerTransactionCRUD")
+    private CustomerTransactionCRUDLocal customerTransactionCRUDRemote;
+	
 	public MainPanel(String id, IMainPageCallback mainPageCallback) {
 		super(id);
 		self = this;
@@ -60,7 +66,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        
 	        //addAllSelectors();
 	        addCategoryModule();  
-	        
+	        addLastOrders();
 	        add (itemPanel);
 	        //addItemModule();
 	}
@@ -237,6 +243,56 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 			setResponsePage(getPage());	
 		}
 	}
+	
+	ListView<CustomerTransaction> orders = null;
+	 
+	private void addLastOrders(){
+		//List<CustomerTransaction> myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
+		List<CustomerTransaction> myList = new ArrayList<CustomerTransaction>();
+		//DUMMYDATEN
+		for (int i=0; i<10; i++){
+			myList.add(new CustomerTransaction());
+		}
+		//DUMMYDATEN
+		
+		myList = myList.subList(myList.size()-6, myList.size()-1);
+    	
+	        orders = new ListView<CustomerTransaction>("lastOrders", myList){
+				
+	        	@Override
+				protected void populateItem(final ListItem<CustomerTransaction> entry) {
+	        		
+	        		//UserTransaction tempOrd = new UserTransaction(entry.getModelObject());
+	        		UserTransaction tempOrd = new UserTransaction();
+					// TODO Auto-generated method stub	        		
+					AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
+						@Override
+						public void onClick(AjaxRequestTarget target) {
+							/*AbstractTouchpoint temp = (AbstractTouchpoint) entry.getModel().getObject();
+							System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());	
+							self.mode = "SHOPPINGCART";
+							currentDisplay(target);
+							//setSelTouchPoint
+							UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
+							uiuc.setTouchpont(temp);
+							SessionUtil.setUIUserConfiguration(uiuc);
+							
+							SessionUtil.setCurrentPage(0);
+							setResponsePage(getPage());	*/
+			            }
+					};
+					
+					link.add(new Label("lastOrderName", "ORDER: "+tempOrd.getDate()));
+					entry.add(link);
+				}       	
+	        };
+	        
+	        if (orders!=null){
+	        	remove(orders);
+	        }
+	        
+	        add(orders);
+	    }
 
 	@Override
 	public void itemPanelClicked(StockItem stockItem) {

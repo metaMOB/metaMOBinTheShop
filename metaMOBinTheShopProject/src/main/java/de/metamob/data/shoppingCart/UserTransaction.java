@@ -26,8 +26,10 @@ public class UserTransaction {
 	public UserTransaction(){
 		this.date = new Date();
 		this.touchpoint = new StationaryTouchpoint(0, "Test TP", null);
+		this.products = new ArrayList<ShoppingItem>();
 		this.products.add(new ShoppingItem(new IndividualisedProductItem("Bla", ProductType.BREAD, 0, 100)));
 		this.products.add(new ShoppingItem(new IndividualisedProductItem("BlaBlub", ProductType.BREAD, 0, 100)));
+		this.date = new Date();
 	}
 	
 	public UserTransaction(CustomerTransaction customerTransaction) {
