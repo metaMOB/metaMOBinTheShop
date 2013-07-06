@@ -14,7 +14,7 @@ import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
 import org.jboss.logging.Logger;
 
-@Stateless
+@Stateless(name="CustomerTransactionCRUD")
 public class CustomerTransactionCRUDStateless implements
 		CustomerTransactionCRUDLocal, CustomerTransactionCRUDRemote {
 
