@@ -140,16 +140,17 @@ public class ItemPanel extends Panel {
 		                System.out.println("ITEM: "+ entry.getModelObject().getName());	
 		                SessionUtil.getShoppingCarts().getShoppingCard(SessionUtil.getUIUserConfiguration().getTouchpont()).add(new ShoppingItem(entry.getModelObject()));
 		                
-		                int numOfProducts = 0;
-		                Set <AbstractTouchpoint> allTouchpoints = SessionUtil.getShoppingCarts().getTouchpoints();
-		                UserShoppingCarts allShoppingCarts = SessionUtil.getShoppingCarts(); 
-		               // itemPanelCallback
+		                
+		                //Set <AbstractTouchpoint> allTouchpoints = SessionUtil.getShoppingCarts().getTouchpoints();
+		                //UserShoppingCarts allShoppingCarts = SessionUtil.getShoppingCarts(); 
+		                iMainPageItemCallback.itemPanelClicked();
+		                // itemPanelCallback
 		                //System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
 					}
 				};
 				entry.add(link);
 				entry.add(new Label("itemName", entry.getModelObject().getName()));
-				entry.add(new Label("itemDescription", entry.getModelObject().getProductType()));
+				entry.add(new Label("itemDescription", ProductType.toReadableString(entry.getModelObject().getProductType())));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(entry.getModelObject().getPrice()/100.0)));
 				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
 			}

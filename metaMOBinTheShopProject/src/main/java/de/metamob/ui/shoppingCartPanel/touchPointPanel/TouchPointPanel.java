@@ -43,6 +43,8 @@ import de.metamob.data.shoppingCart.UserShoppingCart;
 import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
+import de.metamob.ui.callbacks.IMainPageCallback;
+import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.shoppingCartPanel.touchPointAlternatives.TouchPointAlternatives;
 
 public class TouchPointPanel extends Panel {
@@ -61,15 +63,16 @@ public class TouchPointPanel extends Panel {
 	private int priceTotal = 0;	
 	private TouchPointAlternatives touchPointAlternatives;
 	private Panel visiblePanel;
+	IMainPageItemCallback itemPanelCallback;
 	
 	public TouchPointPanel(String id) {
 		super(id);
 	}
 
-	public TouchPointPanel(String id, final UserShoppingCart model, final AbstractTouchpoint tp) {
+	public TouchPointPanel(String id, final UserShoppingCart model, final AbstractTouchpoint tp, final IMainPageItemCallback itemPanelCallback) {
 		super(id);
 		System.out.println("NEW TPPANEL################################");
-		
+		this.itemPanelCallback = itemPanelCallback;
 		
 		// TODO Auto-generated constructor stub
 		self = this;
@@ -110,6 +113,7 @@ public class TouchPointPanel extends Panel {
 		                // temp.remove();
 		                // FEHLT NOCH
 		                model.remove(temp);
+		                itemPanelCallback.itemPanelClicked();
 		                setResponsePage(getPage());
 		            }
 				};
@@ -119,6 +123,7 @@ public class TouchPointPanel extends Panel {
 					public void onClick(AjaxRequestTarget target) {
 					    System.out.println("ITEMINCREASE");	
 					    temp.incUnits();
+					    itemPanelCallback.itemPanelClicked();
 					    setResponsePage(getPage());	
 		           }
 				};
@@ -130,6 +135,7 @@ public class TouchPointPanel extends Panel {
 					public void onClick(AjaxRequestTarget target) {						
 		                System.out.println("ITEMDECREASE");
 		                temp.decUnits();
+		                itemPanelCallback.itemPanelClicked();
 		                setResponsePage(getPage());	
 		            }
 				};
@@ -163,7 +169,7 @@ public class TouchPointPanel extends Panel {
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
 						System.out.println("TP SIZE#######2!'!'!'!'!' "+	SessionUtil.getShoppingCarts().getTouchpoints().size());
 						remove(touchPointAlternatives);
-						
+						itemPanelCallback.itemPanelClicked();
 						setResponsePage(getPage());
 						
 					} catch (ProductNotInStockException e) {

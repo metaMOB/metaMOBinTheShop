@@ -16,7 +16,7 @@ public enum ProductType {
 		case BREAD:
 			return "Brot";
 		case ROLL:
-			return "Brötchen";
+			return "BrÃ¶tchen";
 		case PASTRY:
 			return "Kuchen";	
 		default:
@@ -27,7 +27,7 @@ public enum ProductType {
 	public static ProductType fromReadableString (String str){
 		if (str.equals("Brot")){
 			return BREAD;
-		}else if (str.equals("Brötchen")){
+		}else if (str.equals("BrÃ¶tchen")){
 			return ROLL;
 		}else if (str.equals("Kuchen")){
 			return PASTRY;

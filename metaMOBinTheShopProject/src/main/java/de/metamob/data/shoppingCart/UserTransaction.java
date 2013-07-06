@@ -36,7 +36,6 @@ public class UserTransaction implements Serializable {
 	public UserTransaction(CustomerTransaction customerTransaction) {
 		this.date = customerTransaction.getDate();
 		this.touchpoint = customerTransaction.getTouchpoint();
-		
 		products = new ArrayList<ShoppingItem>();
 		List<CrmProductBundle> productBundles = customerTransaction.getProducts();
 		for(CrmProductBundle productBundle: productBundles){
@@ -44,7 +43,6 @@ public class UserTransaction implements Serializable {
 			item.setUnits(productBundle.getUnits());
 			products.add(item);
 		}
-		
 	}
 	
 	public Date getDate() {

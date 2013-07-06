@@ -273,8 +273,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        	@Override
 				protected void populateItem(final ListItem<CustomerTransaction> entry) {
 	        		
-	        		//UserTransaction tempOrd = new UserTransaction(entry.getModelObject());
-	        		final UserTransaction tempOrder = new UserTransaction();
+	        		final UserTransaction tempOrder = new UserTransaction(entry.getModelObject());
+	        		//final UserTransaction tempOrder = new UserTransaction();
 					// TODO Auto-generated method stub	        		
 					AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
 						@Override
@@ -309,7 +309,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	    }
 
 	@Override
-	public void itemPanelClicked(StockItem stockItem) {
-		
+	public void itemPanelClicked() {
+		iMainPageCallback.unitsChanged();
 	}
 }

@@ -7,4 +7,5 @@ import de.metamob.ui.Item;
 
 public interface IMainPageCallback {
 	public void userLoggedIn ();
+	public void unitsChanged ();
 }

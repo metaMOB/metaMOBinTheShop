@@ -81,6 +81,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private AjaxLink<Void> link;	
 	private AjaxLink<Void> philsButton;
 	private AjaxLink<Void> shoppingCartButton;
+	private Label numOfItems;
 	
 	//private ShoppingCart shoppingCart = new ShoppingCart(); 
 	
@@ -128,7 +129,8 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		visiblePanel = mainPanel;
 		add(visiblePanel);
 
-		
+		numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
+		add(numOfItems);
 		
 		link = new AjaxLink<Void>("loginLink") {
 			@Override
@@ -203,7 +205,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock(product2, pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
-				
+				/*
 				//Erste shopping Action
 				shoppingSessionFacade.setCustomer(customer);
 				shoppingSessionFacade.setTouchpoint(sttp);
@@ -214,7 +216,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					shoppingSessionFacade.purchase();
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 				
 			/*	//Zweite shopping Action
 				shoppingSessionFacade.setCustomer(customer);
@@ -252,7 +254,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				//}
 			}
 		};		
-		System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
+		
 		add(shoppingCartButton);
 		
 		link.add(loginLinkLabel);
@@ -271,4 +273,18 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		setResponsePage(getPage());		
 	}	
+	
+
+	@Override
+	public void unitsChanged() {
+		// TODO Auto-generated method stub
+		System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
+		
+		if (numOfItems!=null){
+			remove(numOfItems);
+		}
+		numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
+		add(numOfItems);
+		setResponsePage(getPage());	
+	}
 }

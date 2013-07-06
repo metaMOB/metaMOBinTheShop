@@ -65,7 +65,7 @@ public class ShoppingCartPanel extends Panel {
 					System.out.println("TPIT: "+si.getProduct().getName());
 				}
 				if (test.size()>0){
-				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", shoppingCarts.getShoppingCard(entry.getModelObject()), entry.getModelObject());
+				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", shoppingCarts.getShoppingCard(entry.getModelObject()), entry.getModelObject(), iMainPageItemCallback);
 				System.out.println("GENERATE TOUCHPOINTPANEL BY SHOPPINGCART");
 				entry.add(touchPointPanel);
 				}

@@ -33,7 +33,6 @@ a {
 
 a:hover {
 	text-decoration:none;
-	color:#F00;
 	cursor:pointer;
 }
 
@@ -49,6 +48,20 @@ h1 {
 	font-weight:300;
 	margin:0;
 	padding:0 0 8px 0;
+}
+
+
+h1.kategorie {
+	background:url(images/kategorie.png) 1px 5px no-repeat;
+	padding-left:23px;
+}
+h1.touchpointlocate {
+	background:url(images/touchpointlocate.png) 1px 4px no-repeat;
+	padding-left:23px;
+}
+h1.lastorder {
+	background:url(images/lastorders.png) 1px 5px no-repeat;
+	padding-left:25px;
 }
 
 h2 {
@@ -140,12 +153,17 @@ nav.headerNav li {
 	vertical-align:middle;
 	margin:0;
 }
+
+
+
+
+
 /* --- ENDE - HEADER NAVIGATION --- */
 
 .user {
 	float:right;
 	margin:3px 7px 0 0;
-	font-size:12px;
+	font-size:13px;
 	}
 
 
@@ -238,7 +256,7 @@ nav.list li:hover {
 	border-bottom:0;
 	padding:5px 0 0 8px;
 	background-color:#002E40;
-	color:#FFF;
+	color:rgba(255,255,255,0.9);
 	background-image:url(images/corner.png);
 	background-repeat:no-repeat;
 	background-position:right top;
@@ -247,44 +265,101 @@ nav.list li:hover {
 
 
 button.cart {
-  background:url(images/cartsmall.png) 6px 4px no-repeat;
+  background:url(images/cartsmall.png) 6px 6px no-repeat;
   margin:0 0 0 10px;
   background-color: #002E40;
-  border-bottom: 2px solid #FF6761;
+  /*border-bottom: 2px solid #FF6761;*/
   font-weight:700;
   color: #FFF;
-  padding: 4px 6px 4px 30px;
+  padding: 6px 10px 7px 30px;
   text-align: center;
   cursor:pointer;
 }
 
 button.cart:hover {
-	background:url(images/cartsmallhover.png) 6px 4px no-repeat;
+	background:url(images/cartsmallhover.png) 6px 6px no-repeat;
     background-color: #FF6761;
 	color:#000;
- 	border-bottom: 5px solid #002E40;
+ 	/*border-bottom: 5px solid #002E40;*/
 	
 }
-
-button.but {
-  margin:0 0 0 10px;
-  background-color: #002E40;
-  border-bottom: 2px solid #FF6761;
+.productsincart {
+	margin:0 5px 0 -2px;
+  background-color: #FF6761;
+  /*border-bottom: 2px solid #FF6761;*/
   font-weight:700;
-  color: #FFF;
-  padding: 4px 6px 4px 6px;
+  color: #002E40;
+  padding: 4px 10px 3px 10px;
   text-align: center;
-  cursor:pointer;
+  cursor:default;
+  font-weight:300;
+  
 }
 
 
 
+
+button.but {
+	  margin:0 5px 0 5px;
+	  background-color: #002E40;
+	  /*border-bottom: 2px solid #FF6761;*/
+	  font-weight:700;
+	  color: #FFF;
+	  padding: 6px 10px 7px 10px;
+	  text-align: center;
+	  cursor:pointer;
+}
 button.but:hover {
     background-color: #FF6761;
 	color:#000;
- 	border-bottom: 5px solid #002E40;
+ 	/*border-bottom: 5px solid #002E40;*/
 	cursor:pointer;
 }
+
+
+
+button.ordernow {
+	margin:0 0 0 10px;
+	  background-color: #002E40;
+	  /*border-bottom: 2px solid #FF6761;*/
+	  font-weight:700;
+	  color: #FFF;
+	  padding: 10px 15px 10px 15px;
+	  text-align: center;
+	  font-size:13px;
+	  cursor:pointer;
+}
+button.ordernow:hover {
+  	background-color: #FF6761;
+	color:#002E40;
+}
+
+
+
+a.buttonwarenkorb {
+  cursor:pointer;
+  position:absolute;
+  bottom:5px;
+  right:5px;
+	  background-color: #002E40;
+	  /*border-bottom: 2px solid #FF6761;*/
+	  font-weight:700;
+	  color: #FFF;
+	  padding: 10px 15px 10px 15px;
+	  font-size:14px;
+	  cursor:pointer;
+}
+
+a.buttonwarenkorb:hover {
+	padding: 10px 15px 10px 31px;
+	background:url(images/cartsmaller.png) 7px 12px no-repeat;
+	background-color: #FF6761;
+	color:#000;
+	
+}
+
+
+
 /* -------------- SITEOPTIONS ---------------*/
 
 .siteoptions {
@@ -360,8 +435,8 @@ li.productitem:hover{
 }
 
 .itemdescwrapper {
-	padding:0 10px 25px 160px;
-	min-height:140px;
+	padding:0 10px 10px 160px;
+	height:140px;
 	position:relative;
 }
 
@@ -383,31 +458,14 @@ li.productitem:hover{
 
 .preis {
 	font-size:25px;
-	font-weight:400;
+	font-weight:300;
 	text-align:right;
 	position:absolute;
-	bottom:33px;
+	bottom:48px;
 	right:5px;
 }
 
-button.buttonwarenkorb {
-  background-color: #002E40;
-  border-bottom: 2px solid #FF6761;
-  color:#FFF;
-  font: bold 11px/1.4 "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-  padding: 2px 4px 3px 4px;
-  text-align: center;
-  cursor:pointer;
-  position:absolute;
-  bottom:5px;
-  right:5px;
-}
 
-button.buttonwarenkorb:hover {
- background-color: #FF6761;
-	color:#000;
- 	border-bottom: 5px solid #002E40;
-}
 
 
 
@@ -620,7 +678,7 @@ ul.searchLists li:nth-child(2n) {
 .kaufen {
 	clear:both;
 	float:right;
-	margin:0 26px 10px 0;
+	margin:5px 26px 20px 0;
 }
 
 .searchListsinnerresult {
@@ -722,15 +780,21 @@ ul.searchLists li:nth-child(2n) {
 	 margin:15px 0 0 0;
 	 padding:10px;
 	 background-color:#FDFDFD;
+	 height:0px;
+	visibility:hidden;
+	overflow:hidden;
+	margin:0;
+	padding:0px;
 }
 
 .orderdetails{
 	padding:15px;
+
 }
 
 .map{
-	background-color:#9C3;
 	width:646px;
+	
 }
 
 
@@ -806,20 +870,23 @@ input[type=text], textarea {
 
 
 button.butlogin {
-  margin:0 0 0 0;
-  background-color: #2A5769;
-  border-bottom: 2px solid #FF6761;
-  font-weight:700;
-  color: #FFF;
-  padding: 4px 6px 4px 6px;
-  text-align: center;
-  cursor:pointer;
+ 
+	  background-color: #002E40;
+	  /*border-bottom: 2px solid #FF6761;*/
+	  font-weight:700;
+	  color: #FFF;
+	  padding: 6px 10px 7px 10px;
+	  text-align: center;
+	  cursor:pointer;
   position:absolute;
   right:16px;
-  top:130px;
+  top:125px;
 }
 
-
+button.butlogin:hover {
+	background-color: #FF6761;
+	color: #002E40;
+}
 
 
 
@@ -859,7 +926,7 @@ label {
 }
 
 .content input[type=text] {
-	width:230px;
+	width:220px;
 	height:25px;
 	padding:0 0 1px 7px;
 	margin:0 0 10px 8px;
@@ -871,7 +938,6 @@ label {
 	background-color:#CCC;
 	margin:35px 0 12px 0;
 }
-
 
 
 
