@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,5 +36,16 @@ public class UserShoppingCarts implements Serializable{
 	public void removeShoppingCard(AbstractTouchpoint tochpoint){
 		shoppingCards.remove(tochpoint);
 		System.out.println("keySet: "+getTouchpoints().size());
+	}
+	
+	public int getNumOfUnits(){
+		int numOfUnits = 0;
+		Collection<UserShoppingCart> allShoppingCarts = shoppingCards.values();
+		for (UserShoppingCart tempCart: allShoppingCarts){
+			for (ShoppingItem tempItem: tempCart){
+				numOfUnits += tempItem.getUnits();
+			}
+		}
+		return numOfUnits;
 	}
 }

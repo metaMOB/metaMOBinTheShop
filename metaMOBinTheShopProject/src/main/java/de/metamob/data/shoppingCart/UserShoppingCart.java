@@ -80,6 +80,7 @@ public class UserShoppingCart implements Set<ShoppingItem>, Serializable {
 		}
 		return lst;
 	}
+	
 
 	@Override
 	public Iterator<ShoppingItem> iterator() {
