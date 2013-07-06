@@ -240,17 +240,19 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 			public void onClick(AjaxRequestTarget target) {
 				System.out.println("SHOPPINGCART: CLICK");
 				
-				((MainPanel) mainPanel).currentDisplay(target);
-				if (!mode.equals("main")){
+//				((MainPanel) mainPanel).currentDisplay(target, "SHOPPINGCART", null);
+//				if (!mode.equals("main")){
 					System.out.println("CHANGE TO MAINPANEL");
 					visiblePanel.replaceWith(mainPanel);
 					visiblePanel = mainPanel;
 					target.add(mainPanel);
+					mainPanel.currentDisplay(target, "SHOPPINGCART", null);
 					mode = "main";
-				}
+					setResponsePage(getPage());	
+				//}
 			}
 		};		
-		
+		System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
 		add(shoppingCartButton);
 		
 		link.add(loginLinkLabel);

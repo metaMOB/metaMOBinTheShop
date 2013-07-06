@@ -74,9 +74,12 @@ public class TouchPointPanel extends Panel {
 		// TODO Auto-generated constructor stub
 		self = this;
 		add(new Label("touchpointName", tp.getName()));
-		touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>());
+		
+		if (touchPointAlternatives == null){
+			touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>());
+		}
 		touchPointAlternatives.setOutputMarkupId(true);
-		touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:0px; overflow:hidden; margin:0px; padding:0px;")));
+		//touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:0px; overflow:hidden; margin:0px; padding:0px;")));
 			
 		add(touchPointAlternatives);
 		//add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
@@ -145,16 +148,20 @@ public class TouchPointPanel extends Panel {
     				UserShoppingCart userShoppingCart = SessionUtil.getShoppingCarts().getShoppingCard(tp);
     				shoppingSession.setCustomer(SessionUtil.getCurrentUser());
     				shoppingSession.setTouchpoint(tp);
+
     				for (ShoppingItem item : userShoppingCart){
         				shoppingSession.addProduct(item.getProduct(), item.getUnits());
         				// MAP
+        				System.out.println("PRODUCTS "+item.getProduct().getName()+" "+item.getUnits());
         				
     				}
     				
     				try {
 						shoppingSession.purchase();	
+						
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);	
 						remove(touchPointAlternatives);
+						setResponsePage(getPage());
 						
 					} catch (ProductNotInStockException e) {
 						AbstractProduct product = e.getProduct();
@@ -165,18 +172,21 @@ public class TouchPointPanel extends Panel {
 						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 						System.out.println(errorMSG);
 						List<AbstractTouchpoint> lst = touchpointCRUD.readTouchpoins(stockSystem.getPointsOfSale((IndividualisedProductItem) product,e.getUnits()));
-						touchPointAlternatives = new TouchPointAlternatives("alternatives", lst);
-						
+						//touchPointAlternatives = new TouchPointAlternatives("alternatives", lst);
+						touchPointAlternatives.updateData(lst);
+						touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
 						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + lst.size());
 						
-						add(touchPointAlternatives);
-        				setResponsePage(getPage());
+						//add(touchPointAlternatives);
+						target.add(touchPointAlternatives);
+        				//setResponsePage(getPage());
 					} catch (Exception e) {
 						
 						e.printStackTrace();
 					}
     				
-    				setResponsePage(getPage());	
+    				//setResponsePage(getPage());	
+    				
     			}else{
     				System.out.println("!!!!! USER NOT LOGGED IN !!!!!!");
     				//touchPointAlternatives = new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints());

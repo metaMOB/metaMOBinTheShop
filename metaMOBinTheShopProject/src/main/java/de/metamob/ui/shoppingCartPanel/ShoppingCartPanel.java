@@ -45,7 +45,7 @@ public class ShoppingCartPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
-		addTouchpointPanel();
+		//addTouchpointPanel();
 	}
 	
 	private void addTouchpointPanel(){
@@ -65,6 +65,7 @@ public class ShoppingCartPanel extends Panel {
 				}
 				
 				TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject())), entry.getModelObject());
+				System.out.println("GENERATE TOUCHPOINTPANEL BY SHOPPINGCART");
 				entry.add(touchPointPanel);
 			}			
 		};
