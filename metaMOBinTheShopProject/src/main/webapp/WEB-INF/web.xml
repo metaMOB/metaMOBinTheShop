@@ -15,7 +15,21 @@
 
 	<filter-mapping>
 		<filter-name>wicket.wicketTest</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/shop/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>wicket.admin</filter-name>
+		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
+		<init-param>
+			<param-name>applicationClassName</param-name>
+			<param-value>de.metamob.admin.MyApplication</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>wicket.admin</filter-name>
+		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
 
 </web-app>

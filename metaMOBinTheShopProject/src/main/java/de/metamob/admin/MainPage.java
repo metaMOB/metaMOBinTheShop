@@ -1,4 +1,4 @@
-package de.metamob.ui;
+package de.metamob.admin;
 
 import javax.ejb.EJB;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

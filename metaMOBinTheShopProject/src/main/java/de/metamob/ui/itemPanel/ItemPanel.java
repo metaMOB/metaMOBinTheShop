@@ -129,7 +129,7 @@ public class ItemPanel extends Panel {
 		for (int i = SessionUtil.getCurrentPage()*itemsPerPage; i< Math.min(itemList.size(), (SessionUtil.getCurrentPage()+1)*itemsPerPage); i++){
 			itemsReduced.add(itemList.get(i));
 		}
-		
+				
 		ListView<IndividualisedProductItem> items = new ListView<IndividualisedProductItem>("items", itemsReduced){
 			@Override
 			protected void populateItem(final ListItem<IndividualisedProductItem> entry) {
