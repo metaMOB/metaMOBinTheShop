@@ -53,6 +53,7 @@ public interface StockSystemInterface {
 	 * @return
 	 */
 	public int getUnitsOnStock(IndividualisedProductItem product, int pointOfSaleId);
+	public void setUnitsOnStock(IndividualisedProductItem product, int pointOfSaleId, int units);
 
 	/**
 	 * returns the total number of units on stock for some product

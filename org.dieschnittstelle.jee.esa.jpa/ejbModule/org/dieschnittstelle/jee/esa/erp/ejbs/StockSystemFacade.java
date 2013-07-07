@@ -103,6 +103,12 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
 		return stockItemCRUD.getStockItemUnitCount(product,pointOfSaleCRUD.readPointOfSale(pointOfSaleId));
     }
     
+    public void setUnitsOnStock(IndividualisedProductItem product, int pointOfSaleId, int units) {   
+    	StockItem stockItem = stockItemCRUD.getStockItem(product, pointOfSaleCRUD.readPointOfSale(pointOfSaleId));
+    	stockItem.setUnits(units);
+    	stockItemCRUD.updateStockItem(stockItem);
+    }
+    
 	/**
      * @see StockSystemRemote#getPointsOfSale(IndividualisedProductItem)
      */
