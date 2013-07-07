@@ -856,6 +856,25 @@ ul.listoftouchpints li:last-child{
 
 
 
+.notavailable {
+	margin:5px 0 0 15px;
+	
+}
+
+.notavailable span.warning {
+	margin:0 5px 0 0 ;
+	padding:5px 10px 5px 10px;
+	background-color:#0C9;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	background-color:#FF6761;
+	color:#FFF;
+}
+
+
+
+
+
 
 footer {
 	font-size:12px;

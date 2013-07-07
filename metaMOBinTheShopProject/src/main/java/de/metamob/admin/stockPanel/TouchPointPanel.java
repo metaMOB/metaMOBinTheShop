@@ -1,4 +1,4 @@
-package de.metamob.ui.shoppingCartPanel.touchPointPanel;
+package de.metamob.admin.stockPanel;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

@@ -181,15 +181,21 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				//points of sale
 				PointOfSale pos1 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
+				PointOfSale pos3 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
 				
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
-				sttp.setLocation(new Address("Luxemburger Stra�e", "10", "DE-13353", "Berlin", 52.550136f,13.39585f));
+				sttp.setLocation(new Address("Luxemburger Straße", "10", "DE-13353", "Berlin", 52.550136f,13.39585f));
 				sttp.setName("Conys Backstube");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				sttp = new StationaryTouchpoint(pos2.getId());
-				sttp.setLocation(new Address("Pettenkofer Stra�e", "13", "DE-10353", "Berlin", 52.54499f,13.35232f));
+				sttp.setLocation(new Address("Pettenkofer Straße", "13", "DE-10353", "Berlin", 52.54499f,13.35232f));
 				sttp.setName("Der Kondidor");
+				touchpointCRUD.createTouchpoint(sttp);
+				
+				sttp = new StationaryTouchpoint(pos3.getId());
+				sttp.setLocation(new Address("Evergreen Terance", "1", "DE-12345", "Springfield", 52.51499f,13.34232f));
+				sttp.setName("Sack Mehl");
 				touchpointCRUD.createTouchpoint(sttp);
 				
 				IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
@@ -208,7 +214,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				stockSystem.addToStock(product2, pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
 				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
-							
+				
+				stockSystem.addToStock(product, pos3.getId(), 3);
+				
 				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
 				setResponsePage(getPage());	
 			}
