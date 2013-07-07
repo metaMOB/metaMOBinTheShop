@@ -59,7 +59,6 @@ public class TouchPointPanel extends Panel {
 
 	public TouchPointPanel(final String id, final UserShoppingCart model, final AbstractTouchpoint tp, final IMainPageItemCallback itemPanelCallback) {
 		super(id);
-		System.out.println("NEW TPPANEL################################");
 		this.messageModel = new PropertyModel<String>(this, "message");
 		this.itemPanelCallback = itemPanelCallback;
 
@@ -82,11 +81,8 @@ public class TouchPointPanel extends Panel {
 			this.touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>(), "");
 		}
 		this.touchPointAlternatives.setOutputMarkupId(true);
-		//touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:0px; overflow:hidden; margin:0px; padding:0px;")));
-
 		this.add(this.touchPointAlternatives);
-		//add(new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints()));
-
+		
 		final ListView<ShoppingItem> items = new ListView<ShoppingItem>("items", new ArrayList<ShoppingItem>(model)){
 
 			@Override
@@ -95,9 +91,6 @@ public class TouchPointPanel extends Panel {
 
 				final ShoppingItem temp = entry.getModelObject();
 				new PropertyModel <Integer>(TouchPointPanel.this.self, "numOfUnits");
-
-				//numOfUnits = temp.getUnits();
-
 
 				entry.add(new Label("itemName", temp.getProduct().getName()));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(temp.getProduct().getPrice()/100.0)));
@@ -109,8 +102,6 @@ public class TouchPointPanel extends Panel {
 					public void onClick(final AjaxRequestTarget target) {
 
 		                System.out.println("ITEMDELETE");
-		                // FEHLT NOCH
-		                // temp.remove();
 		                // FEHLT NOCH
 		                model.remove(temp);
 		                itemPanelCallback.itemPanelClicked();
@@ -165,9 +156,7 @@ public class TouchPointPanel extends Panel {
     				}
     				try {
 						TouchPointPanel.this.shoppingSession.purchase();
-						System.out.println("TP SIZE#######1!'!'!'!'!' "+	SessionUtil.getShoppingCarts().getTouchpoints().size());
 						SessionUtil.getShoppingCarts().removeShoppingCard(tp);
-						System.out.println("TP SIZE#######2!'!'!'!'!' "+	SessionUtil.getShoppingCarts().getTouchpoints().size());
 						this.remove(TouchPointPanel.this.touchPointAlternatives);
 						itemPanelCallback.itemPanelClicked();
 						this.setResponsePage(this.getPage());
@@ -178,36 +167,25 @@ public class TouchPointPanel extends Panel {
 						if (e instanceof ProductUnitCountToLowInStockException) {
 							errorMSG = "Touchpoint verfügt nicht über genügend Einheiten des Produktes '"+product.getName()+"'";
 						}
-						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 						System.out.println(errorMSG);
 						final List<AbstractTouchpoint> lst = TouchPointPanel.this.touchpointCRUD.readTouchpoins(TouchPointPanel.this.stockSystem.getPointsOfSale((IndividualisedProductItem) product,e.getUnits()));
-						//touchPointAlternatives = new TouchPointAlternatives("alternatives", lst);
 						TouchPointPanel.this.touchPointAlternatives.updateData(lst, product.getName());
 						TouchPointPanel.this.touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
-						System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! " + lst.size());
 						if (lst.size() < 1){
 							System.out.println("NICHT DA");
 							TouchPointPanel.this.messageModel.setObject(TouchPointPanel.this.htmlPraefix+"Der Artikel "+product.getName()+" ist leider nicht verfügbar!");
 							target.add(TouchPointPanel.this.messageLabel);
 						}
 
-						//add(touchPointAlternatives);
 						target.add(TouchPointPanel.this.touchPointAlternatives);
-        				//setResponsePage(getPage());
 					} catch (final Exception e) {
 
 						e.printStackTrace();
 					}
 
-    				//setResponsePage(getPage());
 
     			}else{
-    				System.out.println("!!!!! USER NOT LOGGED IN !!!!!!");
-    				//touchPointAlternatives = new TouchPointAlternatives("alternatives", touchpointCRUDRemote.readAllTouchpoints());
-    				//touchPointAlternatives.updateData(touchpointCRUD.readAllTouchpoints());
-    				//touchPointAlternatives.add(new AttributeAppender("style", new Model<String>("height:auto; overflow:visible; margin:15px 0 0 0; padding:10px;")));
-					//target.add(touchPointAlternatives);
-					//setResponsePage(getPage());
+    				System.out.println("!!!!! USER NOT LOGGED IN !!!!!!");    				
     			}
     		}
     	};
@@ -217,8 +195,6 @@ public class TouchPointPanel extends Panel {
     	}
     	this.add(new Label("priceTotal",  new DecimalFormat("0.00").format(this.priceTotal/100.0)));
 
-
-    	//addTouchpointAlternatives(touchpointCRUDRemote.readAllTouchpoints());
     	this.add(linkOrder);
         this.add(items);
 	}

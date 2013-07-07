@@ -32,25 +32,17 @@ public class ShoppingCartPanel extends Panel {
 		super(id);
 		this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
-		//addTouchpointPanel();
 	}
 
 	private void addTouchpointPanel(){
 		final UserShoppingCarts shoppingCarts = SessionUtil.getShoppingCarts();
-		System.out.println("TP SIZE!!!!!!!!!!!! " +shoppingCarts.getTouchpoints().size());
 		final ListView<AbstractTouchpoint> touchpoints = new ListView<AbstractTouchpoint>("touchpoints", new ArrayList(shoppingCarts.getTouchpoints())){
 
 			@Override
 			protected void populateItem(final ListItem<AbstractTouchpoint> entry) {
 				// TODO Auto-generated method stub
-				//entry.getModelObject()
-				System.out.println("TP: "+entry.getModelObject().getId());
 				final List<ShoppingItem> test = new ArrayList<ShoppingItem>( shoppingCarts.getShoppingCard(entry.getModelObject()));
-				System.out.println("TP SIZE "+test.size());
-
-				for (final ShoppingItem si:test){
-					System.out.println("TPIT: "+si.getProduct().getName());
-				}
+				
 				if (test.size()>0){
 				final TouchPointPanel touchPointPanel = new TouchPointPanel("oneTouchpoint", shoppingCarts.getShoppingCard(entry.getModelObject()), entry.getModelObject(), ShoppingCartPanel.this.iMainPageItemCallback);
 				System.out.println("GENERATE TOUCHPOINTPANEL BY SHOPPINGCART");

@@ -91,9 +91,6 @@ public class TouchPointPanel extends Panel {
 
 				new PropertyModel <Integer>(TouchPointPanel.this.self, "numOfUnits");
 
-				//numOfUnits = temp.getUnits();
-
-
 				entry.add(new Label("itemName", temp.getName()));
 				entry.add(new Label("itemCategory", temp.getProductType()));
 
@@ -109,7 +106,6 @@ public class TouchPointPanel extends Panel {
 			    });
 				entry.add(priceField);
 
-				//entry.add(new Label("itemUnits", stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())));
 				final TextField itemUnits = new TextField("itemUnits", unitModel);
 				itemUnits.setOutputMarkupId(true);
 				itemUnits.add(new OnChangeAjaxBehavior(){

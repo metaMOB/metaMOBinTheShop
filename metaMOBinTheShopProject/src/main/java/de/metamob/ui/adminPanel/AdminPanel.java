@@ -108,7 +108,6 @@ public class AdminPanel extends Panel {
 				AdminPanel.this.stockSystem.addToStock(product, pos3.getId(), 3);
 
 				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
-				//setResponsePage(getPage());
 			}
 		};
 

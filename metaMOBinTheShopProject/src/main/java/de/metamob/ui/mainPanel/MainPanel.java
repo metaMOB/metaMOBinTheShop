@@ -64,7 +64,6 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	        this.addCategoryModule();
 
 	        this.add (this.itemPanel);
-	        //addItemModule();
 	}
 
     public MainPanel(final String id, final IModel<?> model) {
@@ -129,13 +128,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     }
 
     private void addLastOrders(){
-		//List<CustomerTransaction> myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
 		List<CustomerTransaction> myList = new ArrayList<CustomerTransaction>();
-		//DUMMYDATEN
-		/*for (int i=0; i<10; i++){
-			myList.add(new CustomerTransaction());
-		}*/
-		//DUMMYDATEN
 		if (SessionUtil.isLoggedIn()){
 			myList = (List<CustomerTransaction>) this.customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
 		}
@@ -184,7 +177,6 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 						final AbstractTouchpoint temp = entry.getModel().getObject();
 						System.out.println("TOUCHPOINT: "+ temp.getName()+ " "+temp.getId());
 						MainPanel.this.currentDisplay(target, "ITEMDISPLAY", null);
-						//setSelTouchPoint
 						final UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 						uiuc.setTouchpont(temp);
 						SessionUtil.setUIUserConfiguration(uiuc);
@@ -209,22 +201,12 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
         this.add(this.touchpoints);
     }
 
-  /*  public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}*/
-
 	public void currentDisplay(final AjaxRequestTarget target, final String view, final Object object){
 		if (view.equals("ITEMDISPLAY")){
 			System.out.println("CHANGE TO ITEMPANEL");
 			this.itemPanel = new ItemPanel("itemPanel", this);
 			this.visiblePanel.replaceWith(this.itemPanel);
 			this.visiblePanel = this.itemPanel;
-
-			//visiblePanel.setOutputMarkupId(true);
 
 			this.add(this.visiblePanel);
 			this.setResponsePage(this.getPage());

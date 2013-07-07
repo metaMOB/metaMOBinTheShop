@@ -103,11 +103,6 @@ public class UserShoppingCart implements Set<ShoppingItem>, Serializable {
 
 	@Override
 	public boolean retainAll(final Collection<?> c) {
-		/*List<ShoppingItem> lst = getAsList();
-		for (ShoppingItem item : lst){
-			c.add(item);
-		}*/
-
 		return true;
 	}
 

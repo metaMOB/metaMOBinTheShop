@@ -26,7 +26,6 @@ public class TransactionPanel extends Panel {
 
 	public TransactionPanel(final String id, final IMainPageItemCallback itemPanelCallback, final UserTransaction transaction) {
 		super(id);
-		//this.iMainPageItemCallback = itemPanelCallback;
 		// TODO Auto-generated constructor stub
 		this.addTransactionModule(transaction);
 	}

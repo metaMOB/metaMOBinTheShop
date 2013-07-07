@@ -82,12 +82,7 @@ public class ItemPanel extends Panel {
 		                System.out.println("ITEM: "+ entry.getModelObject().getName());
 		                SessionUtil.getShoppingCarts().getShoppingCard(SessionUtil.getUIUserConfiguration().getTouchpont()).add(new ShoppingItem(entry.getModelObject()));
 
-
-		                //Set <AbstractTouchpoint> allTouchpoints = SessionUtil.getShoppingCarts().getTouchpoints();
-		                //UserShoppingCarts allShoppingCarts = SessionUtil.getShoppingCarts();
 		                ItemPanel.this.iMainPageItemCallback.itemPanelClicked();
-		                // itemPanelCallback
-		                //System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
 					}
 				};
 				entry.add(link);
@@ -147,10 +142,7 @@ public class ItemPanel extends Panel {
 				}
 			}
 
-			//itemList.get(index)
-
-			//currentPage;
-
+			
 			final ListView<String[]> navigation = new ListView<String[]>("pageNavigation", myList){
 				@Override
 				protected void populateItem(final ListItem<String[]> entry) {
@@ -214,7 +206,6 @@ public class ItemPanel extends Panel {
 
 		final DropDownChoice<List> selectItemsPerPage = new DropDownChoice<List>("selectItemsPerPage", new PropertyModel<List>(this, "selectedItemsPerPage"), itemsPerPageValues);
 
-		//final DropDownChoice<List> selectItemsPerPage = new DropDownChoice<List>("selectItemsPerPage", itemsPerPageValues, "selectedItemsPerPage");
 		selectItemsPerPage.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 		      @Override
 			protected void onUpdate(final AjaxRequestTarget target) {
@@ -246,10 +237,7 @@ public class ItemPanel extends Panel {
 		return this.selectedSortBy;
 	}
 
-
-
-	//private ListView<IndividualisedProductItem> items = null;
-
+	
 	@Override
 	public void onBeforeRender(){
 		super.onBeforeRender();
@@ -261,9 +249,8 @@ public class ItemPanel extends Panel {
 
 	private void refreshItemList(){
 		final UIUserConfiguration uuuc = SessionUtil.getUIUserConfiguration();
-		//List<IndividualisedProductItem> myList = null;
 
-		if(uuuc.getTouchpont()==null){//uuuc.getProductType()
+		if(uuuc.getTouchpont()==null){
 			this.itemList = this.stockSystem.getAllProductsOnStock(uuuc.getProductType(),uuuc.getSortType());
 		}else{
 			this.itemList = this.stockSystem.getProductsOnStock(uuuc.getTouchpont().getErpPointOfSaleId(),uuuc.getProductType(),uuuc.getSortType(),1);

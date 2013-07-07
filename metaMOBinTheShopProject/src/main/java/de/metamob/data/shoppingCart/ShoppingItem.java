@@ -6,21 +6,9 @@ import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 
 public class ShoppingItem implements Serializable {
 
-	/**
-	 *
-	 */
 	private static final long	serialVersionUID	= -3775231088549708620L;
 	private AbstractProduct product;
 	int units;
-	//int touchPoint;
-
-	/*public int getTouchPoint() {
-		return touchPoint;
-	}*/
-
-	/*public void setTouchPoint(int touchPoint) {
-		this.touchPoint = touchPoint;
-	}*/
 
 	public ShoppingItem(final AbstractProduct product){
 		this.product = product;

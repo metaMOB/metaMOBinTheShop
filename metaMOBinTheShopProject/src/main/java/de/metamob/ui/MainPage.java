@@ -81,7 +81,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		this.loginPanel.setOutputMarkupId(true);
 		this.mainPanel.setOutputMarkupId(true);
 		this.adminPanel.setOutputMarkupId(true);
-		//mainPanel.updateData();
 
 
 		this.setOutputMarkupId(true);
@@ -110,7 +109,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 				} else {
 					MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
 					MainPage.this.visiblePanel = MainPage.this.mainPanel;
-					//mainPanel.updateData();
 					MainPage.this.mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
 					target.add(MainPage.this.mainPanel);
 					MainPage.this.mode = "main";
@@ -139,17 +137,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 			@Override
 			public void onClick(final AjaxRequestTarget target) {
 				System.out.println("SHOPPINGCART: CLICK");
-
-//				((MainPanel) mainPanel).currentDisplay(target, "SHOPPINGCART", null);
-//				if (!mode.equals("main")){
-					System.out.println("CHANGE TO MAINPANEL");
-					MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
-					MainPage.this.visiblePanel = MainPage.this.mainPanel;
-					target.add(MainPage.this.mainPanel);
-					MainPage.this.mainPanel.currentDisplay(target, "SHOPPINGCART", null);
-					MainPage.this.mode = "main";
-					this.setResponsePage(this.getPage());
-				//}
+				System.out.println("CHANGE TO MAINPANEL");
+				MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
+				MainPage.this.visiblePanel = MainPage.this.mainPanel;
+				target.add(MainPage.this.mainPanel);
+				MainPage.this.mainPanel.currentDisplay(target, "SHOPPINGCART", null);
+				MainPage.this.mode = "main";
+				this.setResponsePage(this.getPage());
 			}
 		};
 
@@ -207,8 +201,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	public String getLoginLabelText() {
 		return this.loginLabelText;
 	}
-
-	//PropertyModel<String> userNameModel = new PropertyModel<String>(this, "userNameText");
 
 	public String getUserNameText() {
 		return this.userNameText;

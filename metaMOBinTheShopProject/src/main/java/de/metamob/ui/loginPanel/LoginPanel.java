@@ -56,9 +56,7 @@ public class LoginPanel extends Panel {
             @Override
             protected void onError(final AjaxRequestTarget target, final Form<?> formLogin)
             {
-                //repaint the feedback panel so errors are shown
-                //target.add(feedback);
-            	System.out.println("LOGIN ERROR: MISSING PASSWORD"+LoginPanel.this.emailLoginField.getModelObject());
+                System.out.println("LOGIN ERROR: MISSING PASSWORD"+LoginPanel.this.emailLoginField.getModelObject());
 
             	LoginPanel.this.feedbackText = "Fehlende Eingabe!";
             	target.add(LoginPanel.this.feedback);
