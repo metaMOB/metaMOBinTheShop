@@ -5,7 +5,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.wicketstuff.javaee.injection.JavaEEComponentInjector;
 
 import de.metamob.jndi.Jboss7JndiNamingStrategy;
-import de.metamob.admin.*;
+import de.metamob.ui.*;
 
 public class MyApplication extends WebApplication {
 	

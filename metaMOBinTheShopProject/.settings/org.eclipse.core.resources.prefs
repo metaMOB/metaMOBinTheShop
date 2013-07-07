@@ -1,7 +1,6 @@
 eclipse.preferences.version=1
-encoding//src/main/java/de/metamob/admin/MainPage.java=UTF-8
-encoding//src/main/java/de/metamob/admin/stockPanel/TouchPointPanel.java=UTF-8
 encoding//src/main/java/de/metamob/ui/MainPage.java=UTF-8
+encoding//src/main/java/de/metamob/ui/adminPanel/touchPointPanel/TouchPointPanel.java=UTF-8
 encoding//src/main/java/de/metamob/ui/itemPanel/ItemPanel.html=UTF-8
 encoding//src/main/java/de/metamob/ui/shoppingCartPanel/ShoppingCartPanel.html=UTF-8
 encoding//src/main/java/de/metamob/ui/shoppingCartPanel/touchPointAlternatives/TouchPointAlternatives.java=UTF-8

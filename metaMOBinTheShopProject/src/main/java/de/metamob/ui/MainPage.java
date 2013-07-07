@@ -28,6 +28,7 @@ import de.metamob.data.shoppingCart.ShoppingItem;
 import de.metamob.data.shoppingCart.UserShoppingCart;
 import de.metamob.data.shoppingCart.UserShoppingCarts;
 import de.metamob.session.SessionUtil;
+import de.metamob.ui.adminPanel.AdminPanel;
 import de.metamob.ui.callbacks.IMainPageCallback;
 import de.metamob.ui.callbacks.IMainPageItemCallback;
 import de.metamob.ui.loginPanel.LoginPanel;
@@ -77,11 +78,13 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private Panel visiblePanel;
 	private Panel loginPanel;
 	private MainPanel mainPanel;
+	private AdminPanel adminPanel;
 	private String mode = "main";
 	private AjaxLink<Void> link;	
 	private AjaxLink<Void> philsButton;
 	private AjaxLink<Void> shoppingCartButton;
 	private AjaxLink<Void> itemDisplayLink;
+	private AjaxLink<Void> adminLink;
 	private Label numOfItems;
 	
 	//private ShoppingCart shoppingCart = new ShoppingCart(); 
@@ -119,9 +122,11 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		mainPanel = new MainPanel("contentPanel", this);
 		loginPanel = new LoginPanel("contentPanel", this);
+		adminPanel = new AdminPanel("contentPanel");
 		
 		loginPanel.setOutputMarkupId(true);
 		mainPanel.setOutputMarkupId(true);
+		adminPanel.setOutputMarkupId(true);
 		//mainPanel.updateData();
 		
 		
@@ -257,6 +262,27 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 			}
 		};
 		add(itemDisplayLink);
+		
+		adminLink = new AjaxLink<Void>("admin") {
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				System.out.println("ADMIN: CLICK");
+				if (mode.equals("main")) {
+					visiblePanel.replaceWith(adminPanel);
+					visiblePanel = adminPanel;
+					target.add(adminPanel);
+					mode = "admin";
+				} else {
+					visiblePanel.replaceWith(mainPanel);
+					visiblePanel = mainPanel;
+					//mainPanel.updateData();
+					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
+					target.add(mainPanel);
+					mode = "main";
+				}	
+			}
+		};
+		add(adminLink);
 		
 		link.add(loginLinkLabel);
 		add(link);
