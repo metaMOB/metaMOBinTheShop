@@ -20,59 +20,45 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jboss.logging.Logger;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Location implements Serializable {
-
-	protected static Logger logger = Logger.getLogger(Location.class);
+	
+	protected static Logger		logger				= Logger.getLogger(Location.class);
 	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -131090102062445239L;
-
-	private int id = -1;
+	private static final long	serialVersionUID	= -131090102062445239L;
 	
-	private float geoLat;
+	private float				geoLat;
 	
-	private float geoLong;
+	private float				geoLong;
+	
+	private int					id					= -1;
+	
+	@Override
+	public boolean equals(final Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
+	}
+	
+	public float getGeoLat() {
+		return this.geoLat;
+	}
+	
+	public float getGeoLong() {
+		return this.geoLong;
+	}
 	
 	@Id
 	@GeneratedValue
 	public int getId() {
-		return id;
+		return this.id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public float getGeoLat() {
-		return geoLat;
-	}
-
-	public void setGeoLat(float geoLat) {
-		this.geoLat = geoLat;
-	}
-
-	public float getGeoLong() {
-		return geoLong;
-	}
-
-	public void setGeoLong(float geoLong) {
-		this.geoLong = geoLong;
-	}
-	
-	public boolean equals(Object other) {
-		return EqualsBuilder.reflectionEquals(this, other);
-	}
-	
+	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-	
-	/*
-	 * lifecycle logging
-	 */
 	
 	@PostLoad
 	public void onPostLoad() {
@@ -81,14 +67,18 @@ public class Location implements Serializable {
 	
 	@PostPersist
 	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
+		logger.info("@PostPersist: " + this);
 	}
 	
 	@PostRemove
 	public void onPostRemove() {
 		logger.info("@PostRemove: " + this);
 	}
-
+	
+	/*
+	 * lifecycle logging
+	 */
+	
 	@PostUpdate
 	public void onPostUpdate() {
 		logger.info("@PostUpdate: " + this);
@@ -98,16 +88,27 @@ public class Location implements Serializable {
 	public void onPrePersist() {
 		logger.info("@PrePersist: " + this);
 	}
-
+	
 	@PreRemove
 	public void onPreRemove() {
 		logger.info("@PreRemove: " + this);
 	}
-
+	
 	@PreUpdate
 	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
+		logger.info("@PreUpdate: " + this);
 	}
-
-
+	
+	public void setGeoLat(final float geoLat) {
+		this.geoLat = geoLat;
+	}
+	
+	public void setGeoLong(final float geoLong) {
+		this.geoLong = geoLong;
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
 }

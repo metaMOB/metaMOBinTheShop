@@ -6,10 +6,15 @@ import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.exceptions.ProductNotInStockException;
 
 public interface ShoppingSessionFacadeInterface {
-	public void setTouchpoint(AbstractTouchpoint touchpoint);
-	public void setCustomer(Customer customer);
 	public void addProduct(AbstractProduct product, int units);
-	public void verifyCampaigns();
+	
 	public void purchase() throws ProductNotInStockException;
+	
 	public void reset();
+	
+	public void setCustomer(Customer customer);
+	
+	public void setTouchpoint(AbstractTouchpoint touchpoint);
+	
+	public void verifyCampaigns();
 }

@@ -16,14 +16,19 @@ import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 
 public class UserTransaction implements Serializable {
-	
+
+	/**
+	 *
+	 */
+	private static final long	serialVersionUID	= 478707976370399493L;
+
+	private Date date;
+
 	@EJB(name="ProductCRUD")
 	private ProductCRUDLocal productCRUD;
-	
-	private Date date;
-	private AbstractTouchpoint touchpoint;
-	private List<ShoppingItem> products;
-	
+	private final List<ShoppingItem> products;
+	private final AbstractTouchpoint touchpoint;
+
 	public UserTransaction(){
 		this.date = new Date();
 		this.touchpoint = new StationaryTouchpoint(0, "Test TP", null);
@@ -32,28 +37,28 @@ public class UserTransaction implements Serializable {
 		this.products.add(new ShoppingItem(new IndividualisedProductItem("BlaBlub", ProductType.BREAD, 0, 100)));
 		this.date = new Date();
 	}
-	
-	public UserTransaction(CustomerTransaction customerTransaction) {
+
+	public UserTransaction(final CustomerTransaction customerTransaction) {
 		this.date = customerTransaction.getDate();
 		this.touchpoint = customerTransaction.getTouchpoint();
-		products = new ArrayList<ShoppingItem>();
-		List<CrmProductBundle> productBundles = customerTransaction.getProducts();
-		for(CrmProductBundle productBundle: productBundles){
-			ShoppingItem item = new ShoppingItem(productCRUD.readProduct(productBundle.getErpProductId()));
+		this.products = new ArrayList<ShoppingItem>();
+		final List<CrmProductBundle> productBundles = customerTransaction.getProducts();
+		for(final CrmProductBundle productBundle: productBundles){
+			final ShoppingItem item = new ShoppingItem(this.productCRUD.readProduct(productBundle.getErpProductId()));
 			item.setUnits(productBundle.getUnits());
-			products.add(item);
+			this.products.add(item);
 		}
 	}
-	
+
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
-	
-	public AbstractTouchpoint getTouchpoint() {
-		return touchpoint;
-	}
-	
+
 	public List<ShoppingItem> getProducts() {
-		return products;
+		return this.products;
+	}
+
+	public AbstractTouchpoint getTouchpoint() {
+		return this.touchpoint;
 	}
 }

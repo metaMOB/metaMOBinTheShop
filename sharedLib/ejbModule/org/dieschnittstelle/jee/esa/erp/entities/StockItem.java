@@ -21,106 +21,106 @@ import org.jboss.logging.Logger;
 @Entity
 @Table(name = "stock")
 @IdClass(ProductAtPosPK.class)
-public class StockItem implements Serializable{
-	private static final long serialVersionUID = -523570877265085869L;
-
-	protected static Logger logger = Logger.getLogger(StockItem.class);
-
-	@Id
-	@ManyToOne(cascade = CascadeType.MERGE)
-	private PointOfSale pos;
-
-	@Id
-	@ManyToOne(cascade = CascadeType.MERGE)
-	private AbstractProduct product;
-
-	private int price;
+public class StockItem implements Serializable {
+	protected static Logger		logger				= Logger.getLogger(StockItem.class);
 	
-	private int units;
-
+	private static final long	serialVersionUID	= -523570877265085869L;
+	
+	@Id
+	@ManyToOne(cascade = CascadeType.MERGE)
+	private PointOfSale			pos;
+	
+	private int					price;
+	
+	@Id
+	@ManyToOne(cascade = CascadeType.MERGE)
+	private AbstractProduct		product;
+	
+	private int					units;
+	
 	public StockItem() {
-
+		
 	}
-
-	public StockItem(AbstractProduct product, PointOfSale pos, int units) {
+	
+	public StockItem(final AbstractProduct product, final PointOfSale pos, final int units) {
 		this.product = product;
 		this.pos = pos;
 	}
-
+	
 	public PointOfSale getPos() {
-		return pos;
+		return this.pos;
 	}
-
-	public void setPos(PointOfSale pos) {
-		this.pos = pos;
-	}
-
-	public AbstractProduct getProduct() {
-		return product;
-	}
-
-	public void setProduct(AbstractProduct product) {
-		this.product = product;
-	}
-
+	
 	public int getPrice() {
-		return price;
+		return this.price;
 	}
-
-	public void setPrice(int price) {
-		this.price = price;
+	
+	public AbstractProduct getProduct() {
+		return this.product;
 	}
-
-	/*
-	 * the lifecycle log messages
-	 */
-
+	
+	public int getUnits() {
+		return this.units;
+	}
+	
 	@PostLoad
 	public void onPostLoad() {
 		logger.info("onPostLoad(): " + this);
 	}
-
+	
 	@PostPersist
 	public void onPostPersist() {
 		logger.info("onPostPersist(): " + this);
 	}
-
+	
+	/*
+	 * the lifecycle log messages
+	 */
+	
 	@PostRemove
 	public void onPostRemove() {
 		logger.info("onPostRemove(): " + this);
 	}
-
+	
 	@PostUpdate
 	public void onPostUpdate() {
 		logger.info("onPostUpdate(): " + this);
 	}
-
+	
 	@PrePersist
 	public void onPrePersist() {
 		logger.info("onPrePersist(): " + this);
 	}
-
+	
 	@PreRemove
 	public void onPreRemove() {
 		logger.info("onPreRemove(): " + this);
 	}
-
+	
 	@PreUpdate
 	public void onPreUpdate() {
 		logger.info("onPreUpdate(): " + this);
 	}
-
-	public String toString() {
-		return "{StockItemEntity " + this.price + ", " + this.product + "@"
-				+ this.pos + "}";
+	
+	public void setPos(final PointOfSale pos) {
+		this.pos = pos;
 	}
-
-	public int getUnits() {
-		return units;
+	
+	public void setPrice(final int price) {
+		this.price = price;
 	}
-
-	public void setUnits(int units) {
+	
+	public void setProduct(final AbstractProduct product) {
+		this.product = product;
+	}
+	
+	public void setUnits(final int units) {
 		this.units = units;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "{StockItemEntity " + this.price + ", " + this.product + "@" + this.pos + "}";
+	}
+	
 }

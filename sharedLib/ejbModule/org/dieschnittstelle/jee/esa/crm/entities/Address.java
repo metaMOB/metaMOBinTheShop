@@ -9,78 +9,81 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.jboss.logging.Logger;
 
 @Entity
-public class Address extends Location  implements Serializable {
+public class Address extends Location implements Serializable {
 	
-	protected static Logger logger = Logger.getLogger(Address.class);
-
-	private static final long serialVersionUID = 1L;
-
-	private String street;
+	protected static Logger		logger				= Logger.getLogger(Address.class);
 	
-	private String houseNr;
+	private static final long	serialVersionUID	= 1L;
 	
-	private String zipCode;
+	private String				city;
 	
-	private String city;
+	private String				houseNr;
+	
+	private String				street;
+	
+	private String				zipCode;
 	
 	public Address() {
 		logger.info("<constructor>");
 	}
 	
-	public Address(String street,String houseNr,String zipCode,String city) {
+	public Address(final String street, final String houseNr, final String zipCode, final String city) {
 		this.street = street;
 		this.houseNr = houseNr;
 		this.zipCode = zipCode;
 		this.city = city;
 	}
-
-	public Address(String street,String houseNr,String zipCode,String city, float geoLat, float geoLong) {
-		this(street,houseNr,zipCode,city);
+	
+	public Address(final String street, final String houseNr, final String zipCode, final String city, final float geoLat, final float geoLong) {
+		this(street, houseNr, zipCode, city);
 		this.setGeoLat(geoLat);
 		this.setGeoLong(geoLong);
 	}
-		
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getHouseNr() {
-		return houseNr;
-	}
-
-	public void setHouseNr(String houseNr) {
-		this.houseNr = houseNr;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
 	
-	public String toString() {
-		return "{Address " + this.getId() + ", " + this.street + " " + this.houseNr + ", " + this.zipCode + " " + this.city + "}";
-	}
-	
-	public boolean equals(Object other) {
+	@Override
+	public boolean equals(final Object other) {
 		return EqualsBuilder.reflectionEquals(this, other);
 	}
 	
+	public String getCity() {
+		return this.city;
+	}
+	
+	public String getHouseNr() {
+		return this.houseNr;
+	}
+	
+	public String getStreet() {
+		return this.street;
+	}
+	
+	public String getZipCode() {
+		return this.zipCode;
+	}
+	
+	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	public void setCity(final String city) {
+		this.city = city;
+	}
+	
+	public void setHouseNr(final String houseNr) {
+		this.houseNr = houseNr;
+	}
+	
+	public void setStreet(final String street) {
+		this.street = street;
+	}
+	
+	public void setZipCode(final String zipCode) {
+		this.zipCode = zipCode;
+	}
+	
+	@Override
+	public String toString() {
+		return "{Address " + this.getId() + ", " + this.street + " " + this.houseNr + ", " + this.zipCode + " " + this.city + "}";
 	}
 }

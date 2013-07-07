@@ -8,22 +8,22 @@ import javax.persistence.Id;
 
 @Entity
 public class PointOfSale implements Serializable {
-
+	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -3397160788902953608L;
+	private static final long	serialVersionUID	= -3397160788902953608L;
 	
 	@Id
 	@GeneratedValue
-	private int id = -1;
-
+	private int					id					= -1;
+	
 	public int getId() {
-		return id;
+		return this.id;
 	}
-
-	public void setId(int id) {
+	
+	public void setId(final int id) {
 		this.id = id;
 	}
-
+	
 }

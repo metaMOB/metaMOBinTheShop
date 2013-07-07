@@ -1,5 +1,5 @@
 package de.metamob.session;
 
 public enum SessionAttributes {
-	USER, UIUSERCONFIG, CURRENTPAGE, SHOPPINGCARTS;
+	CURRENTPAGE, SHOPPINGCARTS, UIUSERCONFIG, USER;
 }

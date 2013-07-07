@@ -26,50 +26,38 @@ import org.jboss.logging.Logger;
 @XmlType(namespace = "http://dieschnittstelle.org/jee/esa/crm/model")
 @Entity
 @DiscriminatorValue("stationary")
-public class StationaryTouchpoint extends AbstractTouchpoint  implements Serializable {
+public class StationaryTouchpoint extends AbstractTouchpoint implements Serializable {
 	
-	protected static Logger logger = Logger.getLogger(StationaryTouchpoint.class);
+	protected static Logger		logger				= Logger.getLogger(StationaryTouchpoint.class);
 	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -6123798695442913993L;
+	private static final long	serialVersionUID	= -6123798695442913993L;
 	
 	/**
 	 * we assume a onetoone assoc
 	 */
-	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.MERGE})
-	private Address location;
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Address				location;
 	
 	public StationaryTouchpoint() {
 		logger.info("<constructor>");
 	}
 	
-	public StationaryTouchpoint(int erpPointOfSaleId) {
+	public StationaryTouchpoint(final int erpPointOfSaleId) {
 		this.setErpPointOfSaleId(erpPointOfSaleId);
 	}
-
-	public StationaryTouchpoint(int erpPointOfSaleId,String name,Address address) {
+	
+	public StationaryTouchpoint(final int erpPointOfSaleId, final String name, final Address address) {
 		super.setErpPointOfSaleId(erpPointOfSaleId);
 		super.setName(name);
 		this.setLocation(address);
 	}
 	
-	public String toString() {
-		return "{StationaryTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.name + " " + this.location + "}";
-	}
-	
 	public Address getLocation() {
-		return location;
+		return this.location;
 	}
-
-	public void setLocation(Address location) {
-		this.location = location;
-	}
-	
-	/*
-	 * lifecycle logging
-	 */
 	
 	@PostLoad
 	public void onPostLoad() {
@@ -78,14 +66,18 @@ public class StationaryTouchpoint extends AbstractTouchpoint  implements Seriali
 	
 	@PostPersist
 	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
+		logger.info("@PostPersist: " + this);
 	}
+	
+	/*
+	 * lifecycle logging
+	 */
 	
 	@PostRemove
 	public void onPostRemove() {
 		logger.info("@PostRemove: " + this);
 	}
-
+	
 	@PostUpdate
 	public void onPostUpdate() {
 		logger.info("@PostUpdate: " + this);
@@ -95,15 +87,24 @@ public class StationaryTouchpoint extends AbstractTouchpoint  implements Seriali
 	public void onPrePersist() {
 		logger.info("@PrePersist: " + this);
 	}
-
+	
 	@PreRemove
 	public void onPreRemove() {
 		logger.info("@PreRemove: " + this);
 	}
-
+	
 	@PreUpdate
 	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
+		logger.info("@PreUpdate: " + this);
+	}
+	
+	public void setLocation(final Address location) {
+		this.location = location;
+	}
+	
+	@Override
+	public String toString() {
+		return "{StationaryTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.name + " " + this.location + "}";
 	}
 	
 }

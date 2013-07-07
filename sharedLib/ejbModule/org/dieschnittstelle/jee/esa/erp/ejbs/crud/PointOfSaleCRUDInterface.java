@@ -4,6 +4,8 @@ import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
 
 public interface PointOfSaleCRUDInterface {
 	public PointOfSale createPointOfSale(PointOfSale pos);
-	public PointOfSale readPointOfSale(int posId);
+	
 	public boolean deletePointOfSale(int posId);
+	
+	public PointOfSale readPointOfSale(int posId);
 }

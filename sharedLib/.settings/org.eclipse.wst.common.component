@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="sharedLib">
-        <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/" source-path="/src"/>
-        <dependent-module archiveName="commons-codec-1.2.jar" deploy-path="/" handle="module:/classpath/lib/sharedLib/lib/commons-codec-1.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <property name="java-output-path" value="/sharedLib/build/classes"/>
-    </wb-module>
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="sharedLib">
+		<wb-resource deploy-path="/" source-path="/ejbModule"
+			tag="defaultRootSource" />
+		<wb-resource deploy-path="/" source-path="/src" />
+		<dependent-module archiveName="commons-codec-1.2.jar"
+			deploy-path="/"
+			handle="module:/classpath/lib/sharedLib/lib/commons-codec-1.2.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<property name="java-output-path" value="/sharedLib/build/classes" />
+	</wb-module>
 </project-modules>

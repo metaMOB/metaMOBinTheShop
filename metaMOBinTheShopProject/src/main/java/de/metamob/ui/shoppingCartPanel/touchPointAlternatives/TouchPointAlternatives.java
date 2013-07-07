@@ -2,7 +2,6 @@ package de.metamob.ui.shoppingCartPanel.touchPointAlternatives;
 
 import java.util.List;
 
-import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AttributeAppender;
@@ -14,95 +13,95 @@ import org.apache.wicket.model.Model;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.Address;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
-import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
-import org.wicketstuff.gmap.GMap;
 import org.wicketstuff.gmap.api.GLatLng;
-import org.wicketstuff.gmap.api.GMarker;
-import org.wicketstuff.gmap.api.GMarkerOptions;
-
-import de.metamob.session.SessionUtil;
 
 public class TouchPointAlternatives extends Panel {
-	
-	private GLatLng centerCoordinate;
-	
-	
-	private MapPanel positionDummy;
-	private Label messageDummy;
+
+	/**
+	 *
+	 */
+	private static final long	serialVersionUID	= 8429011732870872726L;
+
+
 	private ListView<AbstractTouchpoint> alternativeTouchpoints;
+
+
+	private GLatLng centerCoordinate;
 	private MapPanel map;
-	
-	public TouchPointAlternatives(String id) {
+	private Label messageDummy;
+	private MapPanel positionDummy;
+
+	public TouchPointAlternatives(final String id) {
 		super(id);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public TouchPointAlternatives(String id, List <AbstractTouchpoint> alternativeTP, String productName) {
+
+	public TouchPointAlternatives(final String id, final List <AbstractTouchpoint> alternativeTP, final String productName) {
 		super(id);
 		// TODO Auto-generated constructor stub
-		positionDummy = new MapPanel ("position");
-		messageDummy = new Label("message", "");
-		positionDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
-		messageDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
-		
-		addTouchpointAlternatives(alternativeTP, productName);
+		this.positionDummy = new MapPanel ("position");
+		this.messageDummy = new Label("message", "");
+		this.positionDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
+		this.messageDummy.add(new AttributeAppender("style", new Model<String>("height:0px;")));
+
+		this.addTouchpointAlternatives(alternativeTP, productName);
 	}
-	
-	public void updateData(List <AbstractTouchpoint> alternativeTP, String productName){
-		addTouchpointAlternatives(alternativeTP, productName);
-	}
-	
-	private void addTouchpointAlternatives(List <AbstractTouchpoint> alternativeTP, String productName){
-		if (alternativeTP.size()> 0){		
-			remove(positionDummy);
-			remove(messageDummy);
-			
-			map = new MapPanel("position");
-			map.add(new AttributeAppender("style", new Model<String>("height:300px;")));
-			add(new MessagePanel("message", productName));
-			add(map);
-	                        
-	        for (AbstractTouchpoint at: alternativeTP){
+
+	private void addTouchpointAlternatives(final List <AbstractTouchpoint> alternativeTP, final String productName){
+		if (alternativeTP.size()> 0){
+			this.remove(this.positionDummy);
+			this.remove(this.messageDummy);
+
+			this.map = new MapPanel("position");
+			this.map.add(new AttributeAppender("style", new Model<String>("height:300px;")));
+			this.add(new MessagePanel("message", productName));
+			this.add(this.map);
+
+	        for (final AbstractTouchpoint at: alternativeTP){
 	        	if (at instanceof StationaryTouchpoint){
-	        		StationaryTouchpoint temp = (StationaryTouchpoint) at;
-	        		GLatLng tempCoord = new GLatLng(temp.getLocation().getGeoLat(), temp.getLocation().getGeoLong());
-	        		map.addMarker(tempCoord); 
-	        		if (centerCoordinate == null){
-	                	map.setCenter(tempCoord);
+	        		final StationaryTouchpoint temp = (StationaryTouchpoint) at;
+	        		final GLatLng tempCoord = new GLatLng(temp.getLocation().getGeoLat(), temp.getLocation().getGeoLong());
+	        		this.map.addMarker(tempCoord);
+	        		if (this.centerCoordinate == null){
+	                	this.map.setCenter(tempCoord);
 	                }
-	        	}        	
-	        }    
+	        	}
+	        }
 		} else {
-			add(positionDummy);
-			add(messageDummy);
+			this.add(this.positionDummy);
+			this.add(this.messageDummy);
 		}
-		
-		if (alternativeTouchpoints != null){
-			remove(alternativeTouchpoints);
+
+		if (this.alternativeTouchpoints != null){
+			this.remove(this.alternativeTouchpoints);
 		}
-		
-		alternativeTouchpoints = new ListView<AbstractTouchpoint>("alternativeTouchpoints", (List<AbstractTouchpoint>) alternativeTP){
+
+		this.alternativeTouchpoints = new ListView<AbstractTouchpoint>("alternativeTouchpoints", alternativeTP){
         	@Override
 			protected void populateItem(final ListItem<AbstractTouchpoint> entry) {
         		if (entry.getModelObject() instanceof StationaryTouchpoint){
-        			AjaxLink<Void> link = new AjaxLink<Void>("touchpointAlternativeLink"){
+        			final AjaxLink<Void> link = new AjaxLink<Void>("touchpointAlternativeLink"){
     					@Override
-    					public void onClick(AjaxRequestTarget target) {		                
-    		                StationaryTouchpoint temp = (StationaryTouchpoint) entry.getModelObject();
-    		                GLatLng tempCoord = new GLatLng((double)temp.getLocation().getGeoLat(), (double)temp.getLocation().getGeoLong());
-    		                map.setCenter(tempCoord);
+    					public void onClick(final AjaxRequestTarget target) {
+    		                final StationaryTouchpoint temp = (StationaryTouchpoint) entry.getModelObject();
+    		                final GLatLng tempCoord = new GLatLng(temp.getLocation().getGeoLat(), temp.getLocation().getGeoLong());
+    		                TouchPointAlternatives.this.map.setCenter(tempCoord);
     		            }
     				};
-    				StationaryTouchpoint tempTP = (StationaryTouchpoint) entry.getModelObject();
-    				Address tempTPAdr = tempTP.getLocation();
-    				link.add(new Label("touchpointAlternative", tempTP.getName()));    				
+    				final StationaryTouchpoint tempTP = (StationaryTouchpoint) entry.getModelObject();
+    				final Address tempTPAdr = tempTP.getLocation();
+    				link.add(new Label("touchpointAlternative", tempTP.getName()));
     				entry.add(new Label("touchpointAlternativeAddress", tempTPAdr.getStreet()+" "+tempTPAdr.getHouseNr()));
     				entry.add(new Label("touchpointAlternativeAddressCity", tempTPAdr.getZipCode()+" "+tempTPAdr.getCity()));
     				entry.add(link);
         		}
         	}
         };
-        
-        add(alternativeTouchpoints);       	
+
+        this.add(this.alternativeTouchpoints);
+	}
+
+	public void updateData(final List <AbstractTouchpoint> alternativeTP, final String productName){
+		this.addTouchpointAlternatives(alternativeTP, productName);
 	}
 }

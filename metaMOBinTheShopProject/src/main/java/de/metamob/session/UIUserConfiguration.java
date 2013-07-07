@@ -9,33 +9,33 @@ import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 public class UIUserConfiguration implements Serializable{
 	private static final long serialVersionUID = -9027476182757928717L;
 
-	private AbstractTouchpoint touchpont = null;
+	private Integer itemsPerPage = null;
 	private ProductType productType = null;
 	private SortType sortType = null;
-	private Integer itemsPerPage = null;
-	
-	public AbstractTouchpoint getTouchpont() {
-		return touchpont;
-	}
-	public void setTouchpont(AbstractTouchpoint touchpont) {
-		this.touchpont = touchpont;
+	private AbstractTouchpoint touchpont = null;
+
+	public Integer getItemsPerPage() {
+		return this.itemsPerPage;
 	}
 	public ProductType getProductType() {
-		return productType;
-	}
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
+		return this.productType;
 	}
 	public SortType getSortType() {
-		return sortType;
+		return this.sortType;
 	}
-	public void setSortType(SortType sortType) {
+	public AbstractTouchpoint getTouchpont() {
+		return this.touchpont;
+	}
+	public void setItemsPerPage(final Integer itemsPerPage) {
+		this.itemsPerPage = itemsPerPage;
+	}
+	public void setProductType(final ProductType productType) {
+		this.productType = productType;
+	}
+	public void setSortType(final SortType sortType) {
 		this.sortType = sortType;
 	}
-	public Integer getItemsPerPage() {
-		return itemsPerPage;
-	}
-	public void setItemsPerPage(Integer itemsPerPage) {
-		this.itemsPerPage = itemsPerPage;
+	public void setTouchpont(final AbstractTouchpoint touchpont) {
+		this.touchpont = touchpont;
 	}
 }

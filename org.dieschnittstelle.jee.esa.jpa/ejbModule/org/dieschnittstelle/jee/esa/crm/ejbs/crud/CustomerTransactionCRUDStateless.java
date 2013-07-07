@@ -25,30 +25,48 @@ public class CustomerTransactionCRUDStateless implements
 	private EntityManager em;
 
 	@Override
-	public boolean createTransaction(CustomerTransaction transaction) {
+	public boolean createTransaction(final CustomerTransaction transaction) {
 		logger.info("createTransaction(): " + transaction);
 
 		// check whether the transaction fields are detached or not
 		logger.info("createTransaction(): customer attached (before): "
-				+ em.contains(transaction.getCustomer()));
+				+ this.em.contains(transaction.getCustomer()));
 		logger.info("createTransaction(): touchpoint attached (before): "
-				+ em.contains(transaction.getTouchpoint()));
+				+ this.em.contains(transaction.getTouchpoint()));
 		/*
 		 * Ü1.1
 		 */
 		// persist each bundle
-		for (CrmProductBundle bundle : transaction.getProducts()) {
+		for (final CrmProductBundle bundle : transaction.getProducts()) {
 			logger.info("createTransaction(): will manually persist bundle: " + bundle);
-			em.persist(bundle);
+			this.em.persist(bundle);
 			logger.info("createTransaction(): persisted bundle: " + bundle);
 		}
 
 		// persit the transaction
-		em.persist(transaction);
-				
+		this.em.persist(transaction);
+
 		logger.info("createTransaction(): done.");
 
 		return true;
+	}
+
+	@Override
+	public Collection<CustomerTransaction> readAllTransactionsForCustomer(final Customer customer) {
+		logger.info("readAllTransactionsForCustomer(): " + customer);
+
+		final Query query = this.em
+				.createQuery("SELECT t FROM CustomerTransaction t WHERE t.customer = "
+						+ customer.getId());
+		logger.info("readAllTransactionsForCustomer(): created query: " + query);
+
+		final List<CustomerTransaction> trans = query.getResultList();
+		logger.info("readAllTransactionsForCustomer(): " + trans);
+		logger.info("readAllTransactionsForCustomer(): class is: "
+				+ (trans == null ? "<null pointer>" : String.valueOf(trans
+						.getClass())));
+
+		return trans;
 	}
 
 	@Override
@@ -58,11 +76,11 @@ public class CustomerTransactionCRUDStateless implements
 		logger.info("readAllTransactionsForTouchpoint(): before merge transactions are: "
 				+ touchpoint.getTransactions());
 
-		touchpoint = em.find(AbstractTouchpoint.class, touchpoint.getId());
+		touchpoint = this.em.find(AbstractTouchpoint.class, touchpoint.getId());
 		logger.info("touchpoint queried.");
 
 		// now read out the transactions
-		Collection<CustomerTransaction> trans = touchpoint.getTransactions();
+		final Collection<CustomerTransaction> trans = touchpoint.getTransactions();
 		logger.info("readAllTransactionsForTouchpoint(): transactions are: "
 				+ trans);
 		logger.info("readAllTransactionsForTouchpoint(): class is: "
@@ -73,30 +91,12 @@ public class CustomerTransactionCRUDStateless implements
 	}
 
 	@Override
-	public Collection<CustomerTransaction> readAllTransactionsForCustomer(Customer customer) {
-		logger.info("readAllTransactionsForCustomer(): " + customer);
-
-		Query query = em
-				.createQuery("SELECT t FROM CustomerTransaction t WHERE t.customer = "
-						+ customer.getId());
-		logger.info("readAllTransactionsForCustomer(): created query: " + query);
-
-		List<CustomerTransaction> trans = query.getResultList();
-		logger.info("readAllTransactionsForCustomer(): " + trans);
-		logger.info("readAllTransactionsForCustomer(): class is: "
-				+ (trans == null ? "<null pointer>" : String.valueOf(trans
-						.getClass())));
-
-		return trans;
-	}
-
-	@Override
 	public List<CustomerTransaction> readAllTransactionsForTouchpointAndCustomer(
-			AbstractTouchpoint touchpoint, Customer customer) {
+			final AbstractTouchpoint touchpoint, final Customer customer) {
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): "
 				+ touchpoint + " / " + customer);
 
-		Query query = em
+		final Query query = this.em
 				.createQuery("SELECT t FROM CustomerTransaction t WHERE t.customer = "
 						+ customer.getId()
 						+ " AND t.touchpoint = "
@@ -104,7 +104,7 @@ public class CustomerTransactionCRUDStateless implements
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): created query: "
 				+ query);
 
-		List<CustomerTransaction> trans = query.getResultList();
+		final List<CustomerTransaction> trans = query.getResultList();
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): " + trans);
 		logger.info("readAllTransactionsForTouchpointAndCustomer(): class is: "
 				+ (trans == null ? "<null pointer>" : String.valueOf(trans.getClass())));

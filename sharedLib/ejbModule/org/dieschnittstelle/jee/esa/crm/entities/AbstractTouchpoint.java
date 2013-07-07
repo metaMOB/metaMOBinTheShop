@@ -7,7 +7,6 @@ import java.util.HashSet;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,105 +32,103 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = "http://dieschnittstelle.org/jee/esa/crm/model")
 @XmlSeeAlso(StationaryTouchpoint.class)
-
 // jpa annotations
 @Entity
 // inheritance
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="touchpointType", discriminatorType=DiscriminatorType.STRING)
-//@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS);
-//@Inheritance(strategy=InheritanceType.JOINED);
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "touchpointType", discriminatorType = DiscriminatorType.STRING)
+// @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS);
+// @Inheritance(strategy=InheritanceType.JOINED);
 @SequenceGenerator(name = "touchpoint_sequence", sequenceName = "touchpoint_id_sequence")
 public abstract class AbstractTouchpoint implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5207353251688141788L;
-
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "touchpoint_sequence")
-	protected int id = -1;
-
+	/**
+	 *
+	 */
+	private static final long				serialVersionUID	= 5207353251688141788L;
+	
+	@XmlTransient
+	@ManyToMany
+	private Collection<Customer>			customers			= new HashSet<Customer>();
+	
 	/**
 	 * the id of the PointOfSale from the erp data
 	 */
-	protected int erpPointOfSaleId;
-
+	protected int							erpPointOfSaleId;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "touchpoint_sequence")
+	protected int							id					= -1;
+	
 	/**
 	 * the name of the touchpoint
 	 */
-	protected String name;
-
-	@XmlTransient
-	@ManyToMany
-	private Collection<Customer> customers = new HashSet<Customer>();
+	protected String						name;
 	
-	@OneToMany(mappedBy="touchpoint")
-	private Collection<CustomerTransaction> transactions;
-
-
+	@OneToMany(mappedBy = "touchpoint")
+	private Collection<CustomerTransaction>	transactions;
+	
 	public AbstractTouchpoint() {
-
+		
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getErpPointOfSaleId() {
-		return erpPointOfSaleId;
-	}
-
-	public void setErpPointOfSaleId(int erpPointOfSaleId) {
-		this.erpPointOfSaleId = erpPointOfSaleId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Collection<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(HashSet<Customer> customers) {
-		this.customers = customers;
-	}
-
-	public void addCustomer(Customer customer) {
+	
+	public void addCustomer(final Customer customer) {
 		this.customers.add(customer);
 	}
-
-	public boolean equals(Object obj) {
-
-		if (obj == null || !(obj instanceof AbstractTouchpoint)) {
+	
+	@Override
+	public boolean equals(final Object obj) {
+		
+		if ((obj == null) || !(obj instanceof AbstractTouchpoint)) {
 			return false;
 		}
-
+		
 		return this.getId() == ((AbstractTouchpoint) obj).getId();
 	}
-
-	public Collection<CustomerTransaction> getTransactions() {
-		return transactions;
+	
+	public Collection<Customer> getCustomers() {
+		return this.customers;
 	}
-
-	public void setTransactions(Collection<CustomerTransaction> transactions) {
-		this.transactions = transactions;
+	
+	public int getErpPointOfSaleId() {
+		return this.erpPointOfSaleId;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public Collection<CustomerTransaction> getTransactions() {
+		return this.transactions;
 	}
 	
 	@Override
 	public int hashCode() {
-		return (this.name+this.id).hashCode();
+		return (this.name + this.id).hashCode();
 	}
-
+	
+	public void setCustomers(final HashSet<Customer> customers) {
+		this.customers = customers;
+	}
+	
+	public void setErpPointOfSaleId(final int erpPointOfSaleId) {
+		this.erpPointOfSaleId = erpPointOfSaleId;
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	public void setName(final String name) {
+		this.name = name;
+	}
+	
+	public void setTransactions(final Collection<CustomerTransaction> transactions) {
+		this.transactions = transactions;
+	}
+	
 }

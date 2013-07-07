@@ -1,17 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="MetaMOBinTheShopEAR">
-        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
-        <dependent-module archiveName="sharedLib.jar" deploy-path="/" handle="module:/resource/sharedLib/sharedLib">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="org.dieschnittstelle.jee.esa.ejbs.jar" deploy-path="/" handle="module:/resource/org.dieschnittstelle.jee.esa.jpa/org.dieschnittstelle.jee.esa.jpa">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="MetaMOBinTheShopWicketUI.war" deploy-path="/" handle="module:/resource/MetaMOBinTheShopWicketUI/MetaMOBinTheShopWicketUI">
-            <dependent-object/>
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-    </wb-module>
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="MetaMOBinTheShopEAR">
+		<wb-resource deploy-path="/" source-path="/EarContent"
+			tag="defaultRootSource" />
+		<dependent-module archiveName="sharedLib.jar"
+			deploy-path="/" handle="module:/resource/sharedLib/sharedLib">
+			<dependent-object />
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module archiveName="org.dieschnittstelle.jee.esa.ejbs.jar"
+			deploy-path="/"
+			handle="module:/resource/org.dieschnittstelle.jee.esa.jpa/org.dieschnittstelle.jee.esa.jpa">
+			<dependent-object />
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module archiveName="MetaMOBinTheShopWicketUI.war"
+			deploy-path="/"
+			handle="module:/resource/MetaMOBinTheShopWicketUI/MetaMOBinTheShopWicketUI">
+			<dependent-object />
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+	</wb-module>
 </project-modules>

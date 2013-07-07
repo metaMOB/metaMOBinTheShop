@@ -16,5 +16,5 @@
 	<filter-mapping>
 		<filter-name>wicket.wicketTest</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>	
+	</filter-mapping>
 </web-app>

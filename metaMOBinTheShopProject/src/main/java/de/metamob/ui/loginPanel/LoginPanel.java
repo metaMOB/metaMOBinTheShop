@@ -10,7 +10,6 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
-
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -22,74 +21,78 @@ import de.metamob.ui.callbacks.IMainPageCallback;
 
 public class LoginPanel extends Panel {
 
-	private IMainPageCallback iMainPageCallback;
+	/**
+	 *
+	 */
+	private static final long	serialVersionUID	= 4319630302908198354L;
 	private TextField<String> emailLoginField;
-	private PasswordTextField passwordLoginField;	
+	private final Label feedback = new Label("feedback", this.messageModel);
 	private String feedbackText = "";
-	
-	@EJB(name="LoginSystem")
-    private UserCheckLocal userCheck;
-	
-	public String getFeedbackText() {
-		return feedbackText;
-	}
+	private IMainPageCallback iMainPageCallback;
 
-	public void setFeedbackText(String feedbackText) {
-		this.feedbackText = feedbackText;
-	}
-	
 	PropertyModel<String> messageModel = new PropertyModel<String>(this, "feedbackText");
 
-	private Label feedback = new Label("feedback", messageModel);
-	
-	public LoginPanel(String id, IMainPageCallback mainPageCallback) {
+	private PasswordTextField passwordLoginField;
+
+	@EJB(name="LoginSystem")
+    private UserCheckLocal userCheck;
+
+	public LoginPanel(final String id, final IMainPageCallback mainPageCallback) {
 		super(id);
 		this.iMainPageCallback = mainPageCallback;
-		feedback.setOutputMarkupId(true);
-		Form<?> formLogin = new Form<Void>("formLogin");
+		this.feedback.setOutputMarkupId(true);
+		final Form<?> formLogin = new Form<Void>("formLogin");
 
-        add(feedback);
-		
-		emailLoginField = new TextField<String>("emailLogin", Model.of(""));
-		passwordLoginField = new PasswordTextField("passwordLogin", Model.of(""));
-		formLogin.add(emailLoginField);
-		formLogin.add(passwordLoginField);
-		
-		
+        this.add(this.feedback);
+
+		this.emailLoginField = new TextField<String>("emailLogin", Model.of(""));
+		this.passwordLoginField = new PasswordTextField("passwordLogin", Model.of(""));
+		formLogin.add(this.emailLoginField);
+		formLogin.add(this.passwordLoginField);
+
+
 		formLogin.add(new AjaxButton("submitLogin")
 		{
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> formLogin)
-            {
-            	Customer user = userCheck.checkLoginData(emailLoginField.getModelObject(), DigestUtils.md5Hex(passwordLoginField.getModelObject()));
-            	if (user!=null){
-            		SessionUtil.login(user);
-            		feedbackText = "PASST";
-            		iMainPageCallback.userLoggedIn();
-            	}else{
-            		feedbackText = "Falscher Benutzer/Passwort";
-            	}
-            	
-            	target.add(feedback);
-            }
-
-            @Override
-            protected void onError(AjaxRequestTarget target, Form<?> formLogin)
+            protected void onError(final AjaxRequestTarget target, final Form<?> formLogin)
             {
                 //repaint the feedback panel so errors are shown
                 //target.add(feedback);
-            	System.out.println("LOGIN ERROR: MISSING PASSWORD"+emailLoginField.getModelObject());
-            	
-            	feedbackText = "Fehlende Eingabe!";           	
-            	target.add(feedback);
+            	System.out.println("LOGIN ERROR: MISSING PASSWORD"+LoginPanel.this.emailLoginField.getModelObject());
+
+            	LoginPanel.this.feedbackText = "Fehlende Eingabe!";
+            	target.add(LoginPanel.this.feedback);
+            }
+
+            @Override
+            protected void onSubmit(final AjaxRequestTarget target, final Form<?> formLogin)
+            {
+            	final Customer user = LoginPanel.this.userCheck.checkLoginData(LoginPanel.this.emailLoginField.getModelObject(), DigestUtils.md5Hex(LoginPanel.this.passwordLoginField.getModelObject()));
+            	if (user!=null){
+            		SessionUtil.login(user);
+            		LoginPanel.this.feedbackText = "PASST";
+            		LoginPanel.this.iMainPageCallback.userLoggedIn();
+            	}else{
+            		LoginPanel.this.feedbackText = "Falscher Benutzer/Passwort";
+            	}
+
+            	target.add(LoginPanel.this.feedback);
             }
         });
-		add(formLogin);	
+		this.add(formLogin);
 	}
 
-	public LoginPanel(String id, IModel<?> model) {
+	public LoginPanel(final String id, final IModel<?> model) {
 		super(id, model);
 		// TODO Auto-generated constructor stub
 	}
-		
+
+	public String getFeedbackText() {
+		return this.feedbackText;
+	}
+
+	public void setFeedbackText(final String feedbackText) {
+		this.feedbackText = feedbackText;
+	}
+
 }

@@ -1,6 +1,8 @@
 <wicket:panel>
-	<div class="touchpoint" >
-           		<div class="touchpointhead"><span wicket:id="touchpointName"></span></div>
+	<div class="touchpoint">
+		<div class="touchpointhead">
+			<span wicket:id="touchpointName"></span>
+		</div>
 		<div class="shoppingcart">
 			<ul class="searchLists">
 				<li>
@@ -12,25 +14,31 @@
 						<div class="categoryhead">Kategorie</div>
 					</div>
 				</li>
-		        	<li wicket:id="items">
-		            	<div class="searchListsinner">	            	
-		                	<div class="produkt"><span wicket:id="itemName"></span></div>
-		                    <div class="pricebackend">
-		                    	<input class="tfprice" type="text" wicket:id="itemPrice"> &euro;
-		                    </div>
-		                    <div class="countbackend">
-		                    	<a class="countbuttonless" href="#" wicket:id="itemUnitsDec"></a>
-		                    	<div class="counttext">
-		                    		<input class="tfunits" type="text" wicket:id="itemUnits"></input>
-		                    	</div>
-		                    	<a class="countbuttonmore" href="#" wicket:id="itemUnitsInc"></a>
-		                    </div>
-		                    <a href="#" class="delete" wicket:id="itemDelete" style="color:#002e40;"></a>				
-		                    <div class="produktkat"><span wicket:id="itemCategory"></span></div>
-		                </div>
-		            </li>           
-		    </ul>   
-	        <div style="clear:both;"></div>      
-       	</div>            	   
-	</div>			
+				<li wicket:id="items">
+					<div class="searchListsinner">
+						<div class="produkt">
+							<span wicket:id="itemName"></span>
+						</div>
+						<div class="pricebackend">
+							<input class="tfprice" type="text" wicket:id="itemPrice">
+							&euro;
+						</div>
+						<div class="countbackend">
+							<a class="countbuttonless" href="#" wicket:id="itemUnitsDec"></a>
+							<div class="counttext">
+								<input class="tfunits" type="text" wicket:id="itemUnits"></input>
+							</div>
+							<a class="countbuttonmore" href="#" wicket:id="itemUnitsInc"></a>
+						</div>
+						<a href="#" class="delete" wicket:id="itemDelete"
+							style="color: #002e40;"></a>
+						<div class="produktkat">
+							<span wicket:id="itemCategory"></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
 </wicket:panel>

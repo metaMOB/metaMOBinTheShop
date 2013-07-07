@@ -1,38 +1,46 @@
 <wicket:panel>
-<div class="rightContent">
-	<div class="touchpoint" >
-           		<div class="touchpointhead"><span wicket:id="touchpointName"></span>, vom <span wicket:id="orderDate"></span><div class="carticon"></div></div>
-		<div class="shoppingcart">
-			<ul class="searchLists">
-				<li>
-					<div class="searchListsinner" id="head">
-						<div class="produkthead">Produkt</div>
-						<div class="pricehead">Preis</div>
-						<div class="counthead">Anzahl</div>
+	<div class="rightContent">
+		<div class="touchpoint">
+			<div class="touchpointhead">
+				<span wicket:id="touchpointName"></span>, vom <span
+					wicket:id="orderDate"></span>
+				<div class="carticon"></div>
+			</div>
+			<div class="shoppingcart">
+				<ul class="searchLists">
+					<li>
+						<div class="searchListsinner" id="head">
+							<div class="produkthead">Produkt</div>
+							<div class="pricehead">Preis</div>
+							<div class="counthead">Anzahl</div>
+						</div>
+					</li>
+					<li wicket:id="items">
+						<div class="searchListsinner">
+							<div class="produkt">
+								<span wicket:id="itemName"></span>
+							</div>
+							<div class="price">
+								<span wicket:id="itemPrice"></span> &euro;
+							</div>
+							<div class="count">
+								<div class="counttext">
+									<span wicket:id="itemUnits"></span>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="results">
+					<div class="searchListsinnerresult">
+						<div class="price">
+							<span wicket:id="priceTotal"></span> &euro;
+						</div>
+						<div class="sum">Gesamtpreis:</div>
 					</div>
-				</li>
-		        	<li wicket:id="items">
-		            	<div class="searchListsinner">	            	
-		                	<div class="produkt"><span wicket:id="itemName"></span></div>
-		                    <div class="price"><span wicket:id="itemPrice"></span> &euro;</div>
-		                    <div class="count">		                    	
-		                    	<div class="counttext">
-		                    		<span wicket:id="itemUnits"></span>
-		                    	</div>
-		                    </div>				
-		                </div>
-		            </li>           
-		    </ul>
-		    <div class="results" >
-	           	<div class="searchListsinnerresult">	           	
-	               	<div class="price">
-						<span wicket:id="priceTotal"></span> &euro;
-					</div>
-	               	<div class="sum">Gesamtpreis:</div>
-	           	</div>
-	        </div>          
-	        <div style="clear:both;"></div>
-	     </div>            	   
-	</div>		
-	</div>		
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+	</div>
 </wicket:panel>

@@ -12,63 +12,66 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Entity
 public class ProductBundle implements Serializable {
-
+	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 1501911067906145681L;
+	private static final long			serialVersionUID	= 1501911067906145681L;
 	
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Integer						id;
 	
 	@ManyToOne
-	private IndividualisedProductItem product;
-
-	private int units;
-
+	private IndividualisedProductItem	product;
+	
+	private int							units;
+	
 	public ProductBundle() {
 	}
-
-	public ProductBundle(IndividualisedProductItem product, int units) {
+	
+	public ProductBundle(final IndividualisedProductItem product, final int units) {
 		this.product = product;
 		this.units = units;
 	}
-
+	
+	@Override
+	public boolean equals(final Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
+	}
+	
+	public Integer getId() {
+		return this.id;
+	}
+	
 	public IndividualisedProductItem getProduct() {
 		return this.product;
 	}
-
-	public void setProduct(IndividualisedProductItem product) {
-		this.product = product;
-	}
-
+	
 	public int getUnits() {
 		return this.units;
 	}
-
-	public void setUnits(int units) {
-		this.units = units;
-	}
-
-	public String toString() {
-		return "{" + this.product + " (" + this.units + ")}";
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public boolean equals(Object other) {
-		return EqualsBuilder.reflectionEquals(this, other);
-	}
-
+	
+	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this, new String[] { "id" });
 	}
-
+	
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+	
+	public void setProduct(final IndividualisedProductItem product) {
+		this.product = product;
+	}
+	
+	public void setUnits(final int units) {
+		this.units = units;
+	}
+	
+	@Override
+	public String toString() {
+		return "{" + this.product + " (" + this.units + ")}";
+	}
+	
 }

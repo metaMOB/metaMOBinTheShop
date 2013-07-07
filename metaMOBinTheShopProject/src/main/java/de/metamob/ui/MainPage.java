@@ -1,257 +1,250 @@
 package de.metamob.ui;
 
 import javax.ejb.EJB;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.util.ListModel;
-
-import org.dieschnittstelle.jee.esa.crm.entities.Gender;
-import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
-import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
-import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
-import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
-
-import de.metamob.data.shoppingCart.ShoppingItem;
-import de.metamob.data.shoppingCart.UserShoppingCart;
-import de.metamob.data.shoppingCart.UserShoppingCarts;
-import de.metamob.session.SessionUtil;
-import de.metamob.ui.adminPanel.AdminPanel;
-import de.metamob.ui.callbacks.IMainPageCallback;
-import de.metamob.ui.callbacks.IMainPageItemCallback;
-import de.metamob.ui.loginPanel.LoginPanel;
-import de.metamob.ui.mainPanel.MainPanel;
-
-import org.apache.wicket.authroles.authentication.panel.SignInPanel;
-import org.apache.wicket.authroles.authorization.strategies.role.Roles;
-import org.apache.wicket.behavior.Behavior;
-import org.dieschnittstelle.jee.esa.crm.ejbs.UserCheckLocal;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.AdressCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
-import org.dieschnittstelle.jee.esa.crm.entities.Address;
-import org.dieschnittstelle.jee.esa.crm.entities.Customer;
-import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
+import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
+import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
-import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
-import org.dieschnittstelle.jee.esa.erp.entities.PointOfSale;
-import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
-import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
+import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
+
+import de.metamob.session.SessionUtil;
+import de.metamob.ui.adminPanel.AdminPanel;
+import de.metamob.ui.callbacks.IMainPageCallback;
+import de.metamob.ui.loginPanel.LoginPanel;
+import de.metamob.ui.mainPanel.MainPanel;
 
 public class MainPage extends WebPage implements IMainPageCallback { // IMainPageItemCallback
-	
-	@EJB(name="TouchpointCRUD")
-    private TouchpointCRUDLocal touchpointCRUD;
-	
-	@EJB(name="PointOfSaleCRUD")
-    private PointOfSaleCRUDLocal pointOfSaleCRUD;
-	
-	@EJB(name="CustomerCRUD")
-	private CustomerCRUDLocal customerCRUD;
-	
-	@EJB(name="ProductCRUD")
-	private ProductCRUDLocal productCRUD;
-	
+
+	private static final long serialVersionUID = 1L;
+
+	private final AjaxLink<Void> adminLink;
+
+	private final AdminPanel adminPanel;
+
 	@EJB(name="AdressCRUD")
 	private AdressCRUDLocal adressCRUD;
-	
-	@EJB(name="StockSystem")
-	private StockSystemLocal stockSystem;
-	
-	@EJB(name="shoppingSystem")
-	private ShoppingSessionFacadeLocal shoppingSessionFacade;
-	
-	private static final long serialVersionUID = 1L;
-	
-	private Panel visiblePanel;
-	private Panel loginPanel;
-	private MainPanel mainPanel;
-	private AdminPanel adminPanel;
-	private String mode = "main";
-	private AjaxLink<Void> link;	
-	private AjaxLink<Void> shoppingCartButton;
-	private AjaxLink<Void> itemDisplayLink;
-	private AjaxLink<Void> adminLink;
-	private Label numOfItems;
-	
-	
-	String userNameText = "Gast";
-	public String getUserNameText() {
-		return userNameText;
-	}
 
-	public void setUserNameText(String userNameText) {
-		this.userNameText = userNameText;
-	}
-	
+	@EJB(name="CustomerCRUD")
+	private CustomerCRUDLocal customerCRUD;
+
+	private final AjaxLink<Void> itemDisplayLink;
+
+	private final AjaxLink<Void> link;
+
 	String loginLabelText = "Login";
 
-	public String getLoginLabelText() {
-		return loginLabelText;
-	}
+	private final Label loginLinkLabel;
+	private final Panel loginPanel;
+	private final MainPanel mainPanel;
+	private String mode = "main";
+	private Label numOfItems;
+	@EJB(name="PointOfSaleCRUD")
+    private PointOfSaleCRUDLocal pointOfSaleCRUD;
+	@EJB(name="ProductCRUD")
+	private ProductCRUDLocal productCRUD;
+	private final AjaxLink<Void> shoppingCartButton;
+	@EJB(name="shoppingSystem")
+	private ShoppingSessionFacadeLocal shoppingSessionFacade;
+	@EJB(name="StockSystem")
+	private StockSystemLocal stockSystem;
 
-	public void setLoginLabelText(String loginLabelText) {
-		this.loginLabelText = loginLabelText;
-	}
 
-	//PropertyModel<String> userNameModel = new PropertyModel<String>(this, "userNameText");
-	
-	private Label userNameLabel;
-	private Label loginLinkLabel;
+	@EJB(name="TouchpointCRUD")
+    private TouchpointCRUDLocal touchpointCRUD;
+	private final Label userNameLabel;
+
+	String userNameText = "Gast";
+
+	private Panel visiblePanel;
 
 	public MainPage(final PageParameters parameters) {
-		userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
-		loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
-		
-		add(userNameLabel);
-		
-		
-		mainPanel = new MainPanel("contentPanel", this);
-		loginPanel = new LoginPanel("contentPanel", this);
-		adminPanel = new AdminPanel("contentPanel", this);
-		
-		loginPanel.setOutputMarkupId(true);
-		mainPanel.setOutputMarkupId(true);
-		adminPanel.setOutputMarkupId(true);
+		this.userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
+		this.loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
+
+		this.add(this.userNameLabel);
+
+
+		this.mainPanel = new MainPanel("contentPanel", this);
+		this.loginPanel = new LoginPanel("contentPanel", this);
+		this.adminPanel = new AdminPanel("contentPanel", this);
+
+		this.loginPanel.setOutputMarkupId(true);
+		this.mainPanel.setOutputMarkupId(true);
+		this.adminPanel.setOutputMarkupId(true);
 		//mainPanel.updateData();
-		
-		
+
+
 		this.setOutputMarkupId(true);
 
-		visiblePanel = mainPanel;
-		add(visiblePanel);
+		this.visiblePanel = this.mainPanel;
+		this.add(this.visiblePanel);
 
-		numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
-		add(numOfItems);
-		
-		link = new AjaxLink<Void>("loginLink") {
+		this.numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
+		this.add(this.numOfItems);
+
+		this.link = new AjaxLink<Void>("loginLink") {
+			/**
+			 *
+			 */
+			private static final long	serialVersionUID	= 4453699470346910589L;
+
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(final AjaxRequestTarget target) {
 				System.out.println("LOGIN/LOGOUT: CLICK");
-				if (loginLabelText.equals("Login")){
-				if (mode.equals("main")) {
-					visiblePanel.replaceWith(loginPanel);
-					visiblePanel = loginPanel;
-					target.add(loginPanel);
-					mode = "login";
+				if (MainPage.this.loginLabelText.equals("Login")){
+				if (MainPage.this.mode.equals("main")) {
+					MainPage.this.visiblePanel.replaceWith(MainPage.this.loginPanel);
+					MainPage.this.visiblePanel = MainPage.this.loginPanel;
+					target.add(MainPage.this.loginPanel);
+					MainPage.this.mode = "login";
 				} else {
-					visiblePanel.replaceWith(mainPanel);
-					visiblePanel = mainPanel;
+					MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
+					MainPage.this.visiblePanel = MainPage.this.mainPanel;
 					//mainPanel.updateData();
-					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
-					target.add(mainPanel);
-					mode = "main";
+					MainPage.this.mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
+					target.add(MainPage.this.mainPanel);
+					MainPage.this.mode = "main";
 				}
 				}
 				else {
-					loginLabelText = "Login";
-					userNameText = "Gast"; 
+					MainPage.this.loginLabelText = "Login";
+					MainPage.this.userNameText = "Gast";
 					SessionUtil.logout();
-					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
-					setResponsePage(getPage());	
+					MainPage.this.mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
+					this.setResponsePage(this.getPage());
 				}
 			}
 		};
-		
-		
-		
-		
-		
-		shoppingCartButton = new AjaxLink<Void>("shoppingCartLink") {
+
+
+
+
+
+		this.shoppingCartButton = new AjaxLink<Void>("shoppingCartLink") {
+			/**
+			 *
+			 */
+			private static final long	serialVersionUID	= 7935179210502761874L;
+
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(final AjaxRequestTarget target) {
 				System.out.println("SHOPPINGCART: CLICK");
-				
+
 //				((MainPanel) mainPanel).currentDisplay(target, "SHOPPINGCART", null);
 //				if (!mode.equals("main")){
 					System.out.println("CHANGE TO MAINPANEL");
-					visiblePanel.replaceWith(mainPanel);
-					visiblePanel = mainPanel;
-					target.add(mainPanel);
-					mainPanel.currentDisplay(target, "SHOPPINGCART", null);
-					mode = "main";
-					setResponsePage(getPage());	
+					MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
+					MainPage.this.visiblePanel = MainPage.this.mainPanel;
+					target.add(MainPage.this.mainPanel);
+					MainPage.this.mainPanel.currentDisplay(target, "SHOPPINGCART", null);
+					MainPage.this.mode = "main";
+					this.setResponsePage(this.getPage());
 				//}
 			}
 		};
 
-		add(shoppingCartButton);
-		
-		itemDisplayLink= new AjaxLink<Void>("itemDisplayLink") {
+		this.add(this.shoppingCartButton);
+
+		this.itemDisplayLink= new AjaxLink<Void>("itemDisplayLink") {
+			/**
+			 *
+			 */
+			private static final long	serialVersionUID	= 2674592789426609609L;
+
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(final AjaxRequestTarget target) {
 				System.out.println("ITEMDISPLAY: CLICK");
-				visiblePanel.replaceWith(mainPanel);
-				visiblePanel = mainPanel;
-				target.add(mainPanel);
-				mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
-				mode = "main";
-				setResponsePage(getPage());	
+				MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
+				MainPage.this.visiblePanel = MainPage.this.mainPanel;
+				target.add(MainPage.this.mainPanel);
+				MainPage.this.mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
+				MainPage.this.mode = "main";
+				this.setResponsePage(this.getPage());
 			}
 		};
-		add(itemDisplayLink);
-		
-		adminLink = new AjaxLink<Void>("admin") {
+		this.add(this.itemDisplayLink);
+
+		this.adminLink = new AjaxLink<Void>("admin") {
+			/**
+			 *
+			 */
+			private static final long	serialVersionUID	= 5622954561146482378L;
+
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick(final AjaxRequestTarget target) {
 				System.out.println("ADMIN: CLICK");
-				if (mode.equals("main")) {
-					visiblePanel.replaceWith(adminPanel);
-					visiblePanel = adminPanel;
-					target.add(adminPanel);
-					mode = "admin";
+				if (MainPage.this.mode.equals("main")) {
+					MainPage.this.visiblePanel.replaceWith(MainPage.this.adminPanel);
+					MainPage.this.visiblePanel = MainPage.this.adminPanel;
+					target.add(MainPage.this.adminPanel);
+					MainPage.this.mode = "admin";
 				} else {
-					visiblePanel.replaceWith(mainPanel);
-					visiblePanel = mainPanel;
+					MainPage.this.visiblePanel.replaceWith(MainPage.this.mainPanel);
+					MainPage.this.visiblePanel = MainPage.this.mainPanel;
 					//mainPanel.updateData();
-					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
-					target.add(mainPanel);
-					mode = "main";
-				}	
+					MainPage.this.mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
+					target.add(MainPage.this.mainPanel);
+					MainPage.this.mode = "main";
+				}
 			}
 		};
-		add(adminLink);
-		
-		link.add(loginLinkLabel);
-		add(link);
+		this.add(this.adminLink);
+
+		this.link.add(this.loginLinkLabel);
+		this.add(this.link);
 	}
 
-	@Override
-	public void userLoggedIn() {
-		userNameText = (SessionUtil.isLoggedIn())?SessionUtil.getCurrentUser().getFullName():"Gast"; 
-		loginLabelText = "LogOut";
-		
-		visiblePanel.replaceWith(mainPanel);
-		visiblePanel = mainPanel;
-		add(mainPanel);
-		mode = "main";
-		
-		setResponsePage(getPage());		
-	}	
-	
+	public String getLoginLabelText() {
+		return this.loginLabelText;
+	}
+
+	//PropertyModel<String> userNameModel = new PropertyModel<String>(this, "userNameText");
+
+	public String getUserNameText() {
+		return this.userNameText;
+	}
+	public void setLoginLabelText(final String loginLabelText) {
+		this.loginLabelText = loginLabelText;
+	}
+
+	public void setUserNameText(final String userNameText) {
+		this.userNameText = userNameText;
+	}
 
 	@Override
 	public void unitsChanged() {
 		// TODO Auto-generated method stub
 		System.out.println("NUM OF UNITS "+ SessionUtil.getShoppingCarts().getNumOfUnits());
-		
-		if (numOfItems!=null){
-			remove(numOfItems);
+
+		if (this.numOfItems!=null){
+			this.remove(this.numOfItems);
 		}
-		numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
-		add(numOfItems);
-		setResponsePage(getPage());	
+		this.numOfItems = new Label("numOfItems", SessionUtil.getShoppingCarts().getNumOfUnits());
+		this.add(this.numOfItems);
+		this.setResponsePage(this.getPage());
+	}
+
+
+	@Override
+	public void userLoggedIn() {
+		this.userNameText = (SessionUtil.isLoggedIn())?SessionUtil.getCurrentUser().getFullName():"Gast";
+		this.loginLabelText = "LogOut";
+
+		this.visiblePanel.replaceWith(this.mainPanel);
+		this.visiblePanel = this.mainPanel;
+		this.add(this.mainPanel);
+		this.mode = "main";
+
+		this.setResponsePage(this.getPage());
 	}
 }

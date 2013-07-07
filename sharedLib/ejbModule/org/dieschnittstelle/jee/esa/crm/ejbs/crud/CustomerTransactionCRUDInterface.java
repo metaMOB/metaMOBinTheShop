@@ -7,7 +7,9 @@ import org.dieschnittstelle.jee.esa.crm.entities.Customer;
 import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
 
 public interface CustomerTransactionCRUDInterface {
-	public Collection<CustomerTransaction> readAllTransactionsForTouchpoint(AbstractTouchpoint touchpoint);
 	public Collection<CustomerTransaction> readAllTransactionsForCustomer(Customer customer);
-	public Collection<CustomerTransaction> readAllTransactionsForTouchpointAndCustomer(AbstractTouchpoint touchpoint,Customer customer);
+	
+	public Collection<CustomerTransaction> readAllTransactionsForTouchpoint(AbstractTouchpoint touchpoint);
+	
+	public Collection<CustomerTransaction> readAllTransactionsForTouchpointAndCustomer(AbstractTouchpoint touchpoint, Customer customer);
 }

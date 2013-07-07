@@ -9,47 +9,47 @@
 	<url>http://maven.apache.org</url>
 
 	<dependencies>
-	 	<dependency>
+		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
 			<version>6.8.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
 			<version>6.8.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
 			<version>6.8.0</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-util</artifactId>
 			<version>6.8.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-request</artifactId>
 			<version>6.8.0</version>
 		</dependency>
-		
+
 		<dependency>
-    		<groupId>org.apache.wicket</groupId>
-    		<artifactId>wicket-auth-roles</artifactId>
-   			<version>6.8.0</version>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+			<version>6.8.0</version>
 		</dependency>
-		
+
 		<dependency>
-    		<groupId>org.wicketstuff</groupId>
-    		<artifactId>wicketstuff-javaee-inject</artifactId>
-   	 		<version>6.8.0</version>
+			<groupId>org.wicketstuff</groupId>
+			<artifactId>wicketstuff-javaee-inject</artifactId>
+			<version>6.8.0</version>
 		</dependency>
 
 		<!-- slf4j-log4j -->
@@ -58,13 +58,13 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.5.6</version>
 		</dependency>
-		
+
 		<dependency>
-        	<groupId>commons-codec</groupId>
-        	<artifactId>commons-codec</artifactId>
-        	<version>1.2</version>
-      	</dependency>
-    </dependencies>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.2</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<finalName>WicketExamples</finalName>

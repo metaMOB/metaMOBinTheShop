@@ -19,56 +19,52 @@ import org.jboss.logging.Logger;
 @Entity
 @DiscriminatorValue("mobile")
 public class MobileTouchpoint extends AbstractTouchpoint {
-
-	protected static Logger logger = Logger.getLogger(MobileTouchpoint.class);
+	
+	protected static Logger				logger				= Logger.getLogger(MobileTouchpoint.class);
 	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -3020587110269172721L;
-
+	private static final long			serialVersionUID	= -3020587110269172721L;
+	
 	@ElementCollection
-	private Collection<String> mobilePhoneIds = new HashSet<String>();
-
+	private final Collection<String>	mobilePhoneIds		= new HashSet<String>();
+	
 	public MobileTouchpoint() {
 		logger.info("<constructor>");
 	}
-
-	public MobileTouchpoint(String mobilePhoneId) {
+	
+	public MobileTouchpoint(final String mobilePhoneId) {
 		this.addMobilePhoneId(mobilePhoneId);
 	}
-
-	public Collection<String> getMobilePhoneIds() {
-		return mobilePhoneIds;
-	}
-
-	public void addMobilePhoneId(String mobilePhoneId) {
+	
+	public void addMobilePhoneId(final String mobilePhoneId) {
 		this.mobilePhoneIds.add(mobilePhoneId);
 	}
-
-	public String toString() {
-		return "{MobileTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.mobilePhoneIds + "}";
+	
+	public Collection<String> getMobilePhoneIds() {
+		return this.mobilePhoneIds;
 	}
-
-	/*
-	 * lifecycle logging
-	 */
 	
 	@PostLoad
 	public void onPostLoad() {
 		logger.info("@PostLoad: " + this);
 	}
 	
+	/*
+	 * lifecycle logging
+	 */
+	
 	@PostPersist
 	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
+		logger.info("@PostPersist: " + this);
 	}
 	
 	@PostRemove
 	public void onPostRemove() {
 		logger.info("@PostRemove: " + this);
 	}
-
+	
 	@PostUpdate
 	public void onPostUpdate() {
 		logger.info("@PostUpdate: " + this);
@@ -78,15 +74,20 @@ public class MobileTouchpoint extends AbstractTouchpoint {
 	public void onPrePersist() {
 		logger.info("@PrePersist: " + this);
 	}
-
+	
 	@PreRemove
 	public void onPreRemove() {
 		logger.info("@PreRemove: " + this);
 	}
-
+	
 	@PreUpdate
 	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
+		logger.info("@PreUpdate: " + this);
+	}
+	
+	@Override
+	public String toString() {
+		return "{MobileTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.mobilePhoneIds + "}";
 	}
 	
 }

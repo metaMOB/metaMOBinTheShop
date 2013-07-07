@@ -26,31 +26,33 @@ public class CustomerTrackingStateless implements CustomerTrackingRemote, Custom
 	 */
 	@EJB
 	private CustomerTransactionCRUDLocal customerTransactionCRUD;
-	
-	
+
+
 	public CustomerTrackingStateless() {
 		logger.info("<constructor>: " + this);
 	}
 
-	public void createTransaction(CustomerTransaction transaction) {
+	@Override
+	public void createTransaction(final CustomerTransaction transaction) {
 		logger.info("createTransaction(): " + transaction);
-		
-		customerTransactionCRUD.createTransaction(transaction);
-	}
-	
-	public List<CustomerTransaction> readAllTransactions() {
-		//return transactions;
-		return new ArrayList();
-	}
 
-	@PostConstruct
-	public void initialise() {
-		logger.info("@PostConstruct: customerTransactionCRUD is: " + customerTransactionCRUD);
+		this.customerTransactionCRUD.createTransaction(transaction);
 	}
 
 	@PreDestroy
 	public void finalise() {
 		logger.info("@PreDestroy");
+	}
+
+	@PostConstruct
+	public void initialise() {
+		logger.info("@PostConstruct: customerTransactionCRUD is: " + this.customerTransactionCRUD);
+	}
+
+	@Override
+	public List<CustomerTransaction> readAllTransactions() {
+		//return transactions;
+		return new ArrayList();
 	}
 
 }

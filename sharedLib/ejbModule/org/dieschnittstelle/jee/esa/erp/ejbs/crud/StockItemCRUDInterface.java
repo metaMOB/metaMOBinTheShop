@@ -10,10 +10,15 @@ import org.dieschnittstelle.jee.esa.erp.entities.SortType;
 import org.dieschnittstelle.jee.esa.erp.entities.StockItem;
 
 public interface StockItemCRUDInterface {
-	 public StockItem updateStockItem(StockItem stockItem);
-	 public StockItem getStockItem(AbstractProduct product, PointOfSale pos);
-	 public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType, int minUnits);
-	 public List<StockItem> readUnitsOnStock(AbstractProduct product, int minUnits);
-	 public List<StockItem> readUnitsOnStock(AbstractProduct product);
-	 public Integer getStockItemUnitCount(IndividualisedProductItem product, PointOfSale pos);
+	public StockItem getStockItem(AbstractProduct product, PointOfSale pos);
+	
+	public Integer getStockItemUnitCount(IndividualisedProductItem product, PointOfSale pos);
+	
+	public List<StockItem> readUnitsOnStock(AbstractProduct product);
+	
+	public List<StockItem> readUnitsOnStock(AbstractProduct product, int minUnits);
+	
+	public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType, int minUnits);
+	
+	public StockItem updateStockItem(StockItem stockItem);
 }

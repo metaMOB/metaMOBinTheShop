@@ -9,7 +9,6 @@ import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Stateful;
 
-
 import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
 import org.jboss.logging.Logger;
 
@@ -18,35 +17,13 @@ import org.jboss.logging.Logger;
  */
 @Stateful
 public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLocal {
-	
+
 	protected static Logger logger = Logger.getLogger(ShoppingCartStateful.class);
 
-	private List<CrmProductBundle> productBundles = new ArrayList<CrmProductBundle>();
-	
+	private final List<CrmProductBundle> productBundles = new ArrayList<CrmProductBundle>();
+
 	public ShoppingCartStateful() {
 		logger.info("<constructor>: " + this);
-	}
-	
-	public void addProductBundle(CrmProductBundle product) {
-		logger.info("addProductBundle(): " + product);
-
-		this.productBundles.add(product);
-	}
-	
-	public List<CrmProductBundle> getProductBundles() {
-		logger.info("getProductBundles()");
-
-		return this.productBundles;
-	}
-	
-	@Override
-	public void clear() {
-		productBundles.clear();
-	}
-	
-	@PostConstruct
-	public void beginn() {
-		logger.info("@PostConstruct");
 	}
 
 	@PreDestroy
@@ -54,9 +31,11 @@ public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLoc
 		logger.info("@PreDestroy");
 	}
 
-	@PrePassivate
-	public void passiviere() {
-		logger.info("@PrePassivate");
+	@Override
+	public void addProductBundle(final CrmProductBundle product) {
+		logger.info("addProductBundle(): " + product);
+
+		this.productBundles.add(product);
 	}
 
 	@PostActivate
@@ -64,6 +43,28 @@ public class ShoppingCartStateful implements ShoppingCartRemote, ShoppingCartLoc
 		logger.info("@PostActivate");
 	}
 
-	
+	@PostConstruct
+	public void beginn() {
+		logger.info("@PostConstruct");
+	}
+
+	@Override
+	public void clear() {
+		this.productBundles.clear();
+	}
+
+	@Override
+	public List<CrmProductBundle> getProductBundles() {
+		logger.info("getProductBundles()");
+
+		return this.productBundles;
+	}
+
+	@PrePassivate
+	public void passiviere() {
+		logger.info("@PrePassivate");
+	}
+
+
 
 }

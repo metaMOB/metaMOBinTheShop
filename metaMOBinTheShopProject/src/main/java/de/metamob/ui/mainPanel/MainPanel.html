@@ -1,41 +1,38 @@
 <wicket:panel>
 	<div class="leftContent">
-    	<nav class="list">
-        	<div class="listhead"><h1 class="kategorie">Kategorie</h1></div>
-            	<ul>
-            		<li>
-                    	<a href="#" wicket:id="categoryAllLink">
-                        	Alle Kategorien
-                        </a>	
-                    </li>                   		
-                   	<li wicket:id="categories">
-                       	<a href="#" wicket:id="categoryLink">
-                       		<span wicket:id="categoryName"></span>
-                       	</a>	
-                    </li>    
-                </ul>
-          	<div class="listhead"><h1 class="touchpointlocate">Verkaufsstellen</h1></div>
-            	<ul>
-<!--             		<li> -->
-<!--                     	<a href="#" wicket:id="touchpointAllLink"> -->
-<!--                         	ALL TOUCHPOINTS -->
-<!--                         </a>	 -->
-<!--                     </li>  -->                  		
-                    	<li wicket:id="touchpoints">
-                        	<a href="#" wicket:id="touchpointLink">
-                        		<span wicket:id="touchpointName"></span>
-                        	</a>	
-                        </li> 
-                </ul>
-            <div class="listhead"><h1 class="lastorder">Letzte Bestellungen</h1></div>
-            	<ul>               		
-                    	<li wicket:id="lastOrders">
-                        	<a href="#" wicket:id="lastOrderLink">
-                        		<span wicket:id="lastOrderName"></span>
-                        	</a>	
-                        </li> 
-                </ul>
-            </nav>
-      	</div>
-	 	<span wicket:id="itemPanel"></span>	 
+		<nav class="list">
+			<div class="listhead">
+				<h1 class="kategorie">Kategorie</h1>
+			</div>
+			<ul>
+				<li><a href="#" wicket:id="categoryAllLink"> Alle
+						Kategorien </a></li>
+				<li wicket:id="categories"><a href="#" wicket:id="categoryLink">
+						<span wicket:id="categoryName"></span>
+				</a></li>
+			</ul>
+			<div class="listhead">
+				<h1 class="touchpointlocate">Verkaufsstellen</h1>
+			</div>
+			<ul>
+				<!--             		<li> -->
+				<!--                     	<a href="#" wicket:id="touchpointAllLink"> -->
+				<!--                         	ALL TOUCHPOINTS -->
+				<!--                         </a>	 -->
+				<!--                     </li>  -->
+				<li wicket:id="touchpoints"><a href="#"
+					wicket:id="touchpointLink"> <span wicket:id="touchpointName"></span>
+				</a></li>
+			</ul>
+			<div class="listhead">
+				<h1 class="lastorder">Letzte Bestellungen</h1>
+			</div>
+			<ul>
+				<li wicket:id="lastOrders"><a href="#"
+					wicket:id="lastOrderLink"> <span wicket:id="lastOrderName"></span>
+				</a></li>
+			</ul>
+		</nav>
+	</div>
+	<span wicket:id="itemPanel"></span>
 </wicket:panel>

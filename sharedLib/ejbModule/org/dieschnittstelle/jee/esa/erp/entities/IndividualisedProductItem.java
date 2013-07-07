@@ -3,7 +3,6 @@ package org.dieschnittstelle.jee.esa.erp.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -12,52 +11,55 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class IndividualisedProductItem extends AbstractProduct implements Serializable {
 	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 5109263395081656350L;
+	private static final long	serialVersionUID	= 5109263395081656350L;
 	
-	private ProductType productType;
-
-	private int expirationAfterStocked;
+	private int					expirationAfterStocked;
+	
+	private ProductType			productType;
 	
 	public IndividualisedProductItem() {
 		
 	}
 	
-	public IndividualisedProductItem(String name,ProductType type,int expirationAfterStocked, int price) {
+	public IndividualisedProductItem(final String name, final ProductType type, final int expirationAfterStocked, final int price) {
 		super(name);
 		this.productType = type;
 		this.expirationAfterStocked = expirationAfterStocked;
-		this.setPrice(price); 
+		this.setPrice(price);
 	}
 	
-	public ProductType getProductType() {
-		return productType;
-	}
-
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
+	@Override
+	public boolean equals(final Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
 	}
 	
 	public int getExpirationAfterStocked() {
-		return expirationAfterStocked;
+		return this.expirationAfterStocked;
 	}
-
-	public void setExpirationAfterStocked(int expirationAfterStocked) {
+	
+	public ProductType getProductType() {
+		return this.productType;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int code = HashCodeBuilder.reflectionHashCode(this);
+		return code;
+	}
+	
+	public void setExpirationAfterStocked(final int expirationAfterStocked) {
 		this.expirationAfterStocked = expirationAfterStocked;
 	}
 	
+	public void setProductType(final ProductType productType) {
+		this.productType = productType;
+	}
+	
+	@Override
 	public String toString() {
 		return "{IProductItem " + this.getId() + ", " + this.getName() + ", " + this.productType + "}";
 	}
 	
-	public boolean equals(Object other) {
-		return EqualsBuilder.reflectionEquals(this, other);
-	}
-	
-	public int hashCode() {
-		int code = HashCodeBuilder.reflectionHashCode(this);
-		return code;
-	}
-
 }

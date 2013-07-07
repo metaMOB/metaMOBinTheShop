@@ -23,25 +23,26 @@ import org.jboss.logging.Logger;
 public class CampaignTrackingSingleton implements CampaignTrackingRemote, CampaignTrackingLocal  {
 
 	protected static Logger logger = Logger.getLogger(CampaignTrackingSingleton.class);
-	
+
 	/**
 	 * a map that associates touchpoint ids with campaign ids (we assume that
 	 * for each touchpoint id there may only exist a single campaign execution
 	 * for a given campaign id)
 	 */
-	private Map<Integer, Map<Integer, CampaignExecution>> campaignExecutionsAtTouchpoint = new HashMap<Integer, Map<Integer, CampaignExecution>>();
+	private final Map<Integer, Map<Integer, CampaignExecution>> campaignExecutionsAtTouchpoint = new HashMap<Integer, Map<Integer, CampaignExecution>>();
 
 	public CampaignTrackingSingleton() {
 		logger.info("<constructor>: " + this);
 	}
-	
+
 	/**
 	 * add a campaign execution
 	 */
+	@Override
 	@javax.ejb.Lock(javax.ejb.LockType.WRITE)
-	public void addCampaignExecution(CampaignExecution campaign) {
+	public void addCampaignExecution(final CampaignExecution campaign) {
 		logger.info("addCampaignExecution(): " + campaign);
-		
+
 		if (!this.campaignExecutionsAtTouchpoint.containsKey(campaign
 				.getTouchpoint().getId())) {
 			this.campaignExecutionsAtTouchpoint.put(campaign.getTouchpoint()
@@ -52,23 +53,29 @@ public class CampaignTrackingSingleton implements CampaignTrackingRemote, Campai
 				campaign.getErpCampaignId(), campaign);
 	}
 
+	@PreDestroy
+	public void ende() {
+		logger.info("@PreDestroy");
+	}
+
 	/**
 	 * check whether for some product id there exists a campaign at some
 	 * touchpoint and return its available units
 	 */
+	@Override
 	@javax.ejb.Lock(javax.ejb.LockType.READ)
 	@javax.ejb.AccessTimeout(value=5,unit=java.util.concurrent.TimeUnit.SECONDS)
-	public int existsValidCampaignExecutionAtTouchpoint(int erpProductId,
-			AbstractTouchpoint tp) {
+	public int existsValidCampaignExecutionAtTouchpoint(final int erpProductId,
+			final AbstractTouchpoint tp) {
 		logger.info("existsValidCampaignExecutionAtTouchpoint(): " + erpProductId + "@" + tp);
 
-		Map<Integer, CampaignExecution> campaignExecutions = this.campaignExecutionsAtTouchpoint
+		final Map<Integer, CampaignExecution> campaignExecutions = this.campaignExecutionsAtTouchpoint
 				.get(tp.getId());
 		if (campaignExecutions == null) {
 			logger.warn("no CampaignExecution found for touchpoint " + tp + " in " + this.campaignExecutionsAtTouchpoint);
 			return 0;
 		}
-		CampaignExecution ce = campaignExecutions.get(erpProductId);
+		final CampaignExecution ce = campaignExecutions.get(erpProductId);
 		if (ce == null) {
 			logger.warn("no CampaignExecution found for product id " + erpProductId + " in " + this.campaignExecutionsAtTouchpoint);
 			return 0;
@@ -81,38 +88,35 @@ public class CampaignTrackingSingleton implements CampaignTrackingRemote, Campai
 		return ce.getUnitsLeft();
 	}
 
+	@Override
+	public List<CampaignExecution> getAllCampaignExecutions() {
+		final List<CampaignExecution> campaigns = new ArrayList<CampaignExecution>();
+		for (final int tpid : this.campaignExecutionsAtTouchpoint.keySet()) {
+			for (final int cpid : this.campaignExecutionsAtTouchpoint.get(tpid).keySet()) {
+				campaigns.add(this.campaignExecutionsAtTouchpoint.get(tpid).get(cpid));
+			}
+		}
+
+		return campaigns;
+	}
+
+
 	/**
 	 * purchase some units of some campaign at some touchpoint
 	 */
+	@Override
 	@javax.ejb.Lock(javax.ejb.LockType.WRITE)
-	public void purchaseCampaignAtTouchpoint(int erpProductId,
-			AbstractTouchpoint tp, int units) {
+	public void purchaseCampaignAtTouchpoint(final int erpProductId,
+			final AbstractTouchpoint tp, final int units) {
 		logger.info("purchaseCampaignAtTouchpoint(): " + erpProductId + "@" + tp + ":" + units);
-		
+
 		this.campaignExecutionsAtTouchpoint.get(tp.getId()).get(erpProductId)
 				.purchase(units);
 	}
-	
-	public List<CampaignExecution> getAllCampaignExecutions() {
-		List<CampaignExecution> campaigns = new ArrayList<CampaignExecution>();
-		for (int tpid : campaignExecutionsAtTouchpoint.keySet()) {
-			for (int cpid : campaignExecutionsAtTouchpoint.get(tpid).keySet()) {
-				campaigns.add(campaignExecutionsAtTouchpoint.get(tpid).get(cpid));
-			}
-		}
-		
-		return campaigns;
-	}
-	
-	
+
 	@PostConstruct
 	public void start() {
 		logger.info("@PostConstruct");
-	}
-
-	@PreDestroy
-	public void ende() {
-		logger.info("@PreDestroy");
 	}
 
 

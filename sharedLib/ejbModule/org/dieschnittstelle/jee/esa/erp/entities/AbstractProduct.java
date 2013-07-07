@@ -9,56 +9,56 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractProduct implements Serializable {
-
+	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 6940403029597060153L;
+	private static final long	serialVersionUID	= 6940403029597060153L;
 	
 	@Id
 	@GeneratedValue
-	private int id;
-
-	private String name;
+	private int					id;
 	
-	private int price;
-
+	private String				name;
+	
+	private int					price;
+	
 	public AbstractProduct() {
-
+		
 	}
-
-	public AbstractProduct(String name) {
+	
+	public AbstractProduct(final String name) {
 		this.name = name;
 	}
-
+	
 	public int getId() {
-		return id;
+		return this.id;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return this.name;
 	}
 	
 	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
+		return this.price;
 	}
 	
 	@Override
 	public int hashCode() {
-		return (this.name+this.id).hashCode();
+		return (this.name + this.id).hashCode();
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	public void setName(final String name) {
+		this.name = name;
+	}
+	
+	public void setPrice(final int price) {
+		this.price = price;
 	}
 }

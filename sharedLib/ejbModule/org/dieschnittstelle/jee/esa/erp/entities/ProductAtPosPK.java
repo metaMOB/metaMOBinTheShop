@@ -9,62 +9,62 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class ProductAtPosPK implements Serializable {
-
+	
 	/**
-	 * 
+	 *
 	 */
 	
-	private static final long serialVersionUID = 9113210426279286629L;
+	private static final long	serialVersionUID	= 9113210426279286629L;
 	
 	@Id
 	@ManyToOne(cascade = CascadeType.MERGE)
-	private AbstractProduct product;
+	private PointOfSale			pos;
 	
 	@Id
 	@ManyToOne(cascade = CascadeType.MERGE)
-	private PointOfSale pos;
-
+	private AbstractProduct		product;
+	
 	public ProductAtPosPK() {
 	}
-
-	public ProductAtPosPK(AbstractProduct product,
-			PointOfSale pos) {
+	
+	public ProductAtPosPK(final AbstractProduct product, final PointOfSale pos) {
 		this.product = product;
 		this.pos = pos;
 	}
-
-	public AbstractProduct getProduct() {
-		return product;
+	
+	@Override
+	public boolean equals(final Object obj) {
+		
+		if (obj == null) {
+			return false;
+		}
+		if (obj.getClass() != this.getClass()) {
+			return false;
+		}
+		
+		return (this.product.getId() == ((ProductAtPosPK) obj).getProduct().getId()) && (this.pos.getId() == ((ProductAtPosPK) obj).getPos().getId());
 	}
-
-	public void setProduct(AbstractProduct product) {
-		this.product = product;
-	}
-
+	
 	public PointOfSale getPos() {
-		return pos;
+		return this.pos;
 	}
-
-	public void setPos(PointOfSale pos) {
-		this.pos = pos;
+	
+	public AbstractProduct getProduct() {
+		return this.product;
 	}
-
+	
 	// see http://uaihebert.com/?p=42
+	@Override
 	public int hashCode() {
 		return this.product.hashCode() + this.pos.hashCode();
 	}
-
-	public boolean equals(Object obj) {
-
-		if (obj == null)
-			return false;
-		if (obj.getClass() != this.getClass())
-			return false;
-
-		return this.product.getId() == ((ProductAtPosPK) obj).getProduct()
-				.getId()
-				&& this.pos.getId() == ((ProductAtPosPK) obj)
-						.getPos().getId();
+	
+	public void setPos(final PointOfSale pos) {
+		this.pos = pos;
 	}
-
+	
+	public void setProduct(final AbstractProduct product) {
+		this.product = product;
+	}
+	
 }

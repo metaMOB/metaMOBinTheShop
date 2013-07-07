@@ -1,47 +1,50 @@
 <wicket:panel>
-	<div class="siteoptions">            	
-            	<div class="sholder">
-                    <div class="styled-select">
-                        <select wicket:id="selectSortyBy"></select>
-                    </div>
-                </div>
-        	<div class="sort">Sortieren nach</div>
-        	
-        	<div class="sholder">
-                    <div class="styled-select">
-                        <select wicket:id="selectItemsPerPage"></select>
-                    </div>
-                </div>
-        	<div class="sort">Items per Page</div>
-    	</div>
-    <div class="rightContent">
+	<div class="siteoptions">
+		<div class="sholder">
+			<div class="styled-select">
+				<select wicket:id="selectSortyBy"></select>
+			</div>
+		</div>
+		<div class="sort">Sortieren nach</div>
 
-	<ul class="shopproducts">
-       <li class="productitem" wicket:id="items">
-		<div class="item">	             
-				<div class="itemimage"><img wicket:id="itemImage" width="134" height="134"/></div>      		
-    				<div class="itemdescwrapper">
-    				<div class="titel" wicket:id="itemName"></div>
-    				<div class="description" wicket:id="itemDescription"></div>
-					<div class="Preis"><span wicket:id="itemPrice"></span> &euro;</div>
-					
-					<a href="#"  class="buttonwarenkorb" wicket:id="itemLink">
-                    	zum Warenkorb
-                    </a>   
-				</div>               		
-    		</div>
-    	</li>
-    	</ul>
-    </div>
-    
-    <div class="pagenavi"> 
-        <nav class="pagenumbers">
-            <ul>
-            	<span wicket:id="pageNavigation"> 
-                	<a href="#" wicket:id="pageLink"><li><span wicket:id="pageLabel"></span></li></a>
-                </span>
-           	</ul>
-        </nav>
-    	<div class="sitenumbertext">Seite: </div>
-    </div>
+		<div class="sholder">
+			<div class="styled-select">
+				<select wicket:id="selectItemsPerPage"></select>
+			</div>
+		</div>
+		<div class="sort">Items per Page</div>
+	</div>
+	<div class="rightContent">
+
+		<ul class="shopproducts">
+			<li class="productitem" wicket:id="items">
+				<div class="item">
+					<div class="itemimage">
+						<img wicket:id="itemImage" width="134" height="134" />
+					</div>
+					<div class="itemdescwrapper">
+						<div class="titel" wicket:id="itemName"></div>
+						<div class="description" wicket:id="itemDescription"></div>
+						<div class="Preis">
+							<span wicket:id="itemPrice"></span> &euro;
+						</div>
+
+						<a href="#" class="buttonwarenkorb" wicket:id="itemLink"> zum
+							Warenkorb </a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<div class="pagenavi">
+		<nav class="pagenumbers">
+			<ul>
+				<span wicket:id="pageNavigation"> <a href="#"
+					wicket:id="pageLink"><li><span wicket:id="pageLabel"></span></li></a>
+				</span>
+			</ul>
+		</nav>
+		<div class="sitenumbertext">Seite:</div>
+	</div>
 </wicket:panel>

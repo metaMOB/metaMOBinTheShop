@@ -25,180 +25,127 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.jboss.logging.Logger;
 
 /*
- * 
+ *
  */
 @Entity
 public class Customer implements Serializable {
-
-	protected static Logger logger = Logger.getLogger(Customer.class);
+	
+	protected static Logger					logger				= Logger.getLogger(Customer.class);
 	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 7461272049473919251L;
-
+	private static final long				serialVersionUID	= 7461272049473919251L;
+	
+	@ManyToOne(cascade = { CascadeType.ALL })
+	private Address							address;
+	
+	private String							email;
+	
+	private String							firstName;
+	
+	private Gender							gender;
+	
 	@Id
 	@GeneratedValue
-	private int id = -1;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	private Gender gender;
-
-	private String firstName;
-
-	private String lastName;
-
-	private String mobilePhoneId;
-
-	private String email;
+	private int								id					= -1;
 	
-	private String passwordHash;
-
-	@ManyToOne(cascade={CascadeType.ALL})
-	private Address address;
-
-	@ManyToMany(mappedBy="customers")
-	private Collection<AbstractTouchpoint> touchpoints = new HashSet<AbstractTouchpoint>();
-
+	private String							lastName;
+	
+	private String							mobilePhoneId;
+	
+	private String							passwordHash;
+	
 	@ManyToOne
-	private AbstractTouchpoint preferredTouchpoint;
+	private AbstractTouchpoint				preferredTouchpoint;
+	
+	@ManyToMany(mappedBy = "customers")
+	private Collection<AbstractTouchpoint>	touchpoints			= new HashSet<AbstractTouchpoint>();
 	
 	/*
-	 * Ü1.2 
+	 * Ü1.2
 	 */
-	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
-	//@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
-	private Collection<CustomerTransaction> transactions;
-	
-	public void addTouchpoint(AbstractTouchpoint touchpoint) {
-		this.touchpoints.add(touchpoint);
-	}
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+	// @OneToMany(mappedBy="customer", fetch=FetchType.EAGER)
+	private Collection<CustomerTransaction>	transactions;
 	
 	public Customer() {
-		logger.info("<constructor>");	
+		logger.info("<constructor>");
 	}
-
-	public Customer(String firstName, String lastName, Gender gender) {
+	
+	public Customer(final int id) {
+		this.id = id;
+	}
+	
+	public Customer(final String firstName, final String lastName, final Gender gender) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.gender = gender;
 	}
-
-	public Customer(String firstName, String lastName, Gender gender, String mobilePhoneId, String eMail, String password) {
+	
+	public Customer(final String firstName, final String lastName, final Gender gender, final String mobilePhoneId, final String eMail, final String password) {
 		this(firstName, lastName, gender);
 		this.mobilePhoneId = mobilePhoneId;
 		this.setEmail(eMail);
 		this.setPassword(password);
 	}
-
-	public Customer(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	
+	public void addTouchpoint(final AbstractTouchpoint touchpoint) {
+		this.touchpoints.add(touchpoint);
 	}
 	
-	public String getFullName(){
-		return getFirstName() + " " + getLastName();
+	@Override
+	public boolean equals(final Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
 	}
-
-	public String getMobilePhoneId() {
-		return mobilePhoneId;
-	}
-
-	public void setMobilePhoneId(String mobilePhoneID) {
-		this.mobilePhoneId = mobilePhoneID;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	
 	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public Collection<AbstractTouchpoint> getTouchpoints() {
-		return touchpoints;
-	}
-
-	public void setTouchpoints(HashSet<AbstractTouchpoint> touchpoints) {
-		this.touchpoints = touchpoints;
-	}
-
-	public AbstractTouchpoint getPreferredTouchpoint() {
-		return preferredTouchpoint;
-	}
-
-	public void setPreferredTouchpoint(AbstractTouchpoint preferredTouchpoint) {
-		this.preferredTouchpoint = preferredTouchpoint;
-	}
-
-	public String toString() {
-		return "{Customer " +  this.id + " " + this.firstName + " " + this.lastName
-				+ " (" + this.gender + ") " + this.email + ", "
-				+ this.mobilePhoneId + ", " + this.address + "}";
+		return this.address;
 	}
 	
-	public void setGender(Gender gd) {
-		this.gender = gd;
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public String getFirstName() {
+		return this.firstName;
+	}
+	
+	public String getFullName() {
+		return this.getFirstName() + " " + this.getLastName();
 	}
 	
 	public Gender getGender() {
 		return this.gender;
 	}
 	
-	public String getPasswordHash() {
-		return passwordHash;
-	}
-
-	public void setPassword(String password) {
-		this.passwordHash = DigestUtils.md5Hex(password);;
-	}
-
-	public boolean equals(Object other) {
-		return EqualsBuilder.reflectionEquals(this, other);
-	}
-
-	public Collection<CustomerTransaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(Collection<CustomerTransaction> transactions) {
-		this.transactions = transactions;
+	public int getId() {
+		return this.id;
 	}
 	
-	/*
-	 * lifecycle logging
-	 */
+	public String getLastName() {
+		return this.lastName;
+	}
+	
+	public String getMobilePhoneId() {
+		return this.mobilePhoneId;
+	}
+	
+	public String getPasswordHash() {
+		return this.passwordHash;
+	}
+	
+	public AbstractTouchpoint getPreferredTouchpoint() {
+		return this.preferredTouchpoint;
+	}
+	
+	public Collection<AbstractTouchpoint> getTouchpoints() {
+		return this.touchpoints;
+	}
+	
+	public Collection<CustomerTransaction> getTransactions() {
+		return this.transactions;
+	}
 	
 	@PostLoad
 	public void onPostLoad() {
@@ -207,14 +154,14 @@ public class Customer implements Serializable {
 	
 	@PostPersist
 	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
+		logger.info("@PostPersist: " + this);
 	}
 	
 	@PostRemove
 	public void onPostRemove() {
 		logger.info("@PostRemove: " + this);
 	}
-
+	
 	@PostUpdate
 	public void onPostUpdate() {
 		logger.info("@PostUpdate: " + this);
@@ -224,14 +171,68 @@ public class Customer implements Serializable {
 	public void onPrePersist() {
 		logger.info("@PrePersist: " + this);
 	}
-
+	
 	@PreRemove
 	public void onPreRemove() {
 		logger.info("@PreRemove: " + this);
 	}
-
+	
 	@PreUpdate
 	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
+		logger.info("@PreUpdate: " + this);
+	}
+	
+	public void setAddress(final Address address) {
+		this.address = address;
+	}
+	
+	public void setEmail(final String email) {
+		this.email = email;
+	}
+	
+	public void setFirstName(final String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public void setGender(final Gender gd) {
+		this.gender = gd;
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	/*
+	 * lifecycle logging
+	 */
+	
+	public void setLastName(final String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public void setMobilePhoneId(final String mobilePhoneID) {
+		this.mobilePhoneId = mobilePhoneID;
+	}
+	
+	public void setPassword(final String password) {
+		this.passwordHash = DigestUtils.md5Hex(password);
+		;
+	}
+	
+	public void setPreferredTouchpoint(final AbstractTouchpoint preferredTouchpoint) {
+		this.preferredTouchpoint = preferredTouchpoint;
+	}
+	
+	public void setTouchpoints(final HashSet<AbstractTouchpoint> touchpoints) {
+		this.touchpoints = touchpoints;
+	}
+	
+	public void setTransactions(final Collection<CustomerTransaction> transactions) {
+		this.transactions = transactions;
+	}
+	
+	@Override
+	public String toString() {
+		return "{Customer " + this.id + " " + this.firstName + " " + this.lastName + " (" + this.gender + ") " + this.email + ", " + this.mobilePhoneId + ", " + this.address + "}";
 	}
 }
