@@ -147,6 +147,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					visiblePanel.replaceWith(mainPanel);
 					visiblePanel = mainPanel;
 					//mainPanel.updateData();
+					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
 					target.add(mainPanel);
 					mode = "main";
 				}
@@ -155,6 +156,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 					loginLabelText = "Login";
 					userNameText = "Gast"; 
 					SessionUtil.logout();
+					mainPanel.currentDisplay(target, "ITEMDISPLAY", null);
 					setResponsePage(getPage());	
 				}
 			}

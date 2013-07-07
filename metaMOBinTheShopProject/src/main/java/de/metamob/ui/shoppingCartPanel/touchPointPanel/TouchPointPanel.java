@@ -76,7 +76,14 @@ public class TouchPointPanel extends Panel {
 		
 		// TODO Auto-generated constructor stub
 		self = this;
+		
 		add(new Label("touchpointName", tp.getName()));
+		
+		if (SessionUtil.isLoggedIn()){
+			add(new Label("logonMessage",""));
+		} else {
+			add(new Label("logonMessage","Bestellung erst nach Anmeldung möglich!"));
+		}
 		
 		if (touchPointAlternatives == null){
 			touchPointAlternatives = new TouchPointAlternatives("alternatives",new ArrayList<AbstractTouchpoint>(), "");

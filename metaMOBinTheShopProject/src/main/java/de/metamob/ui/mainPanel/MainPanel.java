@@ -177,6 +177,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
     		@Override
     		public void onClick(AjaxRequestTarget target) {
     			System.out.println("NO CATEGORY");
+    			currentDisplay(target, "ITEMDISPLAY", null);
     			UIUserConfiguration uiuc = SessionUtil.getUIUserConfiguration();
 				uiuc.setProductType(null);
 				SessionUtil.setUIUserConfiguration(uiuc);
@@ -245,16 +246,16 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 		if (SessionUtil.isLoggedIn()){
 			myList = (List<CustomerTransaction>) customerTransactionCRUDRemote.readAllTransactionsForCustomer(SessionUtil.getCurrentUser());
 		} 
-			////myList = myList.subList(myList.size()-6, myList.size()-1);
-    	
+			if (myList.size()>5){
+				myList = myList.subList(myList.size()-6, myList.size()-1);
+			}
 	        orders = new ListView<CustomerTransaction>("lastOrders", myList){
 				
 	        	@Override
 				protected void populateItem(final ListItem<CustomerTransaction> entry) {
 	        		
 	        		final UserTransaction tempOrder = new UserTransaction(entry.getModelObject());
-	        		//final UserTransaction tempOrder = new UserTransaction();
-					// TODO Auto-generated method stub	        		
+	        		// TODO Auto-generated method stub	        		
 					AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
 						@Override
 						public void onClick(AjaxRequestTarget target) {							
