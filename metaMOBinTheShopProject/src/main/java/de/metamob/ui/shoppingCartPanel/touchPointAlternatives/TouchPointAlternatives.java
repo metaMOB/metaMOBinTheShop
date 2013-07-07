@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
+import org.dieschnittstelle.jee.esa.crm.entities.Address;
 import org.dieschnittstelle.jee.esa.crm.entities.StationaryTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.wicketstuff.gmap.GMap;
@@ -86,15 +87,18 @@ public class TouchPointAlternatives extends Panel {
         		if (entry.getModelObject() instanceof StationaryTouchpoint){
         			AjaxLink<Void> link = new AjaxLink<Void>("touchpointAlternativeLink"){
     					@Override
-    					public void onClick(AjaxRequestTarget target) {						
-    		                System.out.println("TP LINK");    		                
+    					public void onClick(AjaxRequestTarget target) {		                
     		                StationaryTouchpoint temp = (StationaryTouchpoint) entry.getModelObject();
     		                GLatLng tempCoord = new GLatLng((double)temp.getLocation().getGeoLat(), (double)temp.getLocation().getGeoLong());
     		                map.setCenter(tempCoord);
     		            }
     				};
-    				link.add(new Label("touchpointAlternative", entry.getModelObject().getName()));    				
-        			entry.add(link);
+    				StationaryTouchpoint tempTP = (StationaryTouchpoint) entry.getModelObject();
+    				Address tempTPAdr = tempTP.getLocation();
+    				link.add(new Label("touchpointAlternative", tempTP.getName()));    				
+    				entry.add(new Label("touchpointAlternativeAddress", tempTPAdr.getStreet()+" "+tempTPAdr.getHouseNr()));
+    				entry.add(new Label("touchpointAlternativeAddressCity", tempTPAdr.getZipCode()+" "+tempTPAdr.getCity()));
+    				entry.add(link);
         		}
         	}
         };
