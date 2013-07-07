@@ -6,6 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
+import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 import org.dieschnittstelle.jee.esa.erp.entities.Campaign;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductBundle;

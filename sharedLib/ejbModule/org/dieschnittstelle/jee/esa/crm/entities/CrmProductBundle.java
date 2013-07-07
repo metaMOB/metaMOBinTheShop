@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostRemove;
@@ -29,24 +30,40 @@ public class CrmProductBundle implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	private final int			id					= -1;
+	private final int			id = -1;
 	
 	private boolean				isCampaign;
 	
 	private int					units;
 	
+	// FIX ---------------
+	
+	@ManyToOne
+	private CustomerTransaction customerTransaction;
+	
+	public CustomerTransaction getCustomerTransaction() {
+		return customerTransaction;
+	}
+
+	public void setCustomerTransaction(CustomerTransaction customerTransaction) {
+		this.customerTransaction = customerTransaction;
+	}
+	
+	// FIX ---------------
+	
 	public CrmProductBundle() {
 		logger.info("<constructor>");
 	}
 	
-	public CrmProductBundle(final int erpProductId, final int units) {
-		this(erpProductId, units, false);
+	public CrmProductBundle(final int erpProductId, final int units, final CustomerTransaction customerTransaction) {
+		this(erpProductId, units, false, customerTransaction);
 	}
 	
-	public CrmProductBundle(final int erpProductId, final int units, final boolean isCampaign) {
+	public CrmProductBundle(final int erpProductId, final int units, final boolean isCampaign, final CustomerTransaction customerTransaction) {
 		this.erpProductId = erpProductId;
 		this.units = units;
 		this.isCampaign = isCampaign;
+		this.customerTransaction = customerTransaction;
 	}
 	
 	public int getErpProductId() {

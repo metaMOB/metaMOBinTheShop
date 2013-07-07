@@ -1,5 +1,7 @@
 package de.metamob.ui;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -12,6 +14,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.AdressCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
+import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.erp.ejbs.ShoppingSessionFacadeLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
 import org.dieschnittstelle.jee.esa.erp.ejbs.crud.PointOfSaleCRUDLocal;
@@ -57,8 +60,6 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private ShoppingSessionFacadeLocal shoppingSessionFacade;
 	@EJB(name="StockSystem")
 	private StockSystemLocal stockSystem;
-
-
 	@EJB(name="TouchpointCRUD")
     private TouchpointCRUDLocal touchpointCRUD;
 	private final Label userNameLabel;
@@ -70,7 +71,9 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	public MainPage(final PageParameters parameters) {
 		this.userNameLabel = new Label("userName", new PropertyModel<String>(this, "userNameText"));
 		this.loginLinkLabel = new Label("loginLabel", new PropertyModel<String>(this, "loginLabelText"));
-
+		
+		
+		
 		this.add(this.userNameLabel);
 
 
@@ -236,7 +239,18 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		this.visiblePanel = this.mainPanel;
 		this.add(this.mainPanel);
 		this.mode = "main";
-
+		
+		
+		
 		this.setResponsePage(this.getPage());
+	}
+	
+	@Override
+	public void onInitialize(){
+		super.onInitialize();
+		List<AbstractTouchpoint> lst = touchpointCRUD.readAllTouchpoints();
+		if(lst.size()>0){
+			SessionUtil.getUIUserConfiguration().setTouchpont(lst.get(0));
+		}
 	}
 }

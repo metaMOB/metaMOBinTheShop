@@ -54,6 +54,10 @@
 			<ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerCRUDStateless</ejb-class>
 		</session>
 		<session>
+			<ejb-name>CrmProductBundleCRUD</ejb-name>
+			<ejb-class>org.dieschnittstelle.jee.esa.crm.ejbs.crud.CrmProductBundleCRUDStateless</ejb-class>
+		</session>
+		<session>
 			<ejb-name>ProductCRUD</ejb-name>
 			<ejb-class>org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDStateless</ejb-class>
 		</session>

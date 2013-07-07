@@ -48,8 +48,8 @@ public class CustomerTransaction implements Serializable {
 	 * Ü1.1
 	 */
 	// @OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
-	@OneToMany
-	private List<CrmProductBundle>	products			= new ArrayList<CrmProductBundle>();
+	//@OneToMany
+	//private List<CrmProductBundle>	products			= new ArrayList<CrmProductBundle>();
 	
 	@ManyToOne
 	private AbstractTouchpoint		touchpoint;
@@ -63,7 +63,6 @@ public class CustomerTransaction implements Serializable {
 	public CustomerTransaction(final Customer customer, final AbstractTouchpoint tp, final List<CrmProductBundle> products) {
 		this.customer = customer;
 		this.touchpoint = tp;
-		this.products = products;
 		this.date = new Date();
 	}
 	
@@ -79,9 +78,9 @@ public class CustomerTransaction implements Serializable {
 		return this.id;
 	}
 	
-	public List<CrmProductBundle> getProducts() {
+	/*public List<CrmProductBundle> getProducts() {
 		return this.products;
-	}
+	}*/
 	
 	public AbstractTouchpoint getTouchpoint() {
 		return this.touchpoint;
@@ -150,9 +149,9 @@ public class CustomerTransaction implements Serializable {
 		this.id = id;
 	}
 	
-	public void setProducts(final List<CrmProductBundle> products) {
+	/*public void setProducts(final List<CrmProductBundle> products) {
 		this.products = products;
-	}
+	}*/
 	
 	public void setTouchpoint(final AbstractTouchpoint touchpoint) {
 		this.touchpoint = touchpoint;
@@ -164,7 +163,7 @@ public class CustomerTransaction implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "{CustomerTransaction " + this.id + " " + this.customer + " " + this.touchpoint + ", " + this.products + "}";
+		return "{CustomerTransaction " + this.id + " " + this.customer + " " + this.touchpoint + ", " +"}";
 	}
 	
 }

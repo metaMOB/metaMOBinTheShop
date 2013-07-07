@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CrmProductBundleCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
 import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
@@ -23,31 +24,14 @@ public class UserTransaction implements Serializable {
 	private static final long	serialVersionUID	= 478707976370399493L;
 
 	private Date date;
-
-	@EJB(name="ProductCRUD")
-	private ProductCRUDLocal productCRUD;
+	
 	private final List<ShoppingItem> products;
 	private final AbstractTouchpoint touchpoint;
 
-	public UserTransaction(){
-		this.date = new Date();
-		this.touchpoint = new StationaryTouchpoint(0, "Test TP", null);
-		this.products = new ArrayList<ShoppingItem>();
-		this.products.add(new ShoppingItem(new IndividualisedProductItem("Bla", ProductType.BREAD, 0, 100)));
-		this.products.add(new ShoppingItem(new IndividualisedProductItem("BlaBlub", ProductType.BREAD, 0, 100)));
-		this.date = new Date();
-	}
-
-	public UserTransaction(final CustomerTransaction customerTransaction) {
+	public UserTransaction(final CustomerTransaction customerTransaction,  List<ShoppingItem> products) {
 		this.date = customerTransaction.getDate();
 		this.touchpoint = customerTransaction.getTouchpoint();
-		this.products = new ArrayList<ShoppingItem>();
-		final List<CrmProductBundle> productBundles = customerTransaction.getProducts();
-		for(final CrmProductBundle productBundle: productBundles){
-			final ShoppingItem item = new ShoppingItem(this.productCRUD.readProduct(productBundle.getErpProductId()));
-			item.setUnits(productBundle.getUnits());
-			this.products.add(item);
-		}
+		this.products = products;
 	}
 
 	public Date getDate() {

@@ -2,6 +2,8 @@ package org.dieschnittstelle.jee.esa.erp.ejbs.crud;
 
 import java.util.List;
 
+import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
+import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
 import org.dieschnittstelle.jee.esa.erp.entities.AbstractProduct;
 
 public interface ProductCRUDInterface {

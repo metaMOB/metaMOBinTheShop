@@ -11,6 +11,7 @@ import org.dieschnittstelle.jee.esa.crm.ejbs.CampaignTrackingLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.CustomerTrackingLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.ShoppingCartLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.ShoppingCartStateful;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CrmProductBundleCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
 import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
 import org.dieschnittstelle.jee.esa.crm.entities.Customer;
@@ -54,12 +55,15 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 	private CustomerTrackingLocal customerTracking;
 	@EJB(beanName="ProductCRUD")
 	private ProductCRUDLocal productCRUD;
-
 	@EJB(beanName="shoppingCart")
 	private ShoppingCartLocal shoppingCart;
 	//private CampaignTrackingRemote campaignTracking;
 	@EJB(beanName="StockSystem")
 	private StockSystemLocal stockSystem;
+	@EJB(beanName="CrmProductBundleCRUD")
+	private CrmProductBundleCRUDLocal crmProductBundleCRUD;
+	
+	
     private AbstractTouchpoint touchpoint;
 	/**
      * Default constructor.
@@ -77,7 +81,7 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 	@Override
 	public void addProduct(final AbstractProduct product, final int units) {
 		logger.info(" --- add product ("+product.getId()+") to shoppingCard");
-		this.shoppingCart.addProductBundle(new CrmProductBundle(product.getId(), units, product instanceof Campaign));
+		this.shoppingCart.addProductBundle(new CrmProductBundle(product.getId(), units, product instanceof Campaign, null));
 	}
 
 	private ProductCount checkStock(final CrmProductBundle productBundle, final List<IndividualisedProductItem> stockProducts) throws ProductNotInStockException{
@@ -145,8 +149,14 @@ public class ShoppingSessionFacade implements ShoppingSessionFacadeLocal, Shoppi
 
 		// then we add a new customer transaction for the current purchase
 		final CustomerTransaction transaction = new CustomerTransaction(this.customer, this.touchpoint, products);
-		transaction.setCompleted(true);
 		this.customerTracking.createTransaction(transaction);
+		for (final CrmProductBundle productBundle : products) {
+			productBundle.setCustomerTransaction(transaction);
+			crmProductBundleCRUD.createCrmProductBundle(productBundle);
+		}
+		
+		transaction.setCompleted(true);
+		
 		products.clear();
 		logger.info("commit(): done.");
 	}

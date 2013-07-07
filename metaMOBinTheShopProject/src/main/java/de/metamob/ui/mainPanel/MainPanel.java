@@ -14,12 +14,16 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CrmProductBundleCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.CustomerTransactionCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.ejbs.crud.TouchpointCRUDLocal;
 import org.dieschnittstelle.jee.esa.crm.entities.AbstractTouchpoint;
+import org.dieschnittstelle.jee.esa.crm.entities.CrmProductBundle;
 import org.dieschnittstelle.jee.esa.crm.entities.CustomerTransaction;
+import org.dieschnittstelle.jee.esa.erp.ejbs.crud.ProductCRUDLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
 
+import de.metamob.data.shoppingCart.ShoppingItem;
 import de.metamob.data.shoppingCart.UserTransaction;
 import de.metamob.session.SessionUtil;
 import de.metamob.session.UIUserConfiguration;
@@ -37,7 +41,13 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 	private static final long	serialVersionUID	= 2109163316925684079L;
 	@EJB(name="CustomerTransactionCRUD")
     private CustomerTransactionCRUDLocal customerTransactionCRUDRemote;
-	//private String message = "Enter a message";
+	
+	@EJB(name="ProductCRUD")
+	private ProductCRUDLocal productCRUD;
+	
+	@EJB(name="TouchpointCRUD")
+    private TouchpointCRUDLocal touchpointCRUDRemote;
+	
 	private IMainPageCallback iMainPageCallback;
 	private Panel itemPanel = new ItemPanel("itemPanel", this);
 	private AjaxLink<Void> linkAllCategories;
@@ -46,8 +56,7 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	private Panel shoppingCartPanel;
 
-	@EJB(name="TouchpointCRUD")
-    private TouchpointCRUDLocal touchpointCRUDRemote;
+	
 
 	ListView<AbstractTouchpoint> touchpoints = null;
 
@@ -139,8 +148,18 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 
 	        	@Override
 				protected void populateItem(final ListItem<CustomerTransaction> entry) {
-
-	        		final UserTransaction tempOrder = new UserTransaction(entry.getModelObject());
+	        		
+	        		CustomerTransaction ct = entry.getModelObject();
+	        		
+	        		final List<ShoppingItem> shoppingItems = new ArrayList<ShoppingItem>();
+	        		final List<CrmProductBundle> productBundles = customerTransactionCRUDRemote.readCrmProductBundle(ct); //customerTransaction.getProducts();
+	        		for(final CrmProductBundle productBundle: productBundles){
+	        			final ShoppingItem item = new ShoppingItem(productCRUD.readProduct(productBundle.getErpProductId()));
+	        			item.setUnits(productBundle.getUnits());
+	        			shoppingItems.add(item);
+	        		}
+	        		
+	        		final UserTransaction tempOrder = new UserTransaction(ct, shoppingItems);
 	        		// TODO Auto-generated method stub
 					final AjaxLink<Void> link = new AjaxLink<Void>("lastOrderLink"){
 						@Override
@@ -187,6 +206,8 @@ public class MainPanel extends Panel implements IMainPageItemCallback {
 				};
 
 				link.add(new Label("touchpointName", entry.getModel().getObject().getName()));
+				
+				
 				if (SessionUtil.getUIUserConfiguration().getTouchpont().getId()==entry.getModel().getObject().getId()){
 					link.add(new AttributeAppender("class", new Model<String>("aktiv")));
 		    	}
