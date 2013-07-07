@@ -1,5 +1,6 @@
 package org.dieschnittstelle.jee.esa.crm.ejbs.crud;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -69,6 +70,9 @@ protected static Logger logger = Logger.getLogger(TouchpointCRUDStateless.class)
 
 	@Override
 	public List<AbstractTouchpoint> readTouchpoins(List<Integer> posIds) {
+		if (posIds.size()==0){
+			return new ArrayList<AbstractTouchpoint>();
+		}
 		Query query = em.createQuery("SELECT a FROM AbstractTouchpoint a WHERE a.erpPointOfSaleId IN :values",AbstractTouchpoint.class);
 		query.setParameter("values", posIds);
 		return (List<AbstractTouchpoint>) query.getResultList();
