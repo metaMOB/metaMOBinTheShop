@@ -81,13 +81,11 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 	private AdminPanel adminPanel;
 	private String mode = "main";
 	private AjaxLink<Void> link;	
-	private AjaxLink<Void> philsButton;
 	private AjaxLink<Void> shoppingCartButton;
 	private AjaxLink<Void> itemDisplayLink;
 	private AjaxLink<Void> adminLink;
 	private Label numOfItems;
 	
-	//private ShoppingCart shoppingCart = new ShoppingCart(); 
 	
 	String userNameText = "Gast";
 	public String getUserNameText() {
@@ -122,7 +120,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		mainPanel = new MainPanel("contentPanel", this);
 		loginPanel = new LoginPanel("contentPanel", this);
-		adminPanel = new AdminPanel("contentPanel");
+		adminPanel = new AdminPanel("contentPanel", this);
 		
 		loginPanel.setOutputMarkupId(true);
 		mainPanel.setOutputMarkupId(true);
@@ -169,65 +167,7 @@ public class MainPage extends WebPage implements IMainPageCallback { // IMainPag
 		
 		
 		
-		philsButton = new AjaxLink<Void>("demPhilSeinButton") {
-			@Override
-			public void onClick(AjaxRequestTarget target) {
-				//customer
-				
-				Customer customer = new Customer("Hans", "Heimlich", Gender.M, "01234579", "hans@wurst.de", "test123");
-				customer = customerCRUD.createCustomer(customer);
-				customerCRUD.createCustomer(new Customer("Felix", "Helix", Gender.M, "01234579", "felix@helix.de", "test123"));
-				customerCRUD.createCustomer(new Customer("Philipp", "UelksMulks", Gender.M, "01234579", "moep@boep.de", "test123"));
-				
-				SessionUtil.login(customer);
-				userLoggedIn();
-				
-				
-				//points of sale
-				PointOfSale pos1 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
-				PointOfSale pos2 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
-				PointOfSale pos3 = pointOfSaleCRUD.createPointOfSale(new PointOfSale());
-				
-				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
-				sttp.setLocation(new Address("Luxemburger Straße", "10", "DE-13353", "Berlin", 52.550136f,13.39585f));
-				sttp.setName("Conys Backstube");
-				touchpointCRUD.createTouchpoint(sttp);
-				
-				sttp = new StationaryTouchpoint(pos2.getId());
-				sttp.setLocation(new Address("Pettenkofer Straße", "13", "DE-10353", "Berlin", 52.54499f,13.35232f));
-				sttp.setName("Der Kondidor");
-				touchpointCRUD.createTouchpoint(sttp);
-				
-				sttp = new StationaryTouchpoint(pos3.getId());
-				sttp.setLocation(new Address("Evergreen Terance", "1", "DE-12345", "Springfield", 52.51499f,13.34232f));
-				sttp.setName("Sack Mehl");
-				touchpointCRUD.createTouchpoint(sttp);
-				
-				IndividualisedProductItem product = (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
-				IndividualisedProductItem product2= (IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180));
-				
-				//StockItems
-				stockSystem.addToStock(product, pos1.getId(), 2);
-				stockSystem.addToStock(product2, pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zimtstern",ProductType.PASTRY,0 , 35)), pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85)), pos1.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Kraftmeier",ProductType.ROLL,0, 65)), pos1.getId(), 10000);
-
-				stockSystem.addToStock(product, pos2.getId(), 5);
-				stockSystem.addToStock(product2, pos2.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
-				stockSystem.addToStock((IndividualisedProductItem) productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
-				
-				stockSystem.addToStock(product, pos3.getId(), 3);
-				
-				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
-				setResponsePage(getPage());	
-			}
-		};
 		
-		add(philsButton);
 		
 		shoppingCartButton = new AjaxLink<Void>("shoppingCartLink") {
 			@Override

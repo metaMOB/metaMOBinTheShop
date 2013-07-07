@@ -1,5 +1,6 @@
 package de.metamob.ui.adminPanel.touchPointPanel;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,7 @@ public class TouchPointPanel extends Panel {
 	
 	private String message;
 	private List<IndividualisedProductItem> itemList;
+	private AbstractTouchpoint tp;
 	
 	public String getMessage() {
 		return message;
@@ -89,6 +91,7 @@ public class TouchPointPanel extends Panel {
 		
 		self = this;	
 		this.itemList = itemList;
+		this.tp = tp;
 		add(new Label("touchpointName", tp.getName()));
 		
 		ListView<IndividualisedProductItem> items = new ListView<IndividualisedProductItem>("items", new ArrayList<IndividualisedProductItem>(itemList)){
@@ -101,6 +104,9 @@ public class TouchPointPanel extends Panel {
 				final PropertyModel<Integer> priceModel;
 				priceModel = new PropertyModel<Integer>(temp, "price");
 				
+				UnitManager units = new UnitManager(temp);				
+				final PropertyModel<Integer> unitModel;
+				unitModel = new PropertyModel<Integer>(units, "units");
 				
 				PropertyModel<Integer> modelUnits = new PropertyModel <Integer>(self, "numOfUnits");
 
@@ -108,32 +114,39 @@ public class TouchPointPanel extends Panel {
 							
 				
 				entry.add(new Label("itemName", temp.getName()));
+				entry.add(new Label("itemCategory", temp.getProductType()));
 				
 				final TextField priceField = new TextField<Integer>("itemPrice", priceModel);
 				priceField.add(new OnChangeAjaxBehavior(){
 			        @Override
-			        protected void onUpdate(final AjaxRequestTarget target){
-			        	
+			        protected void onUpdate(final AjaxRequestTarget target){			        	
 			        	System.out.println("CHANGED "+priceField.getModelObject());
 			        	int value = (Integer) priceField.getModelObject();
 			        	temp.setPrice(value);
-			        	//stockSystem.addToStock(temp, tp.getErpPointOfSaleId(), 1);
 			        	productCRUD.updateProduct(temp);
 			        }
 			    });
 				entry.add(priceField);
 				
+				//entry.add(new Label("itemUnits", stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())));
+				final TextField itemUnits = new TextField("itemUnits", unitModel);
+				itemUnits.setOutputMarkupId(true);
+				itemUnits.add(new OnChangeAjaxBehavior(){
+			        @Override
+			        protected void onUpdate(final AjaxRequestTarget target){			        	
+			        	System.out.println("CHANGED "+priceField.getModelObject());
+			        	int value = (Integer) itemUnits.getModelObject();
+			        	stockSystem.setUnitsOnStock(temp, tp.getErpPointOfSaleId(), value);
+			        }
+			    });
+				entry.add(itemUnits);
+				
 				AjaxLink<Void> delete = new AjaxLink<Void>("itemDelete"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-						
-		                System.out.println("ITEMDELETE");
-		                // FEHLT NOCH
-		                // temp.remove();
-		                // FEHLT NOCH
-		                
-		                //stockSystem.deleFromStock(IndividualisedProductItem, PointOfSale);
-		                setResponsePage(getPage());
+						System.out.println("ITEMDELETE");
+		                stockSystem.setUnitsOnStock(temp, tp.getErpPointOfSaleId(), 0);
+		                target.add(itemUnits);
 		            }
 				};
 								
@@ -142,18 +155,18 @@ public class TouchPointPanel extends Panel {
 					public void onClick(AjaxRequestTarget target) {
 					    System.out.println("ITEMINCREASE");	
 					    stockSystem.setUnitsOnStock(temp, tp.getErpPointOfSaleId(),  stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())+1);
-					    setResponsePage(getPage());	
-		           }
+					    target.add(itemUnits);
+					}
 				};
-				
-				entry.add(new Label("itemUnits", stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())));
+							
 				
 				AjaxLink<Void> decrease = new AjaxLink<Void>("itemUnitsDec"){
 					@Override
 					public void onClick(AjaxRequestTarget target) {						
 		                System.out.println("ITEMDECREASE");
-		                stockSystem.setUnitsOnStock(temp, tp.getErpPointOfSaleId(),  stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())-1);setResponsePage(getPage());	
-		            }
+		                stockSystem.setUnitsOnStock(temp, tp.getErpPointOfSaleId(),  Math.max(0, stockSystem.getUnitsOnStock(temp, tp.getErpPointOfSaleId())-1));	
+		                target.add(itemUnits);
+					}
 				};			
 				
 				entry.add(delete);
@@ -161,6 +174,23 @@ public class TouchPointPanel extends Panel {
 				entry.add(decrease);
 			}
         };
-        add(items);
+        add(items);        
 	}	
+	class UnitManager implements Serializable {
+        private int units;
+
+		public int getUnits() {
+			return stockSystem.getUnitsOnStock(item, tp.getErpPointOfSaleId());
+		}
+
+		public void setUnits(int units) {
+			stockSystem.setUnitsOnStock(item, tp.getErpPointOfSaleId(), units);
+		}
+		
+		private IndividualisedProductItem item;
+		
+		public UnitManager (IndividualisedProductItem temp){
+			item = temp;
+		}
+    }	
 }

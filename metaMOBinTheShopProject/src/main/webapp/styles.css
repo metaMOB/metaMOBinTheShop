@@ -208,6 +208,16 @@ nav.headerNav li {
 	margin-bottom:20px;
 }
 
+.rightContentBackend {
+	padding:10px;
+	width:690px; 
+	border: 1px solid rgba(143,158,139,.2);
+	/*background-color:#F8FFF1;*/
+	float:left;
+	margin-bottom:20px;
+	margin-left:120px;
+}
+
 /* ---------------------------- SLIDER ENDE -------- */
 
 /* --- List 1 NAVIGATION --- */
@@ -331,6 +341,18 @@ button.but {
 	  text-align: center;
 	  cursor:pointer;
 }
+
+button.demPhilSeinButton {
+	  margin:0 0px 5px 1px;
+	  background-color: #002E40;
+	  /*border-bottom: 2px solid #FF6761;*/
+	  font-weight:700;
+	  color: #FFF;
+	  padding: 6px 10px 7px 10px;
+	  text-align: center;
+	  cursor:pointer;
+}
+
 button.but:hover {
     background-color: #FF6761;
 	color:#000;
@@ -556,6 +578,13 @@ ul.searchLists li:nth-child(2n) {
 	top:9px;
 	left:15px;
 }
+
+.produktkat{
+	position:absolute;
+	top:9px;
+	left:260px;
+}
+
 .delete {
 	position:absolute;
 	top:9px;
@@ -575,7 +604,35 @@ ul.searchLists li:nth-child(2n) {
 	top:12px;
 	left:490px;	
 }
-.count .countbuttonless{
+
+.countbackend{
+	position:absolute;
+	top:12px;
+	left:470px;
+}
+
+.countbackend .countbuttonless {
+	width:20px;
+	height:20px;
+	background: url(images/remove_item.png) no-repeat;
+	float:left;
+	cursor:pointer;
+}
+.countbackend .counttext{
+	height:20px;
+	float:left;
+	line-height:15px;
+	padding:0 5px 0 5px;
+}
+.countbackend .countbuttonmore{
+	width:20px;
+	height:20px;
+	background:url(images/add_item.png) no-repeat;
+	float:left;
+	cursor:pointer;
+}
+
+.count .countbuttonless {
 	width:20px;
 	height:20px;
 	background: url(images/remove_item.png) no-repeat;
@@ -603,6 +660,12 @@ ul.searchLists li:nth-child(2n) {
 	
 }
 
+.pricebackend{
+	position:absolute;
+	top:9px;
+	left:600px;
+	
+}
 
 .produkthead{
 	position:absolute;
@@ -613,6 +676,13 @@ ul.searchLists li:nth-child(2n) {
 	position:absolute;
 	top:8px;
 	left:380px;
+	
+}
+
+.categoryhead{
+	position:absolute;
+	top:8px;
+	left:260px;
 	
 }
 .counthead{
@@ -905,6 +975,19 @@ input[type=text], textarea, input[type=password] {
 	margin:0 0 10px 8px;
 }
 
+input[type=text].tfprice{
+	width:50px;
+	height:18px;
+	padding:1px 0 0px 7px;
+	margin:0 0 0px 0px;
+}
+
+input[type=text].tfunits{
+	width:50px;
+	height:18px;
+	padding:1px 0 0px 7px;
+	margin:0 0 0px 0px;
+}
 
 button.butlogin {
  
@@ -968,6 +1051,8 @@ label {
 	background-color:#CCC;
 	margin:35px 0 12px 0;
 }
+
+
 
 
 

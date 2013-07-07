@@ -1,6 +1,6 @@
 <wicket:panel>
 	<div class="touchpoint" >
-           		<div class="touchpointhead"><span wicket:id="touchpointName"></span><div class="carticon"></div></div>
+           		<div class="touchpointhead"><span wicket:id="touchpointName"></span></div>
 		<div class="shoppingcart">
 			<ul class="searchLists">
 				<li>
@@ -9,22 +9,24 @@
 						<div class="pricehead">Preis</div>
 						<div class="counthead">Anzahl</div>
 						<div class="deletehead">entfernen</div>
+						<div class="categoryhead">Kategorie</div>
 					</div>
 				</li>
 		        	<li wicket:id="items">
 		            	<div class="searchListsinner">	            	
 		                	<div class="produkt"><span wicket:id="itemName"></span></div>
-		                    <div class="price">
-		                    	<input wicket:id="itemPrice"> &euro;
+		                    <div class="pricebackend">
+		                    	<input class="tfprice" type="text" wicket:id="itemPrice"> &euro;
 		                    </div>
-		                    <div class="count">
+		                    <div class="countbackend">
 		                    	<a class="countbuttonless" href="#" wicket:id="itemUnitsDec"></a>
 		                    	<div class="counttext">
-		                    		<span wicket:id="itemUnits"></span>
+		                    		<input class="tfunits" type="text" wicket:id="itemUnits"></input>
 		                    	</div>
 		                    	<a class="countbuttonmore" href="#" wicket:id="itemUnitsInc"></a>
 		                    </div>
 		                    <a href="#" class="delete" wicket:id="itemDelete" style="color:#002e40;"></a>				
+		                    <div class="produktkat"><span wicket:id="itemCategory"></span></div>
 		                </div>
 		            </li>           
 		    </ul>   
