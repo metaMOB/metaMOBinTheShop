@@ -59,8 +59,8 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
     	stockItemCRUD.updateStockItem(stockItem);
     }
     
-    private List<IndividualisedProductItem> getProducts(PointOfSale pointOfSale, ProductType productType, SortType sortType) {
-    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock(pointOfSale, productType, sortType);
+    private List<IndividualisedProductItem> getProducts(PointOfSale pointOfSale, ProductType productType, SortType sortType, int minItems) {
+    	List<StockItem> stockItems = stockItemCRUD.readUnitsOnStock(pointOfSale, productType, sortType,minItems);
     	List<IndividualisedProductItem> result = new ArrayList<IndividualisedProductItem>();
     	for (StockItem stockItem:stockItems){
     		result.add((IndividualisedProductItem) stockItem.getProduct());
@@ -72,13 +72,17 @@ public class StockSystemFacade implements StockSystemRemote, StockSystemLocal {
     /**
      * @see StockSystemRemote#getProductsOnStock(int)
      */
+    public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType, int minItems) {
+		return getProducts(pointOfSaleCRUD.readPointOfSale(pointOfSaleId), productType, sortType, minItems);
+    }
+    
     public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType) {
-		return getProducts(pointOfSaleCRUD.readPointOfSale(pointOfSaleId), productType, sortType);
+		return getProducts(pointOfSaleCRUD.readPointOfSale(pointOfSaleId), productType, sortType, 0);
     }
     
     
     public List<IndividualisedProductItem> getAllProductsOnStock(ProductType productType, SortType sortType) {
-		return getProducts(null, productType, sortType);
+		return getProducts(null, productType, sortType, 0);
     }
     
     /**

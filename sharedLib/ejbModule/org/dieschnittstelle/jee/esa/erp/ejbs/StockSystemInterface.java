@@ -34,6 +34,7 @@ public interface StockSystemInterface {
 	 * @param pointOfSaleId
 	 * @return
 	 */
+	public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType, int minItems);
 	public List<IndividualisedProductItem> getProductsOnStock(int pointOfSaleId, ProductType productType, SortType sortType);
 
 	/**

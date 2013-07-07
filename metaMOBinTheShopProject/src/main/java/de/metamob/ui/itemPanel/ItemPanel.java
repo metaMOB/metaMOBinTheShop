@@ -117,7 +117,7 @@ public class ItemPanel extends Panel {
 		if(uuuc.getTouchpont()==null){//uuuc.getProductType()
 			itemList = stockSystem.getAllProductsOnStock(uuuc.getProductType(),uuuc.getSortType());
 		}else{
-			itemList = stockSystem.getProductsOnStock(uuuc.getTouchpont().getErpPointOfSaleId(),uuuc.getProductType(),uuuc.getSortType());
+			itemList = stockSystem.getProductsOnStock(uuuc.getTouchpont().getErpPointOfSaleId(),uuuc.getProductType(),uuuc.getSortType(),1);
 		}	
 	}
 	

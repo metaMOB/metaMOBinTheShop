@@ -47,7 +47,7 @@ public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRU
     	return em.merge(stockItem);
     }
     
-    public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType){
+    public List<StockItem> readUnitsOnStock(PointOfSale pos, ProductType productType, SortType sortType, int minUnits){
     	String queryString = "SELECT a FROM StockItem a";
     	if(pos!=null||productType!=null){
     		queryString += " WHERE";
@@ -59,6 +59,11 @@ public class StockItemCRUDStateless implements StockItemCRUDRemote, StockItemCRU
     	if(productType!=null){
     		queryString += (pos!=null)?" AND ":"";
     		queryString += " a.product.productType = org.dieschnittstelle.jee.esa.erp.entities.ProductType." + productType;
+    	}
+    	
+    	if(minUnits>0){
+    		queryString += (pos!=null||sortType!=null)?" AND ":"";
+    		queryString += " a.units >= " + minUnits;
     	}
     	
     	if (sortType!= null){
