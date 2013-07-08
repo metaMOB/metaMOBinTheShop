@@ -15,8 +15,10 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
+import org.apache.wicket.request.resource.SharedResourceReference;
 import org.dieschnittstelle.jee.esa.erp.ejbs.StockSystemLocal;
 import org.dieschnittstelle.jee.esa.erp.entities.IndividualisedProductItem;
 import org.dieschnittstelle.jee.esa.erp.entities.ProductType;
@@ -91,7 +93,11 @@ public class ItemPanel extends Panel {
 				entry.add(new Label("itemName", product.getName()));
 				entry.add(new Label("itemDescription", ProductType.toReadableString(product.getProductType())));
 				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(product.getPrice()/100.0)));
-				entry.add(new Image("itemImage", new ContextRelativeResource(product.getImgURL())));
+				//entry.add(new Image("itemImage", new Model<String>(product.getImgURL())));
+				Label imagelbl = new Label("itemImage", "<img src=\""+product.getImgURL()+"\" width=\"134\" height=\"134\" />");
+				imagelbl.setEscapeModelStrings(false);
+				entry.add(imagelbl);
+				
 			}
         };
 

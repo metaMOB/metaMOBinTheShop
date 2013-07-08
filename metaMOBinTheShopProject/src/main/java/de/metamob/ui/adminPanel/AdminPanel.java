@@ -75,7 +75,7 @@ public class AdminPanel extends Panel {
 
 				StationaryTouchpoint sttp = new StationaryTouchpoint(pos1.getId());
 				sttp.setLocation(new Address("Luxemburger Straße", "10", "DE-13353", "Berlin", 52.550136f,13.39585f));
-				sttp.setName("Conys Backstube");
+				sttp.setName("Connys Backstube");
 				AdminPanel.this.touchpointCRUD.createTouchpoint(sttp);
 
 				sttp = new StationaryTouchpoint(pos2.getId());
@@ -85,7 +85,7 @@ public class AdminPanel extends Panel {
 
 				sttp = new StationaryTouchpoint(pos3.getId());
 				sttp.setLocation(new Address("Evergreen Terance", "1", "DE-12345", "Springfield", 52.51499f,13.34232f));
-				sttp.setName("Sack Mehl");
+				sttp.setName("Zum Mehlwurm");
 				AdminPanel.this.touchpointCRUD.createTouchpoint(sttp);
 
 				final IndividualisedProductItem product = (IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30,"images/products/broetchen.jpg"));
@@ -95,18 +95,20 @@ public class AdminPanel extends Panel {
 				AdminPanel.this.stockSystem.addToStock(product, pos1.getId(), 2);
 				AdminPanel.this.stockSystem.addToStock(product2, pos1.getId(), 10000);
 				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165,"images/products/weizenbrot.jpg")) , pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200,"images/products/kuchen01.jpg")), pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Montagstorte",ProductType.PASTRY,0 , 35,"images/products/kuchen03.jpeg")), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200,"images/products/kuchen01.png")), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Montagstorte",ProductType.PASTRY,0 , 35,"images/products/kuchen03.png")), pos1.getId(), 10000);
 				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85,"images/products/kuchen02.png")), pos1.getId(), 10000);
 				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Käsebrötchen",ProductType.ROLL,0, 65,"images/products/kaesebroetchen.png")), pos1.getId(), 10000);
 
 				AdminPanel.this.stockSystem.addToStock(product, pos2.getId(), 5);
 				AdminPanel.this.stockSystem.addToStock(product2, pos2.getId(), 10000);
 				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160,"images/products/vollkornbrot.png")), pos2.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240,"images/products/berndbrot.jpg")), pos2.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240,"images/products/berndbrot.png")), pos2.getId(), 10000);
 
 				AdminPanel.this.stockSystem.addToStock(product, pos3.getId(), 3);
-
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Sauerbrot",ProductType.BREAD,0, 160,"images/products/berndbrot.png")), pos3.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Rosinenbrötchen",ProductType.BREAD,0, 240,"images/products/rosienenbroetschen.png")), pos3.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85,"images/products/kuchen02.png")), pos3.getId(), 10000);
 				SessionUtil.getUIUserConfiguration().setTouchpont(sttp);
 			}
 		};
