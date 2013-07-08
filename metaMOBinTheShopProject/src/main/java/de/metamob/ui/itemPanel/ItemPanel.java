@@ -60,7 +60,12 @@ public class ItemPanel extends Panel {
 		this.iMainPageItemCallback = itemPanelCallback;
 		SessionUtil.setCurrentPage(0);
 
-		this.setItemsPerPage(2);
+		if (SessionUtil.getUIUserConfiguration().getItemsPerPage()!=null){
+			this.setItemsPerPage(SessionUtil.getUIUserConfiguration().getItemsPerPage());
+		}
+		else{
+			this.setItemsPerPage(2);
+		}
 		// TODO Auto-generated constructor stub
 		//addItemPanelModule();
 	}
