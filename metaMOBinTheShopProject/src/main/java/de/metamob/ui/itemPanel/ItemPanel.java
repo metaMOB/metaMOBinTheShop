@@ -85,11 +85,13 @@ public class ItemPanel extends Panel {
 		                ItemPanel.this.iMainPageItemCallback.itemPanelClicked();
 					}
 				};
+				
+				IndividualisedProductItem product = entry.getModelObject();
 				entry.add(link);
-				entry.add(new Label("itemName", entry.getModelObject().getName()));
-				entry.add(new Label("itemDescription", ProductType.toReadableString(entry.getModelObject().getProductType())));
-				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(entry.getModelObject().getPrice()/100.0)));
-				entry.add(new Image("itemImage", new ContextRelativeResource("images/products/example.jpg")));
+				entry.add(new Label("itemName", product.getName()));
+				entry.add(new Label("itemDescription", ProductType.toReadableString(product.getProductType())));
+				entry.add(new Label("itemPrice", new DecimalFormat("0.00").format(product.getPrice()/100.0)));
+				entry.add(new Image("itemImage", new ContextRelativeResource(product.getImgURL())));
 			}
         };
 

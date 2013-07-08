@@ -25,12 +25,15 @@ public abstract class AbstractProduct implements Serializable {
 	
 	private int					price;
 	
+	private String 				imgURL;
+	
 	public AbstractProduct() {
 		
 	}
 	
-	public AbstractProduct(final String name) {
+	public AbstractProduct(final String name, final String imgURL) {
 		this.name = name;
+		this.imgURL = imgURL;
 	}
 	
 	public int getId() {
@@ -60,5 +63,13 @@ public abstract class AbstractProduct implements Serializable {
 	
 	public void setPrice(final int price) {
 		this.price = price;
+	}
+
+	public String getImgURL() {
+		return imgURL;
+	}
+
+	public void setImgURL(String imgURL) {
+		this.imgURL = imgURL;
 	}
 }

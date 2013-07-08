@@ -88,22 +88,22 @@ public class AdminPanel extends Panel {
 				sttp.setName("Sack Mehl");
 				AdminPanel.this.touchpointCRUD.createTouchpoint(sttp);
 
-				final IndividualisedProductItem product = (IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30));
-				final IndividualisedProductItem product2= (IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180));
+				final IndividualisedProductItem product = (IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Schrippe",ProductType.ROLL,0, 30,"images/products/broetchen.jpg"));
+				final IndividualisedProductItem product2= (IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Bauernbrot",ProductType.BREAD,0, 180,"images/products/bauernbrot.png"));
 
 				//StockItems
 				AdminPanel.this.stockSystem.addToStock(product, pos1.getId(), 2);
 				AdminPanel.this.stockSystem.addToStock(product2, pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165)) , pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200)), pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Zimtstern",ProductType.PASTRY,0 , 35)), pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85)), pos1.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Kraftmeier",ProductType.ROLL,0, 65)), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mischbrot",ProductType.BREAD,0, 165,"images/products/weizenbrot.jpg")) , pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Sandkuchen",ProductType.PASTRY,0, 200,"images/products/kuchen01.jpg")), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Montagstorte",ProductType.PASTRY,0 , 35,"images/products/kuchen03.jpeg")), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Mohngebaeck",ProductType.PASTRY,0, 85,"images/products/kuchen02.png")), pos1.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Käsebrötchen",ProductType.ROLL,0, 65,"images/products/kaesebroetchen.png")), pos1.getId(), 10000);
 
 				AdminPanel.this.stockSystem.addToStock(product, pos2.getId(), 5);
 				AdminPanel.this.stockSystem.addToStock(product2, pos2.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160)), pos2.getId(), 10000);
-				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240)), pos2.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Haferbrot",ProductType.BREAD,0, 160,"images/products/vollkornbrot.png")), pos2.getId(), 10000);
+				AdminPanel.this.stockSystem.addToStock((IndividualisedProductItem) AdminPanel.this.productCRUD.createProduct(new IndividualisedProductItem("Zuckerbrot",ProductType.BREAD,0, 240,"images/products/berndbrot.jpg")), pos2.getId(), 10000);
 
 				AdminPanel.this.stockSystem.addToStock(product, pos3.getId(), 3);
 
